@@ -1,11 +1,15 @@
-#Profiles
-profile01 = Profile.create(picture:"pic Mati",biography:"This is my Bio!",country:"Chile",city:"Santiago")
-profile02 = Profile.create(picture:"pic Correa",biography:"This is my Bio!",country:"Chile",city:"Santiago")
+
 
 #Users
-user01 = User.create(name:"Matias",last_name:"Canepa",username:"macanepa",email:"macanepa@miandes.cl",password:"123456789",last_login:Time.now,profile:profile01)
-user02 = User.create(name:"Vicente",last_name:"Correa",username:"vicorrea",email:"vicorrera@miandes.cl",password:"123456789",last_login:Time.now,profile:profile02)
-user03 = User.create(name:"Ignacio",last_name:"Figueroa",username:"BadBoiLusho",email:"ifigueroa@miandes.cl",password:"password",last_login:Time.now,profile:profile02)
+user01 = User.create(name:"Matias",last_name:"Canepa",username:"macanepa",email:"macanepa@miandes.cl",password:"123456789",last_login:Time.now)
+user02 = User.create(name:"Vicente",last_name:"Correa",username:"vicorrea",email:"vicorrera@miandes.cl",password:"123456789",last_login:Time.now)
+user03 = User.create(name:"Ignacio",last_name:"Figueroa",username:"BadBoiLusho",email:"ifigueroa@miandes.cl",password:"password",last_login:Time.now)
+
+
+#Profiles
+profile01 = Profile.create(user:user01,picture:"pic Mati",biography:"This is my Bio!",country:"Chile",city:"Santiago")
+profile02 = Profile.create(user:user02, picture:"pic Correa",biography:"This is my Bio!",country:"Chile",city:"Santiago")
+
 
 #Admins
 admin01 = Admin.create(username:"admin_01",password:"123",email:"admin@miuandes.cl",admin_type:"admin",last_access:Time.now)
