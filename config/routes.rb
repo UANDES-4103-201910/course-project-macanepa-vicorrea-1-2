@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :tag_user_comments
+  resources :tag_usercomments
+  resources :tag_user_posts
   resources :follow_users
   resources :follow_posts
   resources :reports

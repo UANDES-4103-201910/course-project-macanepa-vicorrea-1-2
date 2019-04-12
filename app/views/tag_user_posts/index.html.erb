@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Tag User Posts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Post</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tag_user_posts.each do |tag_user_post| %>
+      <tr>
+        <td><%= tag_user_post.user %></td>
+        <td><%= tag_user_post.post %></td>
+        <td><%= link_to 'Show', tag_user_post %></td>
+        <td><%= link_to 'Edit', edit_tag_user_post_path(tag_user_post) %></td>
+        <td><%= link_to 'Destroy', tag_user_post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Tag User Post', new_tag_user_post_path %>
