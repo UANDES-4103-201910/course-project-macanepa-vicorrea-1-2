@@ -43,7 +43,11 @@ val01 = Validation.create(user:user03,post:post04,validation_type:1)
 val01 = Validation.create(user:user04,post:post04,validation_type:1)
 
 
+fp1=FollowPost.create(user:user01,post:post04)
+fp2=FollowPost.create(user:user01,post:post02)
 
+fp3=FollowPost.create(user:user04,post:post02)
+fp4=FollowPost.create(user:user02,post:post02)
 
 
 #Blacklist

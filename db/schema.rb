@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_12_035309) do
+ActiveRecord::Schema.define(version: 2019_04_12_131239) do
 
   create_table "admins", force: :cascade do |t|
     t.string "username"
@@ -56,6 +56,15 @@ ActiveRecord::Schema.define(version: 2019_04_12_035309) do
     t.index ["post_id"], name: "index_file_attachments_on_post_id"
   end
 
+  create_table "follow_posts", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_follow_posts_on_post_id"
+    t.index ["user_id"], name: "index_follow_posts_on_user_id"
+  end
+
   create_table "geofences", force: :cascade do |t|
     t.integer "admin_id"
     t.string "geofence"
@@ -94,6 +103,16 @@ ActiveRecord::Schema.define(version: 2019_04_12_035309) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "post_id"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_reports_on_post_id"
+    t.index ["user_id"], name: "index_reports_on_user_id"
   end
 
   create_table "suspension_lists", force: :cascade do |t|

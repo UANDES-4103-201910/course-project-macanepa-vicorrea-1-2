@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :follow_users
+  resources :follow_posts
+  resources :reports
   resources :validations
   resources :users
   resources :suspension_lists
