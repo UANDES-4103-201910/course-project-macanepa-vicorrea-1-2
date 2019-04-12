@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Geofences</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Admin</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @geofences.each do |geofence| %>
+      <tr>
+        <td><%= geofence.admin %></td>
+        <td><%= link_to 'Show', geofence %></td>
+        <td><%= link_to 'Edit', edit_geofence_path(geofence) %></td>
+        <td><%= link_to 'Destroy', geofence, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Geofence', new_geofence_path %>
