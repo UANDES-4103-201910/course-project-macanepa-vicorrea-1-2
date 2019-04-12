@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :block_lists
   resources :tag_user_comments
   resources :tag_usercomments
   resources :tag_user_posts
