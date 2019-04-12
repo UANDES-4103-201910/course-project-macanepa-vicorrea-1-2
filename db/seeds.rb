@@ -15,8 +15,8 @@ profile04 = Profile.create(user:user04, picture:"pic Joako",biography:"This is m
 
 
 #Admins
-admin01 = Admin.create(username:"admin_01",password:"123",email:"admin@miuandes.cl",admin_type:"admin",last_access:Time.now)
-admin02 = Admin.create(username:"admin_02",password:"123",email:"super_admin@miuandes.cl",admin_type:"super_admin",last_access:Time.now)
+admin01 = Admin.create(username:"admin_01",password:"123abcdef",email:"admin@miuandes.cl",admin_type:"admin",last_access:Time.now)
+admin02 = Admin.create(username:"admin_02",password:"123456789",email:"super_admin@miuandes.cl",admin_type:"super_admin",last_access:Time.now)
 
 
 #Posts
