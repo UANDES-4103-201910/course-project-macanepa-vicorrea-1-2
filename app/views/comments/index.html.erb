@@ -16,8 +16,8 @@
   <tbody>
     <% @comments.each do |comment| %>
       <tr>
-        <td><%= comment.user %></td>
-        <td><%= comment.post %></td>
+        <td><%= link_to comment.user.username, user_path(comment.user) %></td>
+        <td><%= link_to comment.post.title, post_path(comment.post) %></td>
         <td><%= comment.comment %></td>
         <td><%= comment.content %></td>
         <td><%= link_to 'Show', comment %></td>
@@ -31,3 +31,4 @@
 <br>
 
 <%= link_to 'New Comment', new_comment_path %>
+<%= link_to 'Back', root_path %>

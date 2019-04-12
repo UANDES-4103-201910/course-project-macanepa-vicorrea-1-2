@@ -2,12 +2,12 @@
 
 <p>
   <strong>User:</strong>
-  <%= @comment.user %>
+  <%= link_to 'View user', user_path(@comment.user) %>
 </p>
 
 <p>
   <strong>Post:</strong>
-  <%= @comment.post %>
+  <%= link_to 'View post', post_path(@comment.post) %>
 </p>
 
 <p>

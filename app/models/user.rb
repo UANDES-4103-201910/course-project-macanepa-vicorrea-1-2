@@ -6,4 +6,13 @@ class User < ApplicationRecord
   has_one :profile
   has_many :validations
 
+  after_update :last_access_not_future
+
+  private
+  def last_access_not_future
+    if DateTime.now < last_access
+      throw :abort
+    end
+  end
+
 end
