@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @suspension_list.user %>
+</p>
+
+<p>
+  <strong>Exit date:</strong>
+  <%= @suspension_list.exit_date %>
+</p>
+
+<%= link_to 'Edit', edit_suspension_list_path(@suspension_list) %> |
+<%= link_to 'Back', suspension_lists_path %>

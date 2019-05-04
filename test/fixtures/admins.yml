@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  geofence: MyString
+  super_admin: false
+
+two:
+  user: two
+  geofence: MyString
+  super_admin: false
