@@ -4,12 +4,19 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.all
+    @comments = Comment.where(post_id: params[:post_id])
+    respond_to do |format|
+      format.json {render json: @comments.to_json}
+    end
   end
 
   # GET /comments/1
   # GET /comments/1.json
   def show
+    @comment = Comment.where(id:params[:id], post_id: params[:post_id])
+    respond_to do |format|
+      format.json {render json: @comment.to_json}
+    end
   end
 
   # GET /comments/new

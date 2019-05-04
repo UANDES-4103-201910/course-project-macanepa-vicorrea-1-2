@@ -4,15 +4,17 @@ Rails.application.routes.draw do
   resources :shared_posts
   resources :validations
   resources :reports
-  resources :comments
   resources :dumpsters
-  resources :posts
   resources :block_lists
   resources :suspension_lists
   resources :blacklists
   resources :admins
   resources :profiles
-  resources :users
+  resources :users do
+    resources :posts do
+      resources :comments
+    end
+  end
   resources :home
   resources :login
 

@@ -4,12 +4,19 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    @post = Post.where(user_id: params[:user_id])
+    respond_to do |format|
+      format.json {render json: @post.to_json}
+    end
   end
 
   # GET /posts/1
   # GET /posts/1.json
   def show
+    @post = Post.where(id: params[:id],user_id: params[:user_id])
+    respond_to do |format|
+      format.json {render json: @post.to_json}
+    end
   end
 
   # GET /posts/new
