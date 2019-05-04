@@ -12,3 +12,10 @@
  * It is generally better to create a new file per style scope.
  *
  */
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
