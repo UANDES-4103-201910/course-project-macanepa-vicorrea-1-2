@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_04_153811) do
+ActiveRecord::Schema.define(version: 2019_05_04_163226) do
 
   create_table "admins", force: :cascade do |t|
     t.integer "user_id"
@@ -115,6 +115,17 @@ ActiveRecord::Schema.define(version: 2019_05_04_153811) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_suspension_lists_on_user_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "comment_id"
+    t.integer "post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comment_id"], name: "index_tags_on_comment_id"
+    t.index ["post_id"], name: "index_tags_on_post_id"
+    t.index ["user_id"], name: "index_tags_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
