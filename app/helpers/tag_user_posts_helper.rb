@@ -1,2 +1,0 @@
-module TagUserPostsHelper
-end
