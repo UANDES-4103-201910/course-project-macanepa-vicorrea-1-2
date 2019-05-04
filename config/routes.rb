@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :tags
   resources :follows
   resources :shared_posts
   resources :validations

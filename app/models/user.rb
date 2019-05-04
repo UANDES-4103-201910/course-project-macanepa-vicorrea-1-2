@@ -10,5 +10,5 @@ class User < ApplicationRecord
   has_many :reports
   has_many :shared_posts
   has_many :follows
-
+  has_many :tags
 end

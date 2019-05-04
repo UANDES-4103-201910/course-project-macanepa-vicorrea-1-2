@@ -6,4 +6,5 @@ class Post < ApplicationRecord
   has_many :reports
   has_many :validations
   has_many :follows
+  has_many :tags
 end
