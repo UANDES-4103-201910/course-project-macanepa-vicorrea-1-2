@@ -16,11 +16,12 @@ Rails.application.routes.draw do
     end
   end
   resources :home
-  resources :login
-
-
 
   root to: 'home#home'
-  get '/login', to: "login#index", as: "login_page"
+  get 'user_profile/view', as: 'user_profile_view'
+  get 'user_profile', to: 'user_profile#view'
+  get 'user_profile/modify', as: 'user_profile_modify'
+  get 'session/login', as: 'session_login'
+  get 'session/sign_up', as: 'session_sign_up'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

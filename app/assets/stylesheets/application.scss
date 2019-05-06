@@ -17,33 +17,9 @@
   position: fixed;
   bottom: 0;
   width: 100%;
-  text-align: center;
-
-
 }
 
-.login_container{
-
-  width: 30vw;
-
-  position: absolute;
-  top: 25vh;
-  left: 0;
-  right: 0;
-
-  margin: auto;
-  background: #F7F7F7;
-  border-style: solid;
-  border-width: medium;
-  border-color: cadetblue;
-  border-bottom-right-radius: 1vw;
-  border-bottom-left-radius: 1vw;
-}
-
-.login_head{
-  color: white;
-  text-align: center;
-  background: cadetblue;
-  font-size: xx-large;
-  font-weight: bold;
+.page-content {
+  margin-top: 90px;
+  margin-bottom: 70px
 }

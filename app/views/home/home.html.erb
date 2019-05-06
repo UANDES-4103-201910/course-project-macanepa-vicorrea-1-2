@@ -1,1 +1,264 @@
-<h2>Home Page</h2>
+
+<div id="includedContent"></div>
+
+<div class="mainbody container-fluid">
+  <div class="row">
+    <div class="Trending col-3">
+        <h4>Trending Post's</h4>
+        <div class="trending-container container-fluid container-default">
+          <div class="col">
+            <div class="card card-default">
+          <div class="card-body">
+              <div class="card-body-container row">
+                <div class="left-elements row m-2 pull-left">
+                  <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
+
+                  <div class="col">
+                    <a class="h4 text-primary mx-auto my-auto" href="#">Matías Cánepa</a>
+                    <a class="h4 text-secondary mx-auto my-auto" href="#">Post's Title</a>
+                  </div>
+                </div>
+
+                <div class="right-elements row m-2 pull-right">
+                  <i class="fa fa-angle-down mx-2 my-auto pull-left" aria-hidden="true"></i>
+                </div>
+
+              </div>
+
+          </div>
+
+        </div>
+            <div class="card card-default">
+          <div class="card-body">
+              <div class="card-body-container row">
+                <div class="left-elements row m-2 pull-left">
+                  <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
+
+                  <div class="col">
+                    <a class="h4 text-primary mx-auto my-auto" href="#">Matías Cánepa</a>
+<!--                    <a href="<%# view_post_page_path %>" class="h4 text-secondary mx-auto my-auto">Post's Title</a>-->
+                  </div>
+                </div>
+
+                <div class="right-elements row m-2 pull-right">
+                  <i class="fa fa-angle-down mx-2 my-auto pull-left" aria-hidden="true"></i>
+                </div>
+
+              </div>
+
+          </div>
+        </div>
+      </div>
+        </div>
+    </div>
+
+    <div class="col">
+
+
+      <div class="container-fluid">
+        <div class="text-primary h5">What Are You Thinking?</div>
+        <div class="create-post-container">
+          <div class="col">
+            <div class="card card-default h-100">
+
+
+              <div class="card-header">
+                <div class="card-heading-container row">
+                  <div class="left-elements row m-2">
+                    <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
+                    <a class="h4 text-primary mx-2 my-auto w-100" href="#">Matías Cánepa</a>
+                    <input type="text" class="form-control" id="title" placeholder="Post's Title" name="title">
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="card-body">
+                <textarea class="w-100 min-x" style="min-height: 130px; max-height: 250px;"></textarea>
+
+                <div class="bottom-actions pull-right">
+                  <button class="btn btn-primary mx-2 mt-3">Publish</button>
+                </div>
+
+
+
+
+              </div>
+
+            </div>
+            <hr>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="col">
+          <div class="card card-default">
+            <div class="card-header">
+              <div class="card-heading-container row">
+                <div class="left-elements row m-2 pull-left">
+                  <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
+                  <a class="h4 text-primary mx-2 my-auto" href="#">Matías Cánepa</a>
+<!--                  <a class="h4 text-secondary mx-2 my-auto" href="<%#view_profile_page_path %>">Post's Title</a>-->
+                </div>
+
+                <div class="right-elements row m-2 pull-right">
+                  <i class="fa fa-angle-down mx-2 my-auto pull-left" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="h4 text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>
+              <div class="h4 text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>
+              <div class="h4 text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>
+
+              <hr>
+              <div class="card-footer-container my-auto">
+                <div class="pull-right btn-group-xs">
+                  <a class="btn btn-default btn-xs"><i class="fa fa-angle-up" aria-hidden="true"></i> Like</a>
+                  <a class="btn btn-default btn-xs"><i class="fa fa-angle-down" aria-hidden="true"></i> Dislike</a>
+                  <a class="btn btn-default btn-xs"><i class="fa fa-retweet" aria-hidden="true"></i> Reshare</a>
+                  <a class="btn btn-default btn-xs" data-toggle="collapse" href="#collapseNewComment" role="button" aria-expanded="false" aria-controls="collapseComment"><i class="fa fa-comment" aria-hidden="true"></i> Comment</a>
+
+                </div>
+                <div class="pull-left ml-3 row">
+                  <div class="text-secondary mx-2 my-auto"> 5, May 2019</div>
+                  <a class="btn btn-link mx-2 my-auto" data-toggle="collapse" href="#collapseComment" role="button" aria-expanded="false" aria-controls="collapseComment">
+                    Display Comments
+                  </a>
+                </div>
+              </div>
+
+              <div style="height: 40px;"></div>
+
+              <div class="comment-container collapse" id="collapseNewComment">
+                <div class="new-comment-container row mx-1">
+                  <textarea class="w-100" style="max-height: 30px; min-height: 30px" placeholder="Enter comment"></textarea>
+                  <a class="btn btn-primary ml-2">Publish</a>
+                </div>
+              </div>
+              <div class="comment-container collapse" id="collapseComment">
+                <div class="comment-container my-3">
+                    <div class="card card-default">
+
+                      <div class="card-header">
+                        <div class="card-heading-container row">
+                          <div class="left-elements row m-2 pull-left">
+                            <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
+                            <a class="h4 text-primary mx-2 my-auto" href="#">Matías Cánepa</a>
+                          </div>
+
+                          <div class="right-elements row m-2 pull-right">
+                            <i class="fa fa-angle-down mx-2 my-auto pull-left" aria-hidden="true"></i>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="card-body mx-auto">
+                        <div class="h4 text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+
+            </div>
+
+          </div>
+          <hr>
+          <div class="card card-default">
+            <div class="card-heading">
+              <div class="card-heading-container row">
+                <div class="left-elements row m-2 pull-left">
+                  <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
+                  <a class="h4 text-primary mx-2 my-auto" href="#">Matías Cánepa</a>
+<!--                  <a class="h4 text-secondary mx-2 my-auto" href="<%#view_profile_page_path %>">Post's Title</a>-->
+                </div>
+
+                <div class="right-elements row m-2 pull-right">
+                  <i class="fa fa-angle-down mx-2 my-auto pull-left" aria-hidden="true"></i>
+                </div>
+
+              </div>
+
+            </div>
+
+
+
+            <div class="card-body">
+              <div class="h4 text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>
+              <div class="h4 text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>
+              <div class="h4 text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>
+
+              <hr>
+              <div class="card-footer-container my-auto">
+                <div class="pull-right btn-group-xs">
+                  <a class="btn btn-default btn-xs"><i class="fa fa-angle-up" aria-hidden="true"></i> Like</a>
+                  <a class="btn btn-default btn-xs"><i class="fa fa-angle-down" aria-hidden="true"></i> Dislike</a>
+                  <a class="btn btn-default btn-xs"><i class="fa fa-retweet" aria-hidden="true"></i> Reshare</a>
+                  <a class="btn btn-default btn-xs"><i class="fa fa-comment" aria-hidden="true"></i> Comment</a>
+                </div>
+                <div class="pull-left">
+                  <h5 class="text
+
+                  -secondary mx-2"> 5, May 2019</h5>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+          <hr>
+        </div>
+      </div>
+    </div>
+
+    <div class="Trending col-3">
+      <h4>Following Post's</h4>
+      <div class="col">
+        <div class="
+         card-default">
+          <div class="card-heading">
+            <div class="card-heading-container row">
+              <div class="left-elements row m-2 pull-left">
+                <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
+                <a class="h4 text-primary mx-2 my-auto" href="#">Matías Cánepa</a>
+                <a class="h4 text-secondary mx-2 my-auto" href="#">Post's Title</a>
+              </div>
+
+              <div class="right-elements row m-2 pull-right">
+                <i class="fa fa-angle-down mx-2 my-auto pull-left" aria-hidden="true"></i>
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="card-body">
+            <div class="h4 text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>
+            <div class="h4 text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>
+            <div class="h4 text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>
+
+            <hr>
+            <div class="card-footer-container my-auto">
+              <div class="pull-right btn-group-xs">
+                <a class="btn btn-default btn-xs"><i class="fa fa-angle-up" aria-hidden="true"></i> Like</a>
+                <a class="btn btn-default btn-xs"><i class="fa fa-angle-down" aria-hidden="true"></i> Dislike</a>
+                <a class="btn btn-default btn-xs"><i class="fa fa-retweet" aria-hidden="true"></i> Reshare</a>
+                <a class="btn btn-default btn-xs"><i class="fa fa-comment" aria-hidden="true"></i> Comment</a>
+              </div>
+              <div class="pull-left">
+                <h5 class="text-secondary mx-2"> 5, May 2019</h5>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <hr>
+      </div>
+    </div>
+
+  </div>
+</div>

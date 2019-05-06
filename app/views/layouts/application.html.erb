@@ -10,8 +10,8 @@
   </head>
 
   <body>
-  <nav class="navbar navbar-expand-lg bg-light justify-content-between">
-    <a class="navbar-brand" href="http://localhost:3000">
+  <nav class="navbar navbar-expand-lg bg-light justify-content-between fixed-top">
+    <a class="navbar-brand" href="">
       AngryLusho
     </a>
     <form class="form-inline">
@@ -20,27 +20,29 @@
     </form>
     <div class="nav-item">
       <form class="form-inline">
-        <button class="btn btn-outline-dark" type="submit">Admin</button>
+        <a href="admins" class="btn btn-outline-dark" role="button">Admin</a>
         <div class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" style="border-radius: 100%">
           </a>
           <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="http://localhost:3000/profiles">View profile</a>
+            <a class="dropdown-item" href="/profiles">View profile</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="http://localhost:3000">Log out</a>
+            <a class="dropdown-item" href="">Log out</a>
           </div>
         </div>
       </form>
     </div>
     <div class="nav-item">
       <form class="form-inline">
-        <button class="btn btn-outline-primary mr-sm-2" type='button' onclick="location.href='<%= login_page_path %>';">Login</button>
-        <button class="btn btn-outline-primary" type="submit">Sign Up</button>
+        <a href="/login" class="btn btn-outline-primary mr-sm-2" role="button">Login</a>
+        <a href="/sign_up" class="btn btn-outline-primary" role="button">Sign Up</a>
       </form>
     </div>
   </nav>
+  <div class="page-content">
     <%= yield %>
+    </div>
   <footer class="footer">
     <nav class="navbar navbar-expand-lg bg-light justify-content-end">
       <div class="nav-item">
