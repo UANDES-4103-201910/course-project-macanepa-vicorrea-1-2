@@ -1,6 +1,4 @@
 
-<div id="includedContent"></div>
-
 <div class="mainbody container-fluid">
   <div class="row">
     <div class="Trending col-3">
@@ -135,53 +133,32 @@
                 </div>
               </div>
               <div class="comment-container collapse" id="collapseComment">
-                <div class="comment-container my-3">
-                    <div class="card card-default">
 
-                      <div class="card-header">
-                        <div class="card-heading-container row">
-                          <div class="left-elements row m-2 pull-left">
-                            <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
-                            <a class="p text-primary mx-2 my-auto" href="#">Matías Cánepa</a>
+                <%= @comments.each do |comment| %>
+                  <%= comment_user = User.find(comment.user_id) %>
+                  <div class="comment-container my-3">
+                      <div class="card card-default">
+
+                        <div class="card-header">
+                          <div class="card-heading-container row">
+                            <div class="left-elements row m-2 pull-left">
+                              <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
+                              <a class="p text-primary mx-2 my-auto" href="#"><%= comment_user.name %> <%= comment_user.last_name %></a>
+                            </div>
+
+                            <div class="right-elements row m-2 pull-right">
+                              <i class="fa fa-angle-down mx-2 my-auto pull-left" aria-hidden="true"></i>
+                            </div>
                           </div>
-
-                          <div class="right-elements row m-2 pull-right">
-                            <i class="fa fa-angle-down mx-2 my-auto pull-left" aria-hidden="true"></i>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="card-body mx-auto">
-                        <div class="p text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-2"></div>
-                      <div class="col-10 mt-2">
-                        <div class="card card-default">
-
-                    <div class="card-header">
-                      <div class="card-heading-container row">
-                        <div class="left-elements row m-2 pull-left">
-                          <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
-                          <a class="p text-primary mx-2 my-auto" href="#">Matías Cánepa</a>
                         </div>
 
-                        <div class="right-elements row m-2 pull-right">
-                          <i class="fa fa-angle-down mx-2 my-auto pull-left" aria-hidden="true"></i>
+                        <div class="card-body mx-auto">
+                          <div class="p text-secondary"><%= comment.content %></div>
                         </div>
                       </div>
-                    </div>
-
-                    <div class="card-body mx-auto">
-                      <div class="p text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>
-                    </div>
                   </div>
-                      </div>
-                    </div>
-                </div>
-                <hr>
+                <% end %>
+
               </div>
 
             </div>
