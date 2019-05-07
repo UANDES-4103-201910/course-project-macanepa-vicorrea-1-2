@@ -1,4 +1,6 @@
 
+
+
 <div class="mainbody container-fluid">
   <div class="row">
     <div class="Trending col-3">
@@ -83,15 +85,17 @@
           </div>
         </div>
       </div>
-      <div class="container-fluid">
+
+      <% @posts.each do |post| %>
+        <div class="container-fluid">
         <div class="col">
           <div class="card card-default">
             <div class="card-header">
               <div class="card-heading-container row">
                 <div class="left-elements row m-2 pull-left">
                   <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
-                  <a class="p text-primary my-auto" href="<%= user_profile_view_path %>">Matías Cánepa</a>
-                  <p class="p text-secondary my-auto ml-4">Post's Title</p>
+                  <a class="p text-primary my-auto" href="<%= user_profile_view_path %>"><%=post.user.name %> <%=post.user.last_name %></a>
+                  <p class="p text-secondary my-auto ml-4"><%=post.title %></p>
                 </div>
 
                 <div class="right-elements row m-2 pull-right">
@@ -101,10 +105,7 @@
             </div>
 
             <div class="card-body">
-              <div class="p text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>
-              <div class="p text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>
-              <div class="p text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>
-
+              <div class="p text-secondary"><%=post.content%></div>
               <hr>
 
               <div class="form-inline card-footer-container my-auto">
@@ -133,9 +134,10 @@
                 </div>
               </div>
               <div class="comment-container collapse" id="collapseComment">
-
-                <%= @comments.each do |comment| %>
-                  <%= comment_user = User.find(comment.user_id) %>
+                <div class="h3 text-primary">Comments</div>
+                <% @comments.each do |comment| %>
+                  <hr>
+                  <% comment_user = User.find(comment.user_id) %>
                   <div class="comment-container my-3">
                       <div class="card card-default">
 
@@ -152,11 +154,35 @@
                           </div>
                         </div>
 
-                        <div class="card-body mx-auto">
+                        <div class="card-body">
                           <div class="p text-secondary"><%= comment.content %></div>
                         </div>
                       </div>
                   </div>
+                  <div class="reply-container my-2">
+                    <% this_replies = @replies.where(comment_id: comment.id) %>
+                    <% this_replies.each do |reply| %>
+
+
+                      <div class="row">
+
+                        <div class="col-2"></div>
+                        <div class="col-10 mt-2">
+                          <div class="card card-default">
+                            <div class="card-body">
+                              <span>
+                                <div class="p text-secondary"><span class="btn btn-link text-primary"><%= reply.user.name %> <%= reply.user.last_name %></span>replying to<span class="btn btn-link text-primary"><%= comment.user.name %> <%= comment.user.last_name %></span>:<%= reply.content %></div>
+<!--                                <div class="p text-primary"><%#= reply.user.name %> <%#= reply.user.last_name %></div>                              <div class="p text-secondary">  replying to </div>                              <div class="p text-primary"> <%#= comment.user.name %> <%#= comment.user.last_name %></div>                    <div class="p text-secondary"><%#= reply.content %></div>-->
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                  <% end %>
+                  </div>
+
+
                 <% end %>
 
               </div>
@@ -167,6 +193,7 @@
           <hr>
         </div>
       </div>
+      <%end %>
     </div>
 
     <div class="Trending col-3">
