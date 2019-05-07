@@ -7,14 +7,14 @@
       <div class="card card-default">
         <div class="card-body justify-content-center">
           <img class="thumbnail img-responsive" src="https://lut.im/7JCpw12uUT/mY0Mb78SvSIcjvkf.png" width="100vw" height="100vw">
-          <h3>Matías Cánepa</h3>
+          <h3><%= @user.name %> <%= @user.last_name %></h3>
           <a class="text-primary" href="<%=user_profile_modify_path %>">Edit Profile</a>
           <hr>
-          <h4>Bio</h4>
-          <div class="p text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>
+          <h4>Biography</h4>
+          <div class="p text-secondary"><%= @user_profile.biography %></div>
           <hr>
           <h4>Location</h4>
-          <div class="p text-secondary"> Santiago, Chile</div>
+          <div class="p text-secondary"><%= @user_profile.city %>, <%= @user_profile.country %></div>
 
         </div>
       </div>
@@ -29,14 +29,14 @@
         <div class="card-header">
           <div class="row my-auto">
             <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
-            <a class="p text-primary mx-2 my-auto" href="#">Matías Cánepa</a>
-            <div class="p text-secondary mx-2 my-auto">Post's Title</div>
+            <a class="p text-primary mx-2 my-auto" href="#"><%= @user.name %> <%= @user.last_name %></a>
+            <div class="p text-secondary mx-2 my-auto"><%= @user_posts.title %></div>
           </div>
         </div>
         <div class="card-body">
-          <div class="p text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>
-          <div class="p text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>
-          <div class="p text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>
+          <div class="p text-secondary"><%= @user_posts.content %></div>
+<!--          <div class="p text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>-->
+<!--          <div class="p text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>-->
 
           <hr>
           <div class="card-footer-container my-auto">
