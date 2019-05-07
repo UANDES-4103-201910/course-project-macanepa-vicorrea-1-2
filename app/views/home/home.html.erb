@@ -3,51 +3,58 @@
 
 <div class="mainbody container-fluid">
   <div class="row">
-
-    <div class="Trending col-3">
-      <h4>Following Post's</h4>
-      <div class="col">
-        <div class="
-         card-default">
-          <div class="card-header">
-            <div class="card-heading-container row">
-              <div class="left-elements row m-2 pull-left">
-                <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
-                <a class="p text-primary mx-2 my-auto" href="#">Matías Cánepa</a>
-                <a class="p text-secondary mx-2 my-auto" href="#">Post's Title</a>
-              </div>
-
-              <div class="right-elements row m-2 pull-right">
-                <i class="fa fa-angle-down mx-2 my-auto pull-left" aria-hidden="true"></i>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="p text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>
-
+    <div class="Following-Posts col-4">
+      <div class="h5 text-primary">Following</div>
+      <% @posts.each do |post| %>
+        <div class="container-fluid">
+          <div class="col">
             <hr>
-            <div class="card-footer-container my-auto">
-              <div class="pull-right btn-group-xs">
-                <a class="btn btn-default btn-xs"><i class="fa fa-angle-up" aria-hidden="true"></i> Like</a>
-                <a class="btn btn-default btn-xs"><i class="fa fa-angle-down" aria-hidden="true"></i> Dislike</a>
-                <a class="btn btn-default btn-xs"><i class="fa fa-retweet" aria-hidden="true"></i> Reshare</a>
-                <a class="btn btn-default btn-xs"><i class="fa fa-comment" aria-hidden="true"></i> Comment</a>
+            <div class="card card-default">
+              <div class="card-header">
+                <div class="card-heading-container">
+                  <div class="row justify-content-between">
+                    <div class="form-inline">
+                      <a class="p small text-primary my-auto" href="<%= user_profile_view_path %>"><%=post.user.name %> <%=post.user.last_name %></a>
+                      <p class="p small text-secondary my-auto ml-3"><%=post.title %></p>
+                    </div>
+
+                    <!--                  <i class="fa fa-angle-down mx-2 my-auto pull-left" aria-hidden="true"></i>-->
+
+                    <div class="dropdown">
+                      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Unfollow Post</a>
+                        <hr>
+                        <a class="dropdown-item" href="#">Edit</a>
+                        <a class="dropdown-item" href="#">Delete</a>
+                        <hr>
+                        <a class="dropdown-item" href="#">Report</a>
+                      </div>
+                    </div>
+
+
+                  </div>
+                </div>
               </div>
-              <div class="pull-left">
-                <p class="text-secondary mx-2"> 5, May 2019</p>
+              <div class="card-body">
+                <div class="p text-secondary"><%=post.content%></div>
+                <hr>
+
+                <div class="text-secondary mx-2 my-auto small"><%=post.created_at %> </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      <%end %>
     </div>
 
 
-    <div class="col-7">
+    <div class="Main-Posts col-7">
       <div class="container-fluid">
         <div class="text-primary h5">What are you thinking?</div>
         <div class="create-post-container">
           <div class="col">
+            <hr>
             <div class="card card-default h-100">
               <div class="card-header">
                 <div class="card-heading-container row">
