@@ -26,8 +26,13 @@
             <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" style="border-radius: 100%">
           </a>
           <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="<%= user_profile_view_path %>">View profile</a>
+            <div class="dropdown-item">
+              <h6>Juan y To<br>
+                <small>juanito@miuandes.cl</small>
+              </h6>
+            </div>
             <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="<%= user_profile_view_path %>">View profile</a>
             <a class="dropdown-item" href="/">Log out</a>
           </div>
         </div>
@@ -35,7 +40,7 @@
     </div>
     <div class="nav-item">
       <form class="form-inline">
-        <a href="<%= session_login_path %>" class="btn btn-outline-primary mr-sm-2" role="button">Login</a>
+        <a href="<%= session_login_path %>" class="btn btn-outline-primary mr-sm-2" role="button">Log in</a>
         <a href="<%= session_sign_up_path %>" class="btn btn-outline-primary" role="button">Sign Up</a>
       </form>
     </div>
