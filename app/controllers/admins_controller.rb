@@ -4,7 +4,13 @@ class AdminsController < ApplicationController
   # ---------------------
 
   def view
-
+    @users = User.all
+    @posts = (User.joins(:posts)).pluck(:email, :title, :content, :city, :country, :gps_location, :created_at)
+    @blacklist_users = (User.joins(:blacklist)).pluck(:email, :created_at, :exit_date)
+    @dumpster_posts = (Post.joins(:dumpster)).pluck(:title, :created_at, :exit_date)
+    @admins = (Admin.joins(:user)).pluck(:email, :geofence, :super_admin, :created_at)
+    @suspension_list_users = (User.joins(:suspension_list)).pluck(:email, :created_at, :exit_date)
+    @block_list_users = (User.joins(:block_list)).pluck(:email, :created_at, :exit_date)
   end
 
   # ---------------------
