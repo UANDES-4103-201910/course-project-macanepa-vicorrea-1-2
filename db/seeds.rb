@@ -24,7 +24,7 @@ comment02 = Comment.create(post_id:post01.id,user_id:user02.id,content:"Bieeeeen
 comment03 = Comment.create(comment_id:comment01.id,user_id:user02.id,content:"Wena Mati walalala walalala walalala")
 comment04 = Comment.create(comment_id:comment01.id,user_id:user02.id,content:"Wena Matu jejejejeee qwiwiwiiwiwwiw")
 comment05 = Comment.create(comment_id:comment01.id,user_id:user02.id,content:"Yes Yes")
-comment06 = Comment.create(comment_id:comment04.id,user_id:user01.id,content:"Respuesta a Wena Matu")
+comment06 = Comment.create(post_id:post02.id,user_id:user01.id,content:"Respuesta a Wena Matu")
 comment07 = Comment.create(comment_id:comment06.id,user_id:user01.id,content:"Respuesta a Respuesta a Wena Matu")
 
 val01 = Validation.create(user_id:user01.id,post_id:post01.id,validation_type:'like')
