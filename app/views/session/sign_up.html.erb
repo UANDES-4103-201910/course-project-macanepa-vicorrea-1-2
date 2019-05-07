@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="my_session.js"></script>
+  <script type = "text/javascript" src = "js_session.js" ></script>
 </head>
 
 <body>
   <div class="container col-md-6">
     <ul class="nav nav-pills" role="tablist">
       <li class="nav-item">
-        <a class="nav-link active" data-toggle="pill" href="#create-account-nav">Step 1</a>
+        <a id="tab-step-1" class="nav-link active disabled" data-toggle="pill" href="#create-account-nav">Step 1</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-toggle="pill" href="#create-profile-nav">Step 2</a>
+        <a id="tab-step-2" class="nav-link disabled" data-toggle="pill" href="#create-profile-nav">Step 2</a>
       </li>
     </ul>
 
@@ -38,7 +38,7 @@
                 <label for="user-password">Password:</label>
                 <input type="password" class="form-control" id="user-password" name="user-password">
               </div>
-              <button id="next-button" class="btn btn-outline-primary next-button" type="submit" style="float:right">Next</button>
+              <button id="next-button" onclick="goToCreateProfile()" class="btn btn-outline-primary next-button" type="submit" style="float:right">Next</button>
 <!--            </form>-->
           </div>
         </div>
