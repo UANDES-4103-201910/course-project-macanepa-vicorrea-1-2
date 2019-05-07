@@ -19,13 +19,9 @@ post02 = Post.create(user_id:2,title:"I'm very happy!",content:"ARGGG!")
 
 
 #Comments
-comment01 = Comment.create(post_id:post01.id,user_id:user01.id,content:"You right my boi!")
-comment02 = Comment.create(post_id:post01.id,user_id:user02.id,content:"Bieeeeen")
-comment03 = Comment.create(comment_id:comment01.id,user_id:user02.id,content:"Wena Mati walalala walalala walalala")
-comment04 = Comment.create(comment_id:comment01.id,user_id:user02.id,content:"Wena Matu jejejejeee qwiwiwiiwiwwiw")
-comment05 = Comment.create(comment_id:comment01.id,user_id:user02.id,content:"Yes Yes")
-comment06 = Comment.create(post_id:post02.id,user_id:user01.id,content:"Respuesta a Wena Matu")
-comment07 = Comment.create(comment_id:comment06.id,user_id:user01.id,content:"Respuesta a Respuesta a Wena Matu")
+comment01 = Comment.create!(post_id:post01.id, comment_id:nil, user_id:user01.id,content:"U wrong bro.")
+comment02 = Comment.create!(post_id:post01.id, comment_id:comment01.id, user_id:user02.id,content:"Y tho...")
+
 
 val01 = Validation.create(user_id:user01.id,post_id:post01.id,validation_type:'like')
 
