@@ -20,7 +20,7 @@
             <!--                  <i class="fa fa-angle-down mx-2 my-auto pull-left" aria-hidden="true"></i>-->
 
             <div class="dropdown">
-              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+              <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="#">Follow Post</a>
                 <hr>
@@ -49,8 +49,8 @@
           </div>
 
           <div class="pull-right btn-group-xs">
-            <a class="btn btn-default btn-xs"><i class="fa fa-angle-up" aria-hidden="true"></i> Like</a>
-            <a class="btn btn-default btn-xs"><i class="fa fa-angle-down" aria-hidden="true"></i> Dislike</a>
+            <a class="btn btn-default btn-xs"><i class="fa fa-thumbs-up" aria-hidden="true"> </i> Like</a>
+            <a class="btn btn-default btn-xs"><i class="fa fa-thumbs-down" aria-hidden="true"></i> Dislike</a>
             <a class="btn btn-default btn-xs"><i class="fa fa-retweet" aria-hidden="true"></i> Reshare</a>
             <a class="btn btn-default btn-xs" data-toggle="collapse" href="#collapseNewComment-<%=post.id %>" role="button" aria-expanded="false" aria-controls="collapseComment"><i class="fa fa-comment" aria-hidden="true"></i> Comment</a>
           </div>
@@ -78,7 +78,7 @@
                   <div class="card-heading-container row">
                     <div class="left-elements row m-2 pull-left">
                       <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
-                      <a class="p text-primary mx-2 my-auto" href="<%= user_profile_view_path %>"><%= comment_user.name %> <%= comment_user.last_name %></a>
+                      <a class="p text-primary mx-2 my-auto" href="<%= user_profile_view_path(user_id:comment_user.id) %>"><%= comment_user.name %> <%= comment_user.last_name %></a>
                     </div>
 
                     <div class="right-elements row m-2 pull-right">
@@ -103,7 +103,7 @@
                         <div class="form-inline">
                           <div class="p text-secondary">
                             <a class="btn btn-link text-primary" href=<%=user_profile_view_path(user_id:reply.user.id) %>><%= reply.user.name %> <%= reply.user.last_name %></a>
-                            replying to WIWI
+                            replying to
                             <a class="btn btn-link text-primary" href=<%=user_profile_view_path(user_id:comment.user.id) %>><%= comment.user.name %> <%= comment.user.last_name %></a>
                             <%= reply.content %></div>
                         </div>

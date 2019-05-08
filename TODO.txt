@@ -1,0 +1,3 @@
+TODO: Arreglar Recent Activity [profile_view] (esta mostrando mas elementos de los que existen)
+TODO: Arreglar Following Posts [home] (esta mostrando todos los posts, solo debe mostrar los que el usuario esta siguiendo
+TODO: Don't show anywhere posts contained in dumpster
