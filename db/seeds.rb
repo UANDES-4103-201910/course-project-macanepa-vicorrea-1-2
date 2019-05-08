@@ -7,7 +7,7 @@ user02 = User.create(name:"Vicente",last_name:"Correa",email:"vicorrea@miuandes.
 
 #Profiles
 profile01 = Profile.create(user_id:user01.id,image:"pic Mati",biography:"This is my Bio!",country:"Chile",city:"Santiago")
-profile02 = Profile.create(user_id:user02.id,image:"La foto del Vin",biography:"Removes the default list-style and left margin on list items (works on both <ul> and <ol>). This class only applies to immediate children list items (to remove the default list-style from any nested lists, apply this class to any nested lists as well)",country:"Italia",city:"Venecia")
+profile02 = Profile.create(user_id:user02.id,image:"La foto del Vin",biography:"Perro Zorron, amante de la piscola y sus wenas pinchangas papito. \n-4P",country:"Italia",city:"Venecia")
 
 #Admins
 admin01 = Admin.create(user_id:user01.id,super_admin:true,geofence:nil)
@@ -24,6 +24,12 @@ comment02 = Comment.create!(post_id:post01.id, comment_id:comment01.id, user_id:
 
 
 val01 = Validation.create(user_id:user01.id,post_id:post01.id,validation_type:'like')
+val02 = Validation.create(user_id:user01.id,post_id:post02.id,validation_type:'dislike')
+
+sh01 = SharedPost.create!(user_id:user01.id, post_id:post02.id)
+sh02 = SharedPost.create!(user_id:user01.id, post_id:post01.id)
+
+sh03 = SharedPost.create!(user_id:user02.id, post_id:post01.id)
 
 fp1=Follow.create(user_id:user01.id,post_id:post01.id)
 

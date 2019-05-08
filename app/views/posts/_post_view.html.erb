@@ -1,0 +1,121 @@
+<%
+@comments = Comment.where(comment_id: nil)
+@replies = Comment.where.not(comment_id: nil)
+%>
+
+<div class="container-fluid">
+  <div class="col">
+    <hr>
+    <div class="card card-default">
+      <div class="card-header">
+        <div class="card-heading-container">
+
+          <div class="row justify-content-between">
+            <div class="form-inline">
+              <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
+              <a class="p text-primary my-auto" href="<%= user_profile_view_path(user_id:post.id) %>"><%=post.user.name %> <%=post.user.last_name %></a>
+              <p class="p text-secondary my-auto ml-4"><%=post.title %></p>
+            </div>
+
+            <!--                  <i class="fa fa-angle-down mx-2 my-auto pull-left" aria-hidden="true"></i>-->
+
+            <div class="dropdown">
+              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Follow Post</a>
+                <hr>
+                <a class="dropdown-item" href="#">Edit</a>
+                <a class="dropdown-item" href="#">Delete</a>
+                <hr>
+                <a class="dropdown-item" href="#">Report</a>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="p text-secondary"><%=post.content%></div>
+        <hr>
+
+        <div class="text-secondary mx-2 my-auto small"><%=post.created_at %> </div>
+        <div class="form-inline card-footer-container my-auto">
+          <div class="pull-left ml-3 row">
+            <a class="btn btn-link mx-2 my-auto btn-xs" data-toggle="collapse" href="#collapseComment-<%=post.id %>" role="button" aria-expanded="false" aria-controls="collapseComment">
+              Display Comments
+            </a>
+          </div>
+
+          <div class="pull-right btn-group-xs">
+            <a class="btn btn-default btn-xs"><i class="fa fa-angle-up" aria-hidden="true"></i> Like</a>
+            <a class="btn btn-default btn-xs"><i class="fa fa-angle-down" aria-hidden="true"></i> Dislike</a>
+            <a class="btn btn-default btn-xs"><i class="fa fa-retweet" aria-hidden="true"></i> Reshare</a>
+            <a class="btn btn-default btn-xs" data-toggle="collapse" href="#collapseNewComment-<%=post.id %>" role="button" aria-expanded="false" aria-controls="collapseComment"><i class="fa fa-comment" aria-hidden="true"></i> Comment</a>
+          </div>
+
+        </div>
+
+        <div style="height: 40px;"></div>
+
+        <div class="comment-container collapse" id="collapseNewComment-<%=post.id %>">
+          <div class="new-comment-container row mx-1">
+            <textarea class="w-100" style="max-height: 30px; min-height: 30px" placeholder="Enter comment"></textarea>
+            <a class="btn btn-primary ml-2">Publish</a>
+          </div>
+        </div>
+        <div class="comment-container collapse" id="collapseComment-<%=post.id %>">
+          <div class="h5 text-primary">Comments</div>
+          <% this_post_comments = @comments.where(post_id:post.id) %>
+          <% this_post_comments.each do |comment| %>
+            <hr>
+            <% comment_user = User.find(comment.user_id) %>
+            <div class="comment-container my-3">
+              <div class="card card-default">
+
+                <div class="card-header">
+                  <div class="card-heading-container row">
+                    <div class="left-elements row m-2 pull-left">
+                      <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
+                      <a class="p text-primary mx-2 my-auto" href="<%= user_profile_view_path %>"><%= comment_user.name %> <%= comment_user.last_name %></a>
+                    </div>
+
+                    <div class="right-elements row m-2 pull-right">
+                      <i class="fa fa-angle-down mx-2 my-auto pull-left" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  <div class="p text-secondary"><%= comment.content %></div>
+                </div>
+              </div>
+            </div>
+            <div class="reply-container my-2">
+              <% this_replies = @replies.where(comment_id: comment.id) %>
+              <% this_replies.each do |reply| %>
+                <div class="row">
+                  <div class="col-2"></div>
+                  <div class="col-10 mt-2">
+                    <div class="card card-default">
+                      <div class="card-body">
+                        <div class="form-inline">
+                          <div class="p text-secondary">
+                            <a class="btn btn-link text-primary" href=<%=user_profile_view_path(user_id:reply.user.id) %>><%= reply.user.name %> <%= reply.user.last_name %></a>
+                            replying to WIWI
+                            <a class="btn btn-link text-primary" href=<%=user_profile_view_path(user_id:comment.user.id) %>><%= comment.user.name %> <%= comment.user.last_name %></a>
+                            <%= reply.content %></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

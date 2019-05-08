@@ -7,7 +7,7 @@
       <div class="card card-default">
         <div class="card-body justify-content-center">
           <img class="thumbnail img-responsive" src="https://lut.im/7JCpw12uUT/mY0Mb78SvSIcjvkf.png" width="100vw" height="100vw">
-          <h3><%= @user.name %> <%= @user.last_name %></h3>
+          <h3><%= @user_profile.user.name %> <%= @user_profile.user.last_name %></h3>
           <a class="text-primary" href="<%=user_profile_modify_path %>">Edit Profile</a>
           <hr>
           <h4>Biography</h4>
@@ -25,76 +25,91 @@
     <div class="col">
       <h2>Recent Posts</h2><hr>
       <!-- Simple post content example. -->
-      <div class="card card-default">
-        <div class="card-header">
-          <div class="row my-auto">
-            <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
-            <a class="p text-primary mx-2 my-auto" href="#"><%= @user.name %> <%= @user.last_name %></a>
-            <div class="p text-secondary mx-2 my-auto"><%= @user_posts.title %></div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="p text-secondary"><%= @user_posts.content %></div>
-<!--          <div class="p text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>-->
-<!--          <div class="p text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>-->
-
-          <hr>
-          <div class="card-footer-container my-auto">
-            <div class="pull-right btn-group-xs">
-              <a class="btn btn-default btn-xs"><i class="fa fa-angle-up" aria-hidden="true"></i> Like</a>
-              <a class="btn btn-default btn-xs"><i class="fa fa-angle-down" aria-hidden="true"></i> Dislike</a>
-              <a class="btn btn-default btn-xs"><i class="fa fa-retweet" aria-hidden="true"></i> Reshare</a>
-              <a class="btn btn-default btn-xs"><i class="fa fa-comment" aria-hidden="true"></i> Comment</a>
-            </div>
-            <div class="pull-left">
-              <h5 class="text-secondary mx-2"> 5, May 2019</h5>
-            </div>
-          </div>
-
-        </div>
-
-        </nav>
-
-      </div>
+      <% @user_profile.user.posts.each do |post| %>
+        <%= render "posts/post_view", post: post %>
+      <% end %>
 
     </div>
-    <div class="col-3">
+
+<!--    Recent Activity-->
+    <div class="col-4">
       <h2>Recent Activity</h2><hr>
-      <!-- Simple post content example. -->
-      <div class="card card-default">
-        <div class="card-header">
-          <div class="row my-auto">
-            <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
-            <a class="p text-primary mx-2 my-auto" href="#">Matías Cánepa</a>
-            <div class="p text-secondary mx-2 my-auto">Post's Title</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="p text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>
-          <div class="p text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>
-          <div class="p text-secondary"> Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post! Hello World! This is my Post!</div>
+      <div class="Following-Posts">
+        <% @vals.each do |action| %>
+          <div class="container-fluid">
+            <div class="col">
+              <div class="card card-default mt-1">
+                <div class="card-header">
+                  <div class="card-heading-container">
+                    <div class="row justify-content-between">
 
-          <hr>
-          <div class="card-footer-container my-auto">
-            <div class="pull-right btn-group-xs">
-              <a class="btn btn-default btn-xs"><i class="fa fa-angle-up" aria-hidden="true"></i> Like</a>
-              <a class="btn btn-default btn-xs"><i class="fa fa-angle-down" aria-hidden="true"></i> Dislike</a>
-              <a class="btn btn-default btn-xs"><i class="fa fa-retweet" aria-hidden="true"></i> Reshare</a>
-              <a class="btn btn-default btn-xs"><i class="fa fa-comment" aria-hidden="true"></i> Comment</a>
+                      <div class="meta col-10">
+                        <div class="form-inline">
+
+                          <%
+                            content = ""
+                            if(action.is_a?(Validation))
+                              content = action.validation_type+"d"
+                            else
+                              content = "shared"
+                            end
+                          %>
+
+                          <a class="p small text-primary my-auto mx-2" href="<%= user_profile_view_path(user_id:@user_profile.user.id) %>"><%= @user_profile.user.name %> <%= @user_profile.user.last_name %></a>
+                          <p class="p small text-secondary my-auto mx-1"><%=content%></p>
+                          <a class="p small text-secondary my-auto mx-1" href="#"><%= action.post.title %></a>
+                          <br><p class="p small text-secondary mx-2"><%= action.updated_at %></p>
+                        </div>
+                      </div>
+                      <!--                  <i class="fa fa-angle-down mx-2 my-auto pull-left" aria-hidden="true"></i>-->
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="pull-left">
-              <h5 class="text-secondary mx-2"> 5, May 2019</h5>
-            </div>
           </div>
-
-        </div>
-
-        </nav>
-
+        <%end %>
       </div>
 
     </div>
   </div>
 </div>
+
+
+<div class="container">
+  <h2>Large Modal</h2>
+  <!-- Button to Open the Modal -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    Open modal
+  </button>
+
+  <!-- The Modal -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          Modal body..
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
 </body>
 </html>
