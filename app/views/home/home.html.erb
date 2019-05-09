@@ -4,6 +4,7 @@
     <div class="Following-Posts col-4">
       <div class="h5 text-primary mx-auto">Following</div>
       <hr>
+      <% if(!@user.nil?) %>
       <% @following_posts.each do |post| %>
         <div class="container-fluid">
           <div class="col">
@@ -40,6 +41,7 @@
           </div>
         </div>
       <%end %>
+      <% end %>
     </div>
 
 
