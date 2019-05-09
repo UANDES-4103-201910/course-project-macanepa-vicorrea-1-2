@@ -1,7 +1,8 @@
 
 <div class="mainbody container-fluid">
   <div class="row">
-    <div class="Following-Posts col-4">
+  <div class="Following-Posts col-4">
+    <% if $user_type != 3 %>
       <div class="h5 text-primary mx-auto">Following</div>
       <hr>
       <% if(!@user.nil?) %>
@@ -42,16 +43,17 @@
         </div>
       <%end %>
       <% end %>
-    </div>
-
+      <% end %>
+  </div>
 
     <div class="Main-Posts col-7">
+      <% if $user_type != 3 %>
       <div class="container-fluid">
         <div class="text-primary h5">What are you thinking?</div>
+            <hr>
         <div class="create-post-container">
           <div class="col">
-            <hr>
-            <div class="card card-default h-100">
+          <div class="card card-default h-100">
               <div class="card-header">
                 <div class="card-heading-container row">
                   <div class="form-inline row m-2 w-100">
@@ -78,6 +80,7 @@
           </div>
         </div>
       </div>
+        <% end %>
       <% @posts.each do |post| %>
         <%= render "posts/post_view", post:post %>
       <%end %>

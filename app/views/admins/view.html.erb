@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script type = "text/javascript" src = "js_admin.js" ></script>
+</head>
+
+<body>
+
 <div class="container-fluid">
   <!-- Nav pills -->
   <div class="row">
@@ -59,17 +67,13 @@
               <td><%= admin[1] %></td>
               <td><%= admin[2] %></td>
               <td><%= admin[3] %></td>
-              <td><button class="btn btn-info fas fa-edit"></button></td>
+              <td><button class="btn btn-info fas fa-edit" data-toggle="modal" data-target="#edit-admin-modal"></button></td>
               <td><button class="btn btn-danger fas fa-trash-alt"></button></td>
             </tr>
             <% end %>
             </tbody>
           </table>
         </div>
-        <!--        <div id="create-admin" class="container tab-pane fade">-->
-        <!--          <h3>Create administrator</h3>-->
-
-        <!--        </div>-->
         <div id="manage-users" class="container tab-pane fade">
           <h3>Manage users</h3>
           <table class="table table-bordered table-hover">
@@ -179,7 +183,10 @@
                 <td><%= d_post[1] %></td>
                 <td><%= d_post[2] %></td>
                 <td><%= d_post[3] %></td>
-                <td><button class="btn btn-dark fas fa-sign-out-alt"></button></td>
+                <td><button class="btn btn-dark fas fa-sign-out-alt" data-toggle="modal"
+                            data-target="#remove-from-dumpster-modal" data-btn-type="remove-from-dumpster"
+                            data-dumpster-title="<%= d_post[0] %>" data-dumpster-owner="<%= d_post[1] %>">
+                </button></td>
               </tr>
             <% end %>
             </tbody>
@@ -237,3 +244,24 @@
     </div>
   </div>
 </div>
+
+<div class="modal" id="remove-from-dumpster-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Remove user from dumpster</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body" id="remove-from-dumpster-modal-body">
+        <p>Are you sure that you want to remove the post <b id="dump-title"></b> by <b id="dump-owner"></b> from the dumpster?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline-danger">Accept</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

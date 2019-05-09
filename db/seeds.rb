@@ -60,3 +60,4 @@ blacklist01 = Blacklist.create(user_id:user01.id)
 #Dumpster
 # dumpster01 = Dumpster.create(post_id:post01.id)
 dumpster01 = Dumpster.create(post_id:post02.id)
+dumpster02 = Dumpster.create(post_id:post03.id)
