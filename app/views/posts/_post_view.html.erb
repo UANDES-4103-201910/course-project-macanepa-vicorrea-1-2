@@ -27,7 +27,7 @@
                 <a class="dropdown-item" href="#">Edit</a>
                 <a class="dropdown-item" href="#">Delete</a>
                 <hr>
-                <a class="dropdown-item" href="#">Report</a>
+                <a class="dropdown-item" data-toggle="modal" data-target="#report-modal">Report</a>
               </div>
             </div>
 
@@ -116,6 +116,31 @@
           <% end %>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- The Modal -->
+<div class="modal fade" id="report-modal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <div class="h4">Report Post</div>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body row">
+        <div class="col-12">
+          <textarea class="w-100 min-x" style="min-height: 130px; max-height: 250px;"></textarea>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-primary">Report</button>
+      </div>
+
     </div>
   </div>
 </div>

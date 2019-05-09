@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
 
-  $user_type = 0
+  $user_type = 3
 
   def update_type_admin
     $user_type = 1

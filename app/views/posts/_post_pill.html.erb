@@ -1,0 +1,35 @@
+
+<div class="container-fluid">
+  <div class="col">
+    <div class="card card-default mt-1">
+      <div class="card-header">
+        <div class="card-heading-container">
+          <div class="row justify-content-between">
+            <div class="meta col-10">
+              <div class="form-inline">
+                <a class="p small text-primary my-auto mx-2" href="<%= user_profile_view_path(user_id:post.user.id) %>"><%=post.user.name %> <%=post.user.last_name %></a>
+                <a class="p small text-secondary my-auto mx-1"  data-toggle="modal" data-target="#myModal"><%=post.title %></a>
+                <br><p class="p small text-secondary mx-2">Last Update:<%=post.updated_at %></p>
+              </div>
+            </div>
+            <!--                  <i class="fa fa-angle-down mx-2 my-auto pull-left" aria-hidden="true"></i>-->
+
+            <div class="col-2 dropdown">
+              <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Unfollow Post</a>
+                <hr>
+                <a class="dropdown-item" href="#">Edit</a>
+                <a class="dropdown-item" href="#">Delete</a>
+                <hr>
+                <a class="dropdown-item" data-toggle="modal" data-target="#report-modal">Report</a>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
