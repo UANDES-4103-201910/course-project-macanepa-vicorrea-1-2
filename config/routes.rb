@@ -24,5 +24,9 @@ Rails.application.routes.draw do
   get 'session/login', as: 'session_login'
   get 'session/sign_up', as: 'session_sign_up'
   get 'admin/view', to: 'admins#view', as: 'admin_view'
+  get '/admin', to: 'application#update_type_admin', as: 'view_like_admin'
+  get '/regular', to: 'application#update_type_regular_user', as: 'view_like_regular_user'
+  get '/guest', to: 'application#update_type_guest_user', as: 'view_like_guest_user'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
