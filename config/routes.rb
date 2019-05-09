@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'search/search'
   resources :tags
   resources :follows
   resources :shared_posts
@@ -27,6 +28,9 @@ Rails.application.routes.draw do
   get '/admin', to: 'application#update_type_admin', as: 'view_like_admin'
   get '/regular', to: 'application#update_type_regular_user', as: 'view_like_regular_user'
   get '/guest', to: 'application#update_type_guest_user', as: 'view_like_guest_user'
+  # get '/search/search', to: 'search'
+  get '/search', to: 'search#search', as: 'search'
+  # get 'post/watch', as: 'post_watch'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
