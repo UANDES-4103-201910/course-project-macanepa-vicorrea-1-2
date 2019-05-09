@@ -25,7 +25,7 @@ function startAdmin() {
 }
 
 function startRegularUser() {
-    window.location.href = "http://localhost:3000/?user_id=1";
+    window.location.href = "http://localhost:3000/regular?user_id=1";
     // $('#user-is-admin').remove();
     // $('#user-is-guest').remove();
 
