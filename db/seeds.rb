@@ -19,6 +19,9 @@ admin01 = Admin.create(user_id:user01.id,super_admin:true,geofence:nil)
 post01 = Post.create(user_id:1,title:"I'm very angry!",content:"ARGGG!")
 post02 = Post.create(user_id:2,title:"I'm very happy!",content:"ARGGG!")
 post03 = Post.create(user_id:3,title:"$&#%($ #$%&",content:"Mueranse todos malditos!!!!")
+post04 = Post.create(user_id:1,title:"Post wiwi",content:"permiso... WIWIWIWIWIWIWIIWIWIWIWWIIIWIWWWIW WIWIWIW WIIWW. \n\n Gracias.")
+post05 = Post.create(user_id:3,title:"AAAAA",content:"UUUUU")
+post06 = Post.create(user_id:2,title:"Pepe grillo",content:"Popaaaa")
 
 
 #Comments
@@ -47,12 +50,13 @@ sh03 = SharedPost.create!(user_id:user02.id, post_id:post01.id)
 fp1=Follow.create(user_id:user01.id,post_id:post01.id)
 fp1=Follow.create(user_id:user01.id,post_id:post02.id)
 fp1=Follow.create(user_id:user01.id,post_id:post03.id)
-fp1=Follow.create(user_id:user02.id,post_id:post03.id)
-fp1=Follow.create(user_id:user02.id,post_id:post03.id)
+fp1=Follow.create(user_id:user01.id,post_id:post05.id)
+fp1=Follow.create(user_id:user01.id,post_id:post06.id)
+fp1=Follow.create(user_id:user02.id,post_id:post04.id)
 
 #Blacklist
 blacklist01 = Blacklist.create(user_id:user01.id)
 
 #Dumpster
-dumpster01 = Dumpster.create(post_id:post01.id)
+# dumpster01 = Dumpster.create(post_id:post01.id)
 dumpster01 = Dumpster.create(post_id:post02.id)
