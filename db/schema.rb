@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_04_163226) do
+ActiveRecord::Schema.define(version: 2019_05_07_215208) do
 
   create_table "admins", force: :cascade do |t|
     t.integer "user_id"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 2019_05_04_163226) do
     t.integer "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "exit_date"
     t.index ["post_id"], name: "index_dumpsters_on_post_id"
   end
 
