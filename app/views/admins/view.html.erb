@@ -38,6 +38,8 @@
       <div class="tab-content">
         <div id="manage-admins" class="container tab-pane active">
           <h3>Manage administrators</h3>
+          <p>You can create a new admin <a href="<%= session_sign_up_path %>">here</a>
+          or make a current user an admin</p>
           <table class="table table-bordered table-hover">
             <thead>
             <tr>
@@ -64,10 +66,10 @@
             </tbody>
           </table>
         </div>
-<!--        <div id="create-admin" class="container tab-pane fade">-->
-<!--          <h3>Create administrator</h3>-->
+        <!--        <div id="create-admin" class="container tab-pane fade">-->
+        <!--          <h3>Create administrator</h3>-->
 
-<!--        </div>-->
+        <!--        </div>-->
         <div id="manage-users" class="container tab-pane fade">
           <h3>Manage users</h3>
           <table class="table table-bordered table-hover">
@@ -79,6 +81,7 @@
               <th>Last access</th>
               <th>Creation date</th>
               <th>Edit</th>
+              <th>Make admin</th>
               <th>Delete</th>
             </tr>
             </thead>
@@ -90,12 +93,9 @@
               <td><%= user.email %></td>
               <td><%= user.last_access %></td>
               <td><%= user.created_at %></td>
-              <td>
-                <button class="btn btn-info fas fa-edit"></button>
-              </td>
-              <td>
-                <button class="btn btn-danger fas fa-trash-alt"></button>
-              </td>
+              <td><button class="btn btn-info fas fa-edit"></button></td>
+              <td><button class="btn btn-success fas fa-user-cog"></button></td>
+              <td><button class="btn btn-danger fas fa-trash-alt"></button></td>
             </tr>
               <% end %>
             </tbody>
@@ -165,6 +165,7 @@
             <thead>
             <tr>
               <th>Post</th>
+              <th>Owner</th>
               <th>Entry date</th>
               <th>Exit date</th>
               <th>Remove from the dumpster</th>
@@ -172,11 +173,12 @@
             </thead>
             <tbody>
             <% @dumpster_posts.each do |d_post| %>
-              <!--:title, :created_at, :exit_date-->
+              <!--:title, :email, :created_at, :exit_date-->
               <tr>
                 <td><%= d_post[0] %></td>
                 <td><%= d_post[1] %></td>
                 <td><%= d_post[2] %></td>
+                <td><%= d_post[3] %></td>
                 <td><button class="btn btn-dark fas fa-sign-out-alt"></button></td>
               </tr>
             <% end %>

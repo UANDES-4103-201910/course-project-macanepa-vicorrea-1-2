@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>AngryLusho</title>
+<!--    <script type = "text/javascript" src = "js_application.js" ></script>-->
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -11,10 +12,8 @@
   </head>
 
   <body>
-  <nav class="navbar navbar-expand-lg bg-light justify-content-between fixed-top">
-    <a class="navbar-brand" href="/">
-      AngryLusho
-    </a>
+  <nav id="navbar-app" class="navbar navbar-expand-lg bg-light justify-content-between fixed-top">
+    <a class="navbar-brand" href="/">AngryLusho</a>
     <form class="form-inline">
       <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search">
       <button class="btn btn-outline-primary" type="submit">Search</button>
@@ -46,10 +45,10 @@
       </form>
     </div>
   </nav>
-  <div class="page-content">
+ <div id="page-app" class="page-content">
     <%= yield %>
     </div>
-  <footer class="footer">
+  <footer id="footer-app" class="footer">
     <nav class="navbar navbar-expand-lg bg-light justify-content-end">
       <div class="nav-item">
         <a class="nav-link" href="">Acceptable Use Policy</a>
@@ -61,5 +60,3 @@
   </footer>
   </body>
 </html>
-
-
