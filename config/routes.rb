@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'search/search'
   resources :tags
   resources :follows
   resources :shared_posts
@@ -11,12 +10,20 @@ Rails.application.routes.draw do
   resources :blacklists
   resources :admins
   resources :profiles
-  resources :users do
-    resources :posts do
-      resources :comments
-    end
-  end
+  resources :comments
+  # resources :users do
+  #   resources :posts do
+  #     resources :comments
+  #   end
+  # end
   resources :home
+
+  defaults format: :json do
+    resources :posts
+  end
+  defaults format: :json do
+    resources :users
+  end
 
   root to: 'home#home'
   get 'user_profile/view', as: 'user_profile_view'
@@ -30,6 +37,7 @@ Rails.application.routes.draw do
   get '/guest', to: 'application#update_type_guest_user', as: 'view_like_guest_user'
   # get '/search/search', to: 'search'
   get '/search', to: 'search#search', as: 'search'
+  # get 'search/search'
   get '/posts/watch', to: 'posts#watch'
   # get 'post/watch', as: 'post_watch'
 

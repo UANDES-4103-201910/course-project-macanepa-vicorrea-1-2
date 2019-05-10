@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
-
+  skip_before_action :verify_authenticity_token
 
 
   def watch
@@ -13,19 +13,12 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @post = Post.where(user_id: params[:user_id])
-    respond_to do |format|
-      format.json {render json: @post.to_json}
-    end
+    @posts = Post.all
   end
 
   # GET /posts/1
   # GET /posts/1.json
   def show
-    @post = Post.where(id: params[:id],user_id: params[:user_id])
-    respond_to do |format|
-      format.json {render json: @post.to_json}
-    end
   end
 
   # GET /posts/new

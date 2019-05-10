@@ -6,6 +6,8 @@ Also you can navigate through guest and regular user views using login/sign up a
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
+Postman collection link: https://www.getpostman.com/collections/9f04bfe4bacef5e587a8
+
 Things you may want to cover:
 
 * Ruby version
