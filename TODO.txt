@@ -1,2 +1,4 @@
 TODO; Show correct username in navbar
 TODO: Got to correct profile (from navbar)
+
+TODO: Show correct options in display option on post (only owner can delete/edit post)

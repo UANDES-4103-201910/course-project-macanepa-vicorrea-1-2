@@ -66,3 +66,8 @@ blacklist01 = Blacklist.create(user_id:user01.id)
 # dumpster01 = Dumpster.create(post_id:post01.id)
 dumpster01 = Dumpster.create(post_id:post02.id)
 dumpster02 = Dumpster.create(post_id:post03.id)
+
+
+suspension01 = SuspensionList.create!(user_id:user03.id,exit_date:Time.now)
+
+block_list01 = BlockList.create!(user_id:user03.id,exit_date:Time.now)
