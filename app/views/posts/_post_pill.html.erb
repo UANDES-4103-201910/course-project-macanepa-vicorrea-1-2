@@ -11,8 +11,8 @@
 <!--                   data-btn-type="show-post"-->
 <!--                   data-post-obj="<%#= @post %>"><%#=post.title %></a>-->
                 <a class="p small text-secondary my-auto mx-1" href="<%= posts_watch_path(post_id:post.id) %>"><%=post.title %></a>
-                <br><p class="p small text-secondary mx-2">Last Update:<%=post.updated_at %></p>
               </div>
+              <p class="p small text-secondary mx-2">Last Update:<%=post.updated_at %></p>
             </div>
             <!--                  <i class="fa fa-angle-down mx-2 my-auto pull-left" aria-hidden="true"></i>-->
 
@@ -21,9 +21,13 @@
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="#">Unfollow Post</a>
                 <hr>
-                <a class="dropdown-item" href="#">Edit</a>
-                <a class="dropdown-item" href="#">Delete</a>
-                <hr>
+                <%if ($current_user != nil) %>
+                  <% if($current_user.id == post.user.id) %>
+                    <a class="dropdown-item" href="#">Edit</a>
+                    <a class="dropdown-item" href="#">Delete</a>
+                    <hr>
+              <% end  end%>
+
                 <a class="dropdown-item" data-toggle="modal" data-target="#report-modal">Report</a>
               </div>
             </div>

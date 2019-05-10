@@ -57,7 +57,7 @@
 
                           <a class="p small text-primary my-auto mx-2" href="<%= user_profile_view_path(user_id:@user_profile.user.id) %>"><%= @user_profile.user.name %> <%= @user_profile.user.last_name %></a>
                           <p class="p small text-secondary my-auto mx-1"><%=content%></p>
-                          <a class="p small text-secondary my-auto mx-1" href="#"><%= action.post.title %></a>
+                          <a class="p small text-secondary my-auto mx-1" href="<%= posts_watch_path(post_id:action.post.id)  %>"><%= action.post.title %></a>
                           <br><p class="p small text-secondary mx-2"><%= action.updated_at %></p>
                         </div>
                       </div>
