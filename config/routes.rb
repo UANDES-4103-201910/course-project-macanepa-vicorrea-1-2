@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'search/search'
   resources :tags
   resources :follows
   resources :shared_posts
@@ -37,7 +38,6 @@ Rails.application.routes.draw do
   get '/guest', to: 'application#update_type_guest_user', as: 'view_like_guest_user'
   # get '/search/search', to: 'search'
   get '/search', to: 'search#search', as: 'search'
-  # get 'search/search'
   get '/posts/watch', to: 'posts#watch'
   # get 'post/watch', as: 'post_watch'
 
