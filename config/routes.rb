@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   get '/guest', to: 'application#update_type_guest_user', as: 'view_like_guest_user'
   # get '/search/search', to: 'search'
   get '/search', to: 'search#search', as: 'search'
+  get '/posts/watch', to: 'posts#watch'
   # get 'post/watch', as: 'post_watch'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

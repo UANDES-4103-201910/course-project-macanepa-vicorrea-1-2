@@ -2,6 +2,14 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
 
+
+  def watch
+    if(params[:post_id] != nil)
+      @posts = Post.find(params[:post_id])
+      render("posts/post_watch")
+    end
+  end
+
   # GET /posts
   # GET /posts.json
   def index
