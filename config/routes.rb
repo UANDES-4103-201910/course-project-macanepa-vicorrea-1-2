@@ -11,12 +11,20 @@ Rails.application.routes.draw do
   resources :blacklists
   resources :admins
   resources :profiles
-  resources :users do
-    resources :posts do
-      resources :comments
-    end
-  end
+  resources :comments
+  # resources :users do
+  #   resources :posts do
+  #     resources :comments
+  #   end
+  # end
   resources :home
+
+  defaults format: :json do
+    resources :posts
+  end
+  defaults format: :json do
+    resources :users
+  end
 
   root to: 'home#home'
   get 'user_profile/view', as: 'user_profile_view'
