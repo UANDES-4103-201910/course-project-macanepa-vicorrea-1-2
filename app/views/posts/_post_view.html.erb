@@ -66,6 +66,9 @@ shares_count = SharedPost.where(post_id:post.id).count
             <button class="post-icon btn btn-link mx-2 my-auto btn-xs" data-toggle="modal" data-target="#display-attachments-modal" role="button" aria-expanded="false" aria-controls="collapseComment">
               Display Attachments
             </button>
+            <button class="post-icon btn btn-link mx-2 my-auto btn-xs" data-toggle="modal" data-target="#display-map-modal" role="button" aria-expanded="false" aria-controls="collapseComment">
+              View location on map
+            </button>
           </div>
 
         </div>
@@ -118,6 +121,13 @@ shares_count = SharedPost.where(post_id:post.id).count
 
                 <div class="card-body">
                   <div class="p text-secondary"><%= comment.content %></div>
+                  <div class="comment-container collapse mu-2" id="new-comment-reply-modal-<%=comment.id %>">
+                    <div class="new-comment-container col mx-1">
+                      <textarea class="w-100" style="max-height: 120px; min-height: 30px" placeholder="Enter comment"></textarea>
+                      <button style="float: right;" class="btn btn-outline-primary mu-4">Publish</button>
+                    </div>
+                  </div>
+                  <button style="float: right;" class="btn btn-link mu-2" data-toggle="collapse" data-target="#new-comment-reply-modal-<%=comment.id %>">Reply</button>
                 </div>
               </div>
             </div>
@@ -129,7 +139,7 @@ shares_count = SharedPost.where(post_id:post.id).count
                   <div class="col-10 mt-2">
                     <div class="card card-default">
                       <div class="card-body">
-                        <div class="form-inline">
+                        <div class="col">
                           <div class="p text-secondary">
                             <% if($current_user != nil) %>
                               <% if(reply.user.id == $current_user.id) %>
@@ -140,10 +150,19 @@ shares_count = SharedPost.where(post_id:post.id).count
                                   </div>
                                 </div>
                               <% end end %>
-                          <a class="btn btn-link text-primary" href=<%=user_profile_view_path(user_id:reply.user.id) %>><%= reply.user.name %> <%= reply.user.last_name %></a>
+
+                          <a class="btn-link text-primary" href=<%=user_profile_view_path(user_id:reply.user.id) %>><%= reply.user.name %> <%= reply.user.last_name %></a>
                             replying to
-                            <a class="btn btn-link text-primary" href=<%=user_profile_view_path(user_id:comment.user.id) %>><%= comment.user.name %> <%= comment.user.last_name %></a>
+                            <a class="btn-link text-primary" href=<%=user_profile_view_path(user_id:comment.user.id) %>><%= comment.user.name %> <%= comment.user.last_name %>: </a>
                             <%= reply.content %></div>
+                          <div class="comment-container collapse mu-2" id="new-reply-modal-<%=reply.id %>">
+                            <div class="new-comment-container col mx-1">
+                              <textarea class="w-100" style="max-height: 120px; min-height: 30px" placeholder="Enter comment"></textarea>
+                              <button style="float: right;" class="btn btn-outline-primary mu-4">Publish</button>
+                            </div>
+                          </div>
+                          <button style="float: right;" class="btn btn-link mu-2" data-toggle="collapse" data-target="#new-reply-modal-<%=reply.id %>">Reply</button>
+
                         </div>
                       </div>
                     </div>
@@ -232,6 +251,23 @@ shares_count = SharedPost.where(post_id:post.id).count
       <div class="modal-body row">
         <div class="col-12">
           <div class="h4 text-primary">In the final version attachments will be shown in this modal</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="display-map-modal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <div class="h4">Location</div>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body row">
+        <div class="col-12">
+          <div class="h4 text-primary">In the final version the map will be shown in this modal</div>
         </div>
       </div>
 

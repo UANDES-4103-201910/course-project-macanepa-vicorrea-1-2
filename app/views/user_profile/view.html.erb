@@ -53,15 +53,19 @@
                             content = ""
                             if(action.is_a?(Validation))
                               content = action.validation_type+"d"
-                            else
+                            end
+                            if(action.is_a?(Comment))
+                              content = "commented"
+                            end
+                            if(action.is_a?(SharedPost))
                               content = "shared"
                             end
                           %>
 
-                          <a class="p small text-primary my-auto mx-2" href="<%= user_profile_view_path(user_id:@user_profile.user.id) %>"><%= @user_profile.user.name %> <%= @user_profile.user.last_name %></a>
-                          <p class="p small text-secondary my-auto mx-1"><%=content%></p>
-                          <a class="p small text-secondary my-auto mx-1" href="<%= watch_path(post_id:action.post.id)  %>"><%= action.post.title %></a>
-                          <br><p class="p small text-secondary mx-2"><%= action.updated_at %></p>
+                          <a class="p small text-primary my-auto" href="<%= user_profile_view_path(user_id:@user_profile.user.id) %>"><%= @user_profile.user.name %> <%= @user_profile.user.last_name %></a>
+                          <p class="p small text-secondary my-auto ml-1"><%=content%></p>
+                          <a class="p small text-secondary my-auto ml-1" href="<%= watch_path(post_id:action.post.id)  %>"><%= action.post.title %></a>
+                          <p class="p small text-secondary"><%= action.updated_at %></p>
                         </div>
                       </div>
                       <!--                  <i class="fa fa-angle-down mx-2 my-auto pull-left" aria-hidden="true"></i>-->

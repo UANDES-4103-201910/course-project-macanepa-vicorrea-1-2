@@ -6,3 +6,21 @@ Also you can navigate through guest and regular user views using login/sign up a
 * If you see the admin modals incomplete (without titles, user emails, etc), please press ENTER on the url. This is for an error loading the javascript.
 
 * Postman collection link: https://www.getpostman.com/collections/9f04bfe4bacef5e587a8
+
+
+Posts (create, view, view publisher, comment [tag user by @username], report, follow, 
+show images & attachments like/dislike, share, show location)
+
+Search ([posts by Title/description & Author] [profiles by Nickname & location])
+
+Admin(manage [users, posts, blacklist, dumpster, suspension list, block list])
+
+SuperAdmin(manage same as admin plus [admins, users(make admin)]) #In 
+this assignment the default Admin is SuperAdmin (user_id:2, admin_id:1). If yo want to test 
+normal admin capabilities set the attribute super_admin:false to
+admin_id:1
+
+
+UserProfile(view, modify, recent posts, recent activity (like, dislike, share, comment)
+
+ToS/AUP (show) #they have temporary modals in where the final files will be shown

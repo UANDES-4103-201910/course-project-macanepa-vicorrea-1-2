@@ -13,9 +13,11 @@
         <li class="nav-item">
           <h2>Administration</h2>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" data-toggle="pill" href="#manage-admins">Administrators</a>
-        </li>
+        <%if($current_user.admin.super_admin) %>
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="pill" href="#manage-admins">Administrators</a>
+          </li>
+        <%end %>
 <!--        <li class="nav-item">-->
 <!--          <a class="nav-link" data-toggle="pill" href="#create-admin">Create admin</a>-->
 <!--        </li>-->
@@ -86,7 +88,9 @@
               <th>Last access</th>
               <th>Creation date</th>
               <th>Edit</th>
-              <th>Make admin</th>
+              <% if($current_user.admin.super_admin) %>
+                <th>Make admin</th>
+              <% end %>
               <th>Delete</th>
             </tr>
             </thead>
@@ -99,9 +103,11 @@
               <td><%= user.last_access %></td>
               <td><%= user.created_at %></td>
               <td><button class="btn btn-info fas fa-edit"></button></td>
+              <% if ($current_user.admin.super_admin) %>
               <td><button class="btn btn-success fas fa-user-cog" data-toggle="modal"
                           data-email="<%= user.email %>"
                           data-target="#make-user-admin-modal" data-btn-type="make-user-admin"></button></td>
+              <% end %>
               <td><button class="btn btn-danger fas fa-trash-alt" data-toggle="modal"
                           data-email="<%= user.email %>"
                           data-target="#delete-user-admin-modal" data-btn-type="delete-user"></button></td>

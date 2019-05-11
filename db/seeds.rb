@@ -29,7 +29,7 @@ post07 = Post.create(user_id:4,title:"celular qlio",content:"Cel qlo se hecho a 
 
 #Comments
 comment01 = Comment.create!(post_id:post01.id, comment_id:nil, user_id:user01.id,content:"U wrong bro.")
-comment02 = Comment.create!(post_id:post01.id, comment_id:comment01.id, user_id:user02.id,content:"Y tho...")
+comment02 = Comment.create!(post_id:post01.id, comment_id:comment01.id, user_id:user02.id,content:"Y tho... este es un reply de prueba hecho para wiwi :D")
 
 comment03 = Comment.create!(post_id:post03.id, comment_id:nil, user_id:user01.id,content:"tranquilo perrito")
 comment04 = Comment.create!(post_id:post03.id, comment_id:comment03.id, user_id:user01.id,content:"Pq no te haces Industrial?")
