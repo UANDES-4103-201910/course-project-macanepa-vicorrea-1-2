@@ -24,3 +24,20 @@ admin_id:1
 UserProfile(view, modify, recent posts, recent activity (like, dislike, share, comment)
 
 ToS/AUP (show) #they have temporary modals in where the final files will be shown
+
+
+#Upcoming features
+
+Posts:
+* Show the actual file attachments
+* Show the actual file image
+* Show the actual map
+* Remove Files (Images & Attachments)
+
+* Show who liked/disliked/shared the posts
+
+Edit:
+* Edit modals must be constructed for posts, admins users(from admin menu)
+
+
+
