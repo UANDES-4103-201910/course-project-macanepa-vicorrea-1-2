@@ -61,11 +61,14 @@
                               content = "shared"
                             end
                           %>
-
-                          <a class="p small text-primary my-auto" href="<%= user_profile_view_path(user_id:@user_profile.user.id) %>"><%= @user_profile.user.name %> <%= @user_profile.user.last_name %></a>
-                          <p class="p small text-secondary my-auto ml-1"><%=content%></p>
-                          <a class="p small text-secondary my-auto ml-1" href="<%= watch_path(post_id:action.post.id)  %>"><%= action.post.title %></a>
-                          <p class="p small text-secondary"><%= action.updated_at %></p>
+                          <div class="col">
+                            <div class="content-container form-inline">
+                              <a class="p small text-primary my-auto" href="<%= user_profile_view_path(user_id:@user_profile.user.id) %>"><%= @user_profile.user.name %> <%= @user_profile.user.last_name %></a>
+                              <p class="p small text-secondary my-auto ml-1"><%=content%></p>
+                              <a class="p small text-secondary my-auto ml-1" href="<%= watch_path(post_id:action.post.id)  %>"><%= action.post.title %></a>
+                            </div>
+                            <p class="p small text-secondary"><%= action.updated_at %></p>
+                          </div>
                         </div>
                       </div>
                       <!--                  <i class="fa fa-angle-down mx-2 my-auto pull-left" aria-hidden="true"></i>-->
