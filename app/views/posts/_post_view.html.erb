@@ -57,10 +57,19 @@ shares_count = SharedPost.where(post_id:post.id).count
 
         <div class="form-inline card-footer-container my-auto">
           <div class="row">
-            <a class="post-icon btn btn-link mx-2 my-auto btn-xs" data-toggle="collapse" href="#collapseComment-<%=post.id %>" role="button" aria-expanded="false" aria-controls="collapseComment">
+            <button class="post-icon btn btn-link mx-2 my-auto btn-xs" data-toggle="collapse" href="#collapseComment-<%=post.id %>" role="button" aria-expanded="false" aria-controls="collapseComment">
               Toggle Comments
-            </a>
+            </button>
+            <button class="post-icon btn btn-link mx-2 my-auto btn-xs" data-toggle="modal" data-target="#display-images-modal" role="button" aria-expanded="false" aria-controls="collapseComment">
+              Display Images
+            </button>
+            <button class="post-icon btn btn-link mx-2 my-auto btn-xs" data-toggle="modal" data-target="#display-attachments-modal" role="button" aria-expanded="false" aria-controls="collapseComment">
+              Display Attachments
+            </button>
           </div>
+
+        </div>
+        <div class="form-inline card-footer-container my-auto">
 
           <div class="btn-group-xs" >
             <a  class="post-icon btn btn-default btn-xs mx-auto"><i class="fa fa-thumbs-up" aria-hidden="true"> </i> Like: <%=likes_count %></a>
@@ -74,9 +83,9 @@ shares_count = SharedPost.where(post_id:post.id).count
         <div style="height: 40px;"></div>
 
         <div class="comment-container collapse" id="collapseNewComment-<%=post.id %>">
-          <div class="new-comment-container row mx-1">
-            <textarea class="w-100" style="max-height: 30px; min-height: 30px" placeholder="Enter comment"></textarea>
-            <a class="btn btn-primary ml-2">Publish</a>
+          <div class="new-comment-container col mx-1">
+            <textarea class="w-100" style="max-height: 120px; min-height: 30px" placeholder="Enter comment"></textarea>
+            <button style="float: right;" class="btn btn-outline-primary mu-4">Publish</button>
           </div>
         </div>
         <div class="comment-container collapse" id="collapseComment-<%=post.id %>">
@@ -95,9 +104,15 @@ shares_count = SharedPost.where(post_id:post.id).count
                       <a class="p text-primary mx-2 my-auto" href="<%= user_profile_view_path(user_id:comment_user.id) %>"><%= comment_user.name %> <%= comment_user.last_name %></a>
                     </div>
 
-                    <div class="right-elements row m-2 pull-right">
-                      <i class="fa fa-angle-down mx-2 my-auto pull-left" aria-hidden="true"></i>
-                    </div>
+                    <% if($current_user != nil) %>
+                      <% if(comment.user.id == $current_user.id) %>
+                        <div class="dropdown" style="float: right;">
+                      <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" data-toggle="modal" data-target="#edit-comment-modal" >Edit</a>
+                        </div>
+                      </div>
+                    <% end end %>
                   </div>
                 </div>
 
@@ -116,7 +131,16 @@ shares_count = SharedPost.where(post_id:post.id).count
                       <div class="card-body">
                         <div class="form-inline">
                           <div class="p text-secondary">
-                            <a class="btn btn-link text-primary" href=<%=user_profile_view_path(user_id:reply.user.id) %>><%= reply.user.name %> <%= reply.user.last_name %></a>
+                            <% if($current_user != nil) %>
+                              <% if(reply.user.id == $current_user.id) %>
+                                <div class="dropdown" style="float: right;">
+                                  <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#edit-comment-modal" >Edit</a>
+                                  </div>
+                                </div>
+                              <% end end %>
+                          <a class="btn btn-link text-primary" href=<%=user_profile_view_path(user_id:reply.user.id) %>><%= reply.user.name %> <%= reply.user.last_name %></a>
                             replying to
                             <a class="btn btn-link text-primary" href=<%=user_profile_view_path(user_id:comment.user.id) %>><%= comment.user.name %> <%= comment.user.last_name %></a>
                             <%= reply.content %></div>
@@ -153,6 +177,62 @@ shares_count = SharedPost.where(post_id:post.id).count
 
       <div class="modal-footer">
         <button class="btn btn-primary">Report</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="edit-comment-modal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <div class="h4">Edit Comment</div>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body row">
+        <div class="col-12">
+          <textarea class="w-100 min-x" style="min-height: 130px; max-height: 250px;"></textarea>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-primary">Save Changes</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="display-images-modal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <div class="h4">Images</div>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body row">
+        <div class="col-12">
+          <div class="h4 text-primary">In the final version images will be shown in this modal</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="display-attachments-modal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <div class="h4">Attachments</div>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body row">
+        <div class="col-12">
+          <div class="h4 text-primary">In the final version attachments will be shown in this modal</div>
+        </div>
       </div>
 
     </div>
