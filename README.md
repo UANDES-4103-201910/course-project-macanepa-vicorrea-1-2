@@ -8,6 +8,8 @@ Also you can navigate through guest and regular user views using login/sign up a
 * Postman collection link: https://www.getpostman.com/collections/9f04bfe4bacef5e587a8
 
 
+#Current Features
+
 Posts (create, view, view publisher, comment [tag user by @username], report, follow, 
 show images & attachments like/dislike, share, show location)
 
@@ -20,13 +22,14 @@ this assignment the default Admin is SuperAdmin (user_id:2, admin_id:1). If yo w
 normal admin capabilities set the attribute super_admin:false to
 admin_id:1
 
+Login (Normal & Google Login, Password Recovery) & SignUp Menu
 
 UserProfile(view, modify, recent posts, recent activity (like, dislike, share, comment)
 
 ToS/AUP (show) #they have temporary modals in where the final files will be shown
 
 
-#Upcoming features
+#Upcoming Features
 
 Posts:
 * Show the actual file attachments
@@ -38,6 +41,3 @@ Posts:
 
 Edit:
 * Edit modals must be constructed for posts, admins users(from admin menu)
-
-
-
