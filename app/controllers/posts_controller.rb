@@ -3,12 +3,6 @@ class PostsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
 
-  def watch
-    if(params[:post_id] != nil)
-      @posts = Post.find(params[:post_id])
-      render("posts/post_watch")
-    end
-  end
 
   # GET /posts
   # GET /posts.json

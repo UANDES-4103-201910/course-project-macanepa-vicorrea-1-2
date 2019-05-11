@@ -21,7 +21,7 @@ shares_count = SharedPost.where(post_id:post.id).count
               <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
               <div class="col">
                 <a class="p text-primary my-auto" href="<%= user_profile_view_path(user_id:post.user.id) %>"><%=post.user.name %> <%=post.user.last_name %></a>
-                <a class="p text-secondary my-auto ml-4" href="<%= posts_watch_path(post_id:post.id) %>"><%=post.title %></a>
+                <a class="p text-secondary my-auto ml-4" href="<%= watch_path(post_id:post.id) %>"><%=post.title %></a>
                 <div class="text-secondary my-auto small"><%=post.created_at %> </div>
 
               </div>
