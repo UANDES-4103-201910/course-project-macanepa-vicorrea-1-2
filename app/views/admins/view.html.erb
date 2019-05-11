@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <script type = "text/javascript" src = "js_admin.js" ></script>
-</head>
-
-<body>
-
 <div class="container-fluid">
   <!-- Nav pills -->
   <div class="row">
@@ -69,7 +61,8 @@
               <td><%= admin[3] %></td>
               <td><button class="btn btn-info fas fa-edit" data-toggle="modal" data-target="#edit-admin-modal"></button></td>
               <td><button class="btn btn-danger fas fa-trash-alt" data-toggle="modal"
-                          data-target="#delete-admin-modal"></button></td>
+                          data-email="<%= admin[0] %>" data-btn-type="delete-admin"
+                          data-target="#delete-user-admin-modal"></button></td>
             </tr>
             <% end %>
             </tbody>
@@ -100,9 +93,11 @@
               <td><%= user.created_at %></td>
               <td><button class="btn btn-info fas fa-edit"></button></td>
               <td><button class="btn btn-success fas fa-user-cog" data-toggle="modal"
+                          data-email="<%= user.email %>"
                           data-target="#make-user-admin-modal" data-btn-type="make-user-admin"></button></td>
               <td><button class="btn btn-danger fas fa-trash-alt" data-toggle="modal"
-                          data-target="#delete-user-modal" data-btn-type="delete-user"></button></td>
+                          data-email="<%= user.email %>"
+                          data-target="#delete-user-admin-modal" data-btn-type="delete-user"></button></td>
             </tr>
               <% end %>
             </tbody>
@@ -135,10 +130,12 @@
                 <td><%= post[4] %></td>
                 <td><%= post[5] %></td>
                 <td><%= post[6] %></td>
-                <td><button class="btn btn-info fas fa-exclamation-triangle" data-toggle="modal"
-                            data-target="#report-post-modal" data-btn-type="report-post"></button></td>
+                <td><button class="btn btn-warning fas fa-exclamation-triangle" data-toggle="modal"
+                            data-owner="<%= post[0] %>" data-title="<%= post[1] %>"
+                            data-target="#delete-report-post-modal" data-btn-type="report-post"></button></td>
                 <td><button class="btn btn-danger fas fa-trash-alt" data-toggle="modal"
-                            data-target="#delete-post-modal" data-btn-type="delete-post"></button></td>
+                            data-owner="<%= post[0] %>" data-title="<%= post[1] %>"
+                            data-target="#delete-report-post-modal" data-btn-type="delete-post"></button></td>
               </tr>
             <% end %>
             </tbody>
@@ -163,8 +160,9 @@
                 <td><%= bl_user[1] %></td>
                 <td><%= bl_user[2] %></td>
                 <td><button class="btn btn-dark fas fa-sign-out-alt"
-                            data-target="#remove-from-blacklist-modal" data-btn-type="remove-from-blacklist"
-                            data-toggle="modal"></button></td>
+                            data-target="#remove-from-list-modal" data-btn-type="remove-from-list"
+                            data-removed-user="<%= bl_user[0] %>"
+                            data-list-type="Blacklist" data-toggle="modal"></button></td>
               </tr>
             <% end %>
             </tbody>
@@ -218,7 +216,9 @@
                 <td><%= sl_user[1] %></td>
                 <td><%= sl_user[2] %></td>
                 <td><button class="btn btn-dark fas fa-sign-out-alt"
-                            data-toggle="modal" data-target="#remove-from-suspension-list-modal" data-btn-type="remove-from-suspension-list"></button></td>
+                            data-toggle="modal" data-target="#remove-from-list-modal"
+                            data-removed-user="<%= sl_user[0] %>"
+                            data-list-type="Suspension List" data-btn-type="remove-from-list"></button></td>
               </tr>
             <% end %>
             </tbody>
@@ -243,7 +243,9 @@
                 <td><%= bl_user[1] %></td>
                 <td><%= bl_user[2] %></td>
                 <td><button class="btn btn-dark fas fa-sign-out-alt"
-                            data-target="#remove-from-block-list-modal" data-btn-type="remove-from-block-list" data-toggle="modal"></button></td>
+                            data-removed-user="<%= bl_user[0] %>"
+                            data-target="#remove-from-list-modal" data-btn-type="remove-from-list"
+                            data-list-type="Block List" data-toggle="modal"></button></td>
               </tr>
             <% end %>
             </tbody>
@@ -258,155 +260,83 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Remove user from dumpster</h4>
+        <h4 class="modal-title">Remove user from Dumpster</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
-      <div class="modal-body" id="remove-from-dumpster-modal-body">
-        <p>Are you sure that you want to remove the post <b id="dump-title"></b> by <b id="dump-owner"></b> from the dumpster?</p>
+      <div class="modal-body">
+        <p>Are you sure that you want to <i>remove</i> the post <b id="dump-title"></b> by <b id="dump-owner"></b> from the dumpster?</p>
       </div>
       <div class="modal-footer">
         <button class="btn btn-outline-danger">Accept</button>
       </div>
-
     </div>
   </div>
 </div>
-<div class="modal" id="delete-admin-modal">
+
+<div class="modal" id="delete-user-admin-modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Delete Admin</h4>
+        <h4 id="delete-user-admin-title" class="modal-title"></h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
-      <div class="modal-body" id="remove-from-dumpster-modal-body">
-        <p>Are you sure that you want to delete this admin <b id="dump-title"></b></p>
+      <div class="modal-body">
+        <p>Are you sure that you want to delete <b id="user-mail-text"></b>?</p>
       </div>
       <div class="modal-footer">
         <button class="btn btn-outline-danger">Accept</button>
       </div>
-
     </div>
   </div>
 </div>
-<div class="modal" id="delete-user-modal">
+
+<div class="modal" id="delete-report-post-modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Delete User</h4>
+        <h4 id="delete-report-title" class="modal-title"></h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
-      <div class="modal-body" id="remove-from-dumpster-modal-body">
-        <p>Are you sure that you want to delete this user?</p>
+      <div class="modal-body">
+        Are you sure that you want to <i id="delete-report-text"></i> the post <b id="post-title"></b> by <b id="post-owner"></b>?</p>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-outline-danger">Accept</button>
+        <button id="delete-report-button" class="btn">Accept</button>
       </div>
-
     </div>
   </div>
 </div>
-<div class="modal" id="delete-post-modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Delete Posts</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body" id="remove-from-dumpster-modal-body">
-        <p>Are you sure that you want to remove this post?</p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-outline-danger">Accept</button>
-      </div>
 
-    </div>
-  </div>
-</div>
-<div class="modal" id="remove-from-blacklist-modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Remove from Blacklist</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body" id="remove-from-dumpster-modal-body">
-        <p>Are you sure that you want to remove this user from the blacklist?</p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-outline-danger">Accept</button>
-      </div>
-
-    </div>
-  </div>
-</div>
-<div class="modal" id="remove-from-suspension-list-modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Remove Post from Suspension List</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body" id="remove-from-dumpster-modal-body">
-        <p>Are you sure that you want to remove this post from the suspension list?</p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-outline-danger">Accept</button>
-      </div>
-
-    </div>
-  </div>
-</div>
-<div class="modal" id="remove-from-block-list-modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Remove User from Block list</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body" id="remove-from-dumpster-modal-body">
-        <p>Are you sure that you want to remove this user from the block list?</p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-outline-danger">Accept</button>
-      </div>
-
-    </div>
-  </div>
-</div>
 <div class="modal" id="make-user-admin-modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Make User Admin</h4>
+        <h4 class="modal-title">Make user admin</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
-      <div class="modal-body" id="remove-from-dumpster-modal-body">
-        <p>Are you sure that you want to make this user an admin?</p>
+      <div class="modal-body">
+        <p>Are you sure that you want to make <b id="make-user-admin-text"></b> an admin?</p>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-outline-danger">Accept</button>
+        <button class="btn btn-outline-success">Accept</button>
       </div>
-
     </div>
   </div>
 </div>
-<div class="modal" id="report-post-modal">
+
+<div class="modal" id="remove-from-list-modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Report Post</h4>
+        <h4 id="modal-remove-from-list-title" class="modal-title"></h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
-      <div class="modal-body" id="remove-from-dumpster-modal-body">
-        <p>Are you sure that you want to report this post?</p>
+      <div class="modal-body">
+        <p>Are you sure that you want to <i>remove</i> <b id="removed-user-text"></b> from the <b id="removed-from-list-type-text"></b>?</p>
       </div>
       <div class="modal-footer">
         <button class="btn btn-outline-danger">Accept</button>
       </div>
-
     </div>
   </div>
 </div>
-
-</body>
-</html>

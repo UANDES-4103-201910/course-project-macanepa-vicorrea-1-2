@@ -4,7 +4,7 @@ class AdminsController < ApplicationController
   # ---------------------
 
   def view
-    @users = User.all
+    @users = User.where("users.id NOT IN (?)", Admin.pluck(:id))
     @posts = (User.joins(:posts)).pluck(:email, :title, :content, :city, :country, :gps_location, :created_at)
     @blacklist_users = (User.joins(:blacklist)).pluck(:email, :created_at, :exit_date)
     @dumpster_posts = (Post.joins(:dumpster, :user)).pluck(:title, :email, :created_at, :exit_date)
