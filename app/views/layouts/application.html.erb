@@ -33,7 +33,7 @@
               </h6>
             </div>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="<%= user_profile_view_path %>">View profile</a>
+            <a class="dropdown-item" href="<%= user_profile_view_path(user_id: $current_user.id) %>">View profile</a>
             <a class="dropdown-item" onclick="startGuestUser()">Log out</a>
           </div>
         </div>
