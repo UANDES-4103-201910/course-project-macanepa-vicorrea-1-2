@@ -1,6 +1,12 @@
 <%
 @comments = Comment.where(comment_id: nil)
 @replies = Comment.where.not(comment_id: nil)
+
+likes = post.validations.where(validation_type: 'like')
+likes_count = likes.count
+dislikes = post.validations.where(validation_type: 'dislike')
+dislikes_count = dislikes.count
+shares_count = SharedPost.where(post_id:post.id).count
 %>
 
 <div class="container-fluid">
@@ -13,26 +19,35 @@
           <div class="row justify-content-between">
             <div class="form-inline">
               <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
-              <a class="p text-primary my-auto" href="<%= user_profile_view_path(user_id:post.user.id) %>"><%=post.user.name %> <%=post.user.last_name %></a>
-              <a class="p text-secondary my-auto ml-4" href="<%= posts_watch_path(post_id:post.id) %>"><%=post.title %></a>
+              <div class="col">
+                <a class="p text-primary my-auto" href="<%= user_profile_view_path(user_id:post.user.id) %>"><%=post.user.name %> <%=post.user.last_name %></a>
+                <a class="p text-secondary my-auto ml-4" href="<%= watch_path(post_id:post.id) %>"><%=post.title %></a>
+                <div class="text-secondary my-auto small"><%=post.created_at %> </div>
+
+              </div>
             </div>
-
-            <!--                  <i class="fa fa-angle-down mx-2 my-auto pull-left" aria-hidden="true"></i>-->
-
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Follow Post</a>
-                <hr>
-                <a class="dropdown-item" href="#">Edit</a>
-                <a class="dropdown-item" href="#">Delete</a>
-                <hr>
+
+                <%if($current_user != nil) %>
+                  <a class="dropdown-item" href="#">Follow Post</a>
+                  <hr>
+                <%end %>
+
+
+                <% if($current_user != nil) %>
+                <% if(post.user.id == $current_user.id) %>
+                  <a class="dropdown-item" href="#">Edit</a>
+                  <a class="dropdown-item" href="#">Delete</a>
+                  <hr>
+                <% end end %>
                 <a class="dropdown-item" data-toggle="modal" data-target="#report-modal">Report</a>
               </div>
             </div>
 
-
           </div>
+
         </div>
       </div>
 
@@ -40,19 +55,18 @@
         <div class="p text-secondary"><%=post.content%></div>
         <hr>
 
-        <div class="text-secondary mx-2 my-auto small"><%=post.created_at %> </div>
         <div class="form-inline card-footer-container my-auto">
-          <div class="pull-left ml-3 row">
-            <a class="btn btn-link mx-2 my-auto btn-xs" data-toggle="collapse" href="#collapseComment-<%=post.id %>" role="button" aria-expanded="false" aria-controls="collapseComment">
-              Display Comments
+          <div class="row">
+            <a class="post-icon btn btn-link mx-2 my-auto btn-xs" data-toggle="collapse" href="#collapseComment-<%=post.id %>" role="button" aria-expanded="false" aria-controls="collapseComment">
+              Toggle Comments
             </a>
           </div>
 
-          <div class="pull-right btn-group-xs">
-            <a class="btn btn-default btn-xs"><i class="fa fa-thumbs-up" aria-hidden="true"> </i> Like</a>
-            <a class="btn btn-default btn-xs"><i class="fa fa-thumbs-down" aria-hidden="true"></i> Dislike</a>
-            <a class="btn btn-default btn-xs"><i class="fa fa-retweet" aria-hidden="true"></i> Reshare</a>
-            <a class="btn btn-default btn-xs" data-toggle="collapse" href="#collapseNewComment-<%=post.id %>" role="button" aria-expanded="false" aria-controls="collapseComment"><i class="fa fa-comment" aria-hidden="true"></i> Comment</a>
+          <div class="btn-group-xs" >
+            <a  class="post-icon btn btn-default btn-xs mx-auto"><i class="fa fa-thumbs-up" aria-hidden="true"> </i> Like: <%=likes_count %></a>
+            <a class="post-icon btn btn-default btn-xs"><i class="fa fa-thumbs-down" aria-hidden="true"></i> Dislike: <%=dislikes_count %></a>
+            <a class="post-icon btn btn-default btn-xs"><i class="fa fa-retweet" aria-hidden="true"></i> Reshare: <%=shares_count %></a>
+            <a class="post-icon btn btn-default btn-xs" data-toggle="collapse" href="#collapseNewComment-<%=post.id %>" role="button" aria-expanded="false" aria-controls="collapseComment"><i class="fa fa-comment" aria-hidden="true"></i> Comment: <%=post.comments.count %></a>
           </div>
 
         </div>

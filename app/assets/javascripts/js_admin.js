@@ -10,7 +10,6 @@ function showInfoRemoveFromList(event) {
     var data = $(event.currentTarget).data();
     var listType = data.listType;
     var removedUser = data.removedUser;
-    console.log(listType, removedUser);
     $('#removed-user-text').text(removedUser);
     $('#modal-remove-from-list-title').text("Remove from " + listType);
     $('#removed-from-list-type-text').text(listType);
@@ -55,6 +54,7 @@ function showMakeUserAdmin(event) {
 }
 
 $(document).ready( function () {
+    console.log("doc ready");
     $('[data-btn-type="remove-from-dumpster"]').click(showInfoPostInDumpster);
     $('[data-btn-type="remove-from-list"]').click(showInfoRemoveFromList);
     $('[data-btn-type = "delete-post"]').click(showDeleteReportPost);

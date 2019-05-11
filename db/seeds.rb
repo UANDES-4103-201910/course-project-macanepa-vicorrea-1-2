@@ -14,7 +14,7 @@ profile03 = Profile.create(user_id:user03.id,image:"foto enojon",biography:"Soy 
 profile04 = Profile.create(user_id:user04.id,image:"jorge en la roca",biography:"rotsap im se natas",country:"Italia",city:"Milano")
 
 #Admins
-admin01 = Admin.create(user_id:user01.id,super_admin:true,geofence:nil)
+admin01 = Admin.create(user_id:user02.id,super_admin:true,geofence:nil)
 
 
 #Posts
@@ -33,18 +33,12 @@ comment02 = Comment.create!(post_id:post01.id, comment_id:comment01.id, user_id:
 
 comment03 = Comment.create!(post_id:post03.id, comment_id:nil, user_id:user01.id,content:"tranquilo perrito")
 comment04 = Comment.create!(post_id:post03.id, comment_id:comment03.id, user_id:user01.id,content:"Pq no te haces Industrial?")
-comment05 = Comment.create!(post_id:post03.id, comment_id:comment03.id, user_id:user01.id,content:"Ahh?")
-comment06 = Comment.create!(post_id:post03.id, comment_id:comment03.id, user_id:user02.id,content:"-.-")
-comment07 = Comment.create!(post_id:post07.id, comment_id:nil, user_id:user01.id,content:"Chupala Jorge!!!")
+comment07 = Comment.create!(post_id:post07.id, comment_id:nil, user_id:user01.id,content:"Jorge!!!")
 
 
 val01 = Validation.create(user_id:user01.id,post_id:post01.id,validation_type:'like')
 val02 = Validation.create(user_id:user01.id,post_id:post02.id,validation_type:'like')
 val02 = Validation.create(user_id:user02.id,post_id:post01.id,validation_type:'like')
-
-val03 = Validation.create(user_id:user01.id,post_id:post03.id,validation_type:'dislike')
-val03 = Validation.create(user_id:user02.id,post_id:post03.id,validation_type:'dislike')
-val03 = Validation.create(user_id:user03.id,post_id:post03.id,validation_type:'like')
 
 sh01 = SharedPost.create!(user_id:user01.id, post_id:post02.id)
 sh02 = SharedPost.create!(user_id:user01.id, post_id:post01.id)
@@ -64,9 +58,7 @@ blacklist01 = Blacklist.create(user_id:user01.id)
 
 #Dumpster
 # dumpster01 = Dumpster.create(post_id:post01.id)
-dumpster01 = Dumpster.create(post_id:post02.id)
 dumpster02 = Dumpster.create(post_id:post03.id)
-
 
 suspension01 = SuspensionList.create!(user_id:user03.id,exit_date:Time.now)
 

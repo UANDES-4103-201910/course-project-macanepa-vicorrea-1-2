@@ -3,12 +3,6 @@ class PostsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
 
-  def watch
-    if(params[:post_id] != nil)
-      @posts = Post.find(params[:post_id])
-      render("posts/post_watch")
-    end
-  end
 
   # GET /posts
   # GET /posts.json
@@ -69,6 +63,9 @@ class PostsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

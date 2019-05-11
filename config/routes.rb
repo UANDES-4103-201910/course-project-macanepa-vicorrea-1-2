@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'watch/watch'
   get 'search/search'
   resources :tags
   resources :follows
@@ -39,6 +40,7 @@ Rails.application.routes.draw do
   # get '/search/search', to: 'search'
   get '/search', to: 'search#search', as: 'search'
   get '/posts/watch', to: 'posts#watch'
+  get 'watch', to: 'watch#watch'
   # get 'post/watch', as: 'post_watch'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
