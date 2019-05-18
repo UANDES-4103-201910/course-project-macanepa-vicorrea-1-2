@@ -7,4 +7,6 @@ class Post < ApplicationRecord
   has_many :validations
   has_many :follows
   has_many :tags
+
+  validates :user_id, :title, :content, presence: true
 end

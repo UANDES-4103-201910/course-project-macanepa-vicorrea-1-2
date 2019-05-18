@@ -53,6 +53,14 @@ function showMakeUserAdmin(event) {
     $('#make-user-admin-text').text(data.email);
 }
 
+function showOnlyCurrentObjectsInList(object_type){
+    $('.' + object_type + '-row-have-exit-date').hide();
+}
+
+function showAllObjectsInList(object_type){
+    $('.' + object_type + '-row-have-exit-date').show();
+}
+
 $(document).ready( function () {
     console.log("doc ready");
     $('[data-btn-type="remove-from-dumpster"]').click(showInfoPostInDumpster);

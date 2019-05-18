@@ -4,13 +4,13 @@ class AdminsController < ApplicationController
   # ---------------------
 
   def view
-    @users = User.where("users.id NOT IN (?)", Admin.pluck(:id))
-    @posts = (User.joins(:posts)).pluck(:email, :title, :content, :city, :country, :gps_location, :created_at)
-    @blacklist_users = (User.joins(:blacklist)).pluck(:email, :created_at, :exit_date)
-    @dumpster_posts = (Post.joins(:dumpster, :user)).pluck(:title, :email, :created_at, :exit_date)
-    @admins = (Admin.joins(:user)).pluck(:email, :geofence, :super_admin, :created_at)
-    @suspension_list_users = (User.joins(:suspension_list)).pluck(:email, :created_at, :exit_date)
-    @block_list_users = (User.joins(:block_list)).pluck(:email, :created_at, :exit_date)
+    @users = User.where("users.id NOT IN (?)", Admin.pluck(:id)).order(:email)
+    @posts = (User.joins(:posts).order(:title)).pluck(:email, :title, :content, :city, :country, :gps_location, :created_at)
+    @blacklist_users = (User.joins(:blacklist).order(:email)).pluck(:email, :created_at, :exit_date)
+    @dumpster_posts = (Post.joins(:dumpster, :user).order(:title)).pluck(:title, :email, :created_at, :exit_date)
+    @admins = (Admin.joins(:user).order(:email)).pluck(:email, :geofence, :super_admin, :created_at)
+    @suspension_list_users = (User.joins(:suspension_list).order(:email)).pluck(:email, :created_at, :exit_date)
+    @block_list_users = (User.joins(:block_list).order(:email)).pluck(:email, :created_at, :exit_date)
   end
 
   # ---------------------
