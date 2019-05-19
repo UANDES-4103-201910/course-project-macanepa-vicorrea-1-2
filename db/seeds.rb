@@ -75,6 +75,7 @@ blacklist05 = Blacklist.create!(user_id:user05.id)
 dumpster01 = Dumpster.create!(post_id:post08.id)
 dumpster02 = Dumpster.create!(post_id:post09.id)
 dumpster03 = Dumpster.create!(post_id:post07.id,exit_date:Time.now)
+dumpster04 = Dumpster.create!(post_id:post01.id)
 
 suspension01 = SuspensionList.create!(user_id:user03.id,exit_date:Time.now)
 suspension02 = SuspensionList.create!(user_id:user01.id,exit_date:Time.now)

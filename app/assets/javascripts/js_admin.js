@@ -2,8 +2,11 @@ function showInfoPostInDumpster(event) {
     var data = $(event.currentTarget).data();
     var dumpsterTitle = data.dumpsterTitle;
     var dumpsterOwner = data.dumpsterOwner;
+    var postId = data.postId;
+    console.log(postId, dumpsterOwner, dumpsterTitle);
     $('#dump-title').text(dumpsterTitle);
     $('#dump-owner').text(dumpsterOwner);
+    $('#hidden-post-id').attr("value", postId);
 }
 
 function showInfoRemoveFromList(event) {
@@ -58,6 +61,7 @@ function showStopBeingAdmin(event) {
 function showMakeUserAdmin(event) {
     var data = $(event.currentTarget).data();
     $('#make-user-admin-text').text(data.email);
+    $('#hidden-user-admin-mail').attr("value", data.email);
 }
 
 function showOnlyCurrentObjectsInList(object_type){
@@ -73,6 +77,15 @@ $(document).ready( function () {
     $('.post-dumpster-row-have-exit-date').hide();
     $('.user-suspension-list-row-have-exit-date').hide();
     $('.user-block-list-row-have-exit-date').hide();
+
+    setTimeout(function () {
+       $('#notice').hide();
+    }, 3000);
+
+    setTimeout(function () {
+        $('#alert').hide();
+    }, 3000);
+
     $('[data-btn-type="remove-from-dumpster"]').click(showInfoPostInDumpster);
     $('[data-btn-type="remove-from-list"]').click(showInfoRemoveFromList);
     $('[data-btn-type = "delete-post"]').click(showDeleteReportPost);
