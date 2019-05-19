@@ -5,7 +5,13 @@ class AdminsController < ApplicationController
   # ---------------------
 
   def view
-    @users = User.where("users.id NOT IN (?)", Admin.pluck(:id)).order(:email)
+    admins_count = Admin.pluck(:user_id).length
+    if admins_count > 0
+      @users = User.where("id NOT IN (?)", Admin.pluck(:user_id)).order(:email)
+    else
+      @users = User.all.order(:email)
+    end
+
     @posts = (User.joins(:posts).order(:title)).pluck(:email, :title, :content, :city, :country, :gps_location, :created_at, :id)
     @blacklist_users = (User.joins(:blacklist).order(:email)).pluck(:email, :created_at, :exit_date, :id)
     @dumpster_posts = (Post.joins(:dumpster, :user).order(:title)).pluck(:title, :email, :created_at, :exit_date, :id)
@@ -17,7 +23,6 @@ class AdminsController < ApplicationController
   end
 
   def remove_object_from_list
-    puts params
     if params[:object_type] == "Blacklist"
       black = Blacklist.where(user_id: params[:object_id], exit_date: nil)
       black.update(exit_date: Time.now)
@@ -30,6 +35,20 @@ class AdminsController < ApplicationController
       s = SuspensionList.where(user_id: params[:object_id], exit_date: nil)
       s.update(exit_date: Time.now)
     end
+    redirect_to admin_view_path
+  end
+
+  def delete_user
+    user_id = User.where(email: params[:user_mail]).pluck(:id)
+    @user_to_delete = User.find(user_id).first
+    @user_to_delete.destroy
+    redirect_to admin_view_path
+  end
+
+  def stop_being_admin
+    admin_id = User.where(email: params[:user_mail]).pluck(:id)
+    @admin_to_delete = Admin.where(user_id: admin_id).first
+    @admin_to_delete.destroy
     redirect_to admin_view_path
   end
 

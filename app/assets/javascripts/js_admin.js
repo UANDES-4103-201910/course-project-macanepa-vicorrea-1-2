@@ -11,7 +11,6 @@ function showInfoRemoveFromList(event) {
     var listType = data.listType;
     var removedUser = data.removedUser;
     var userId = data.objectId;
-    console.log(userId, listType);
     $('#hidden-object-id').attr("value", userId);
     $('#hidden-object-type').attr("value", listType);
     $('#removed-user-text').text(removedUser);
@@ -24,32 +23,36 @@ function showDeleteReportPost(event) {
     var action = data.btnType;
     var owner = data.owner;
     var title = data.title;
+    var actionButton = $('#delete-report-button');
     if (action === "delete-post") {
         $('#delete-report-title').text("Delete post");
         $('#delete-report-text').text("delete");
-        $('#delete-report-button').addClass("btn-outline-danger")
+        actionButton.removeClass("btn-outline-warning");
+        actionButton.addClass("btn-outline-danger");
     }
     else if (action === "report-post") {
         $('#delete-report-title').text("Report post");
         $('#delete-report-text').text("report");
-        $('#delete-report-button').addClass("btn-outline-warning")
+        actionButton.removeClass("btn-outline-danger");
+        actionButton.addClass("btn-outline-warning");
+
     }
     $('#post-title').text(title);
     $('#post-owner').text(owner);
 }
 
-function showDeleteUserAdminInfo(event) {
+function showDeleteUserInfo(event) {
     var data = $(event.currentTarget).data();
     var email = data.email;
-    var action = data.btnType;
-    if (action === "delete-admin") {
-        $('#delete-user-admin-title').text("Delete administrator");
-
-    }
-    else if (action === "delete-user") {
-        $('#delete-user-admin-title').text("Delete user");
-    }
     $('#user-mail-text').text(email);
+    $('#hidden-user-mail').attr("value", email);
+}
+
+function showStopBeingAdmin(event) {
+    var data = $(event.currentTarget).data();
+    var email = data.email;
+    $('#admin-mail-text').text(email);
+    $('#hidden-admin-mail').attr("value", email);
 }
 
 function showMakeUserAdmin(event) {
@@ -58,19 +61,23 @@ function showMakeUserAdmin(event) {
 }
 
 function showOnlyCurrentObjectsInList(object_type){
-    $('.' + object_type + '-row-have-exit-date').hide();
-}
-
-function showAllObjectsInList(object_type){
     $('.' + object_type + '-row-have-exit-date').show();
 }
 
+function showAllObjectsInList(object_type){
+    $('.' + object_type + '-row-have-exit-date').hide();
+}
+
 $(document).ready( function () {
+    $('.user-blacklist-row-have-exit-date').hide();
+    $('.post-dumpster-row-have-exit-date').hide();
+    $('.user-suspension-list-row-have-exit-date').hide();
+    $('.user-block-list-row-have-exit-date').hide();
     $('[data-btn-type="remove-from-dumpster"]').click(showInfoPostInDumpster);
     $('[data-btn-type="remove-from-list"]').click(showInfoRemoveFromList);
     $('[data-btn-type = "delete-post"]').click(showDeleteReportPost);
     $('[data-btn-type = "report-post"]').click(showDeleteReportPost);
-    $('[data-btn-type = "delete-user"]').click(showDeleteUserAdminInfo);
-    $('[data-btn-type = "delete-admin"]').click(showDeleteUserAdminInfo);
+    $('[data-btn-type = "delete-user"]').click(showDeleteUserInfo);
     $('[data-btn-type = "make-user-admin"]').click(showMakeUserAdmin);
+    $('[data-btn-type = "stop-being-admin"]').click(showStopBeingAdmin);
 });
