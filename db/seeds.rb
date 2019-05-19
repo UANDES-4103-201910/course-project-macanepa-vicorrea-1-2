@@ -67,6 +67,9 @@ fp6 = Follow.create!(user_id:user02.id,post_id:post04.id)
 #Blacklist
 blacklist01 = Blacklist.create!(user_id:user03.id)
 blacklist02 = Blacklist.create!(user_id:user05.id,exit_date:Time.now)
+blacklist03 = Blacklist.create!(user_id:user02.id)
+blacklist04 = Blacklist.create!(user_id:user04.id)
+blacklist05 = Blacklist.create!(user_id:user05.id)
 
 #Dumpster
 dumpster01 = Dumpster.create!(post_id:post08.id)
@@ -81,3 +84,4 @@ suspension05 = SuspensionList.create!(user_id:user02.id)
 
 
 block_list01 = BlockList.create!(user_id:user05.id,exit_date:Time.now)
+block_list02 = BlockList.create!(user_id:user04.id)

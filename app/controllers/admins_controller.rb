@@ -1,16 +1,36 @@
 class AdminsController < ApplicationController
   before_action :set_admin, only: [:show, :edit, :update, :destroy]
+  skip_before_action :verify_authenticity_token
 
   # ---------------------
 
   def view
     @users = User.where("users.id NOT IN (?)", Admin.pluck(:id)).order(:email)
-    @posts = (User.joins(:posts).order(:title)).pluck(:email, :title, :content, :city, :country, :gps_location, :created_at)
-    @blacklist_users = (User.joins(:blacklist).order(:email)).pluck(:email, :created_at, :exit_date)
-    @dumpster_posts = (Post.joins(:dumpster, :user).order(:title)).pluck(:title, :email, :created_at, :exit_date)
-    @admins = (Admin.joins(:user).order(:email)).pluck(:email, :geofence, :super_admin, :created_at)
-    @suspension_list_users = (User.joins(:suspension_list).order(:email)).pluck(:email, :created_at, :exit_date)
-    @block_list_users = (User.joins(:block_list).order(:email)).pluck(:email, :created_at, :exit_date)
+    @posts = (User.joins(:posts).order(:title)).pluck(:email, :title, :content, :city, :country, :gps_location, :created_at, :id)
+    @blacklist_users = (User.joins(:blacklist).order(:email)).pluck(:email, :created_at, :exit_date, :id)
+    @dumpster_posts = (Post.joins(:dumpster, :user).order(:title)).pluck(:title, :email, :created_at, :exit_date, :id)
+    @admins = (Admin.joins(:user).order(:email)).pluck(:email, :geofence, :super_admin, :created_at, :id)
+    @suspension_list_users = (User.joins(:suspension_list).order(:email)).pluck(:email, :created_at, :exit_date, :id)
+    @block_list_users = (User.joins(:block_list).order(:email)).pluck(:email, :created_at, :exit_date, :id)
+    @us = (User.joins(:blacklist).pluck(:id))
+    @bl2 = Blacklist.pluck(:id)
+  end
+
+  def remove_object_from_list
+    puts params
+    if params[:object_type] == "Blacklist"
+      black = Blacklist.where(user_id: params[:object_id], exit_date: nil)
+      black.update(exit_date: Time.now)
+    end
+    if params[:object_type] == "Block List"
+      block = BlockList.where(user_id: params[:object_id], exit_date: nil)
+      block.update(exit_date: Time.now)
+    end
+    if params[:object_type] == "Suspension List"
+      s = SuspensionList.where(user_id: params[:object_id], exit_date: nil)
+      s.update(exit_date: Time.now)
+    end
+    redirect_to admin_view_path
   end
 
   # ---------------------

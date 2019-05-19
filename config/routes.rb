@@ -43,5 +43,7 @@ Rails.application.routes.draw do
   get 'watch', to: 'watch#watch'
   # get 'post/watch', as: 'post_watch'
 
+  post 'admin/remove_object_from_list', to: 'admins#remove_object_from_list'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
