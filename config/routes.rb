@@ -44,11 +44,14 @@ Rails.application.routes.draw do
   # get 'post/watch', as: 'post_watch'
 
   post 'admin/remove_user_from_list', to: 'admins#remove_user_from_list'
-  post 'admin/delete_user', to: 'admins#delete_user'
-  post 'admin/stop_being_admin', to: 'admins#stop_being_admin'
+  post 'admin/delete_user', to: 'users#destroy'
+  post 'admin/stop_being_admin', to: 'admins#destroy'
   post 'admin/make_user_admin', to: 'admins#make_user_admin'
   post 'admin/remove_post_from_dumpster', to: 'admins#remove_post_from_dumpster'
-  post 'admin/delete_post', to: 'admins#delete_post'
+  post 'admin/delete_post', to: 'posts#destroy'
+  post 'admin/report_post', to: 'reports#create'
+  post 'admin/edit_admin', to: 'users#update'
+  post 'admin/edit_user', to: 'users#update'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

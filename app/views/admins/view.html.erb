@@ -75,14 +75,18 @@
             </thead>
             <tbody>
             <% @admins.each do |admin| %>
-              <!--:email, :geofence, :super_admin, :created_at, :id-->
+              <!--:email, :geofence, :super_admin, :created_at, :id, :user_id-->
             <tr>
               <td><%= admin[0] %></td>
               <td><%= admin[1] %></td>
               <td><%= admin[2] %></td>
               <td><%= admin[3] %></td>
-              <td><button class="btn btn-info fas fa-edit" data-toggle="modal" data-target="#edit-admin-modal"></button></td>
+              <td><button class="btn btn-info fas fa-edit" data-toggle="modal"
+                          data-target="#edit-admin-modal" data-email="<%= admin[0] %>"
+                          data-user-id="<%= admin[5] %>"
+                          data-admin-id="<%= admin[4] %>" data-btn-type="edit-admin"></button></td>
               <td><button class="btn btn-danger fas fa-user-lock" data-toggle="modal"
+                          data-admin-id="<%= admin[4] %>"
                           data-email="<%= admin[0] %>" data-btn-type="stop-being-admin"
                           data-target="#stop-being-admin-modal"></button></td>
             </tr>
@@ -115,14 +119,16 @@
               <td><%= user.email %></td>
               <td><%= user.last_access %></td>
               <td><%= user.created_at %></td>
-              <td><button class="btn btn-info fas fa-edit"></button></td>
+              <td><button class="btn btn-info fas fa-edit" data-toggle="modal"
+                          data-target="#edit-user-modal" data-email="<%= user.email %>"
+                          data-user-id="<%= user.id %>" data-btn-type="edit-user"></button></td>
               <%# if ($current_user.admin.super_admin) %>
               <td><button class="btn btn-success fas fa-user-cog" data-toggle="modal"
                           data-email="<%= user.email %>"
                           data-target="#make-user-admin-modal" data-btn-type="make-user-admin"></button></td>
               <%# end %>
               <td><button class="btn btn-danger fas fa-trash-alt" data-toggle="modal"
-                          data-email="<%= user.email %>"
+                          data-email="<%= user.email %>" data-user-id="<%= user.id %>"
                           data-target="#delete-user-modal" data-btn-type="delete-user"></button></td>
             </tr>
               <% end %>
@@ -157,11 +163,11 @@
                 <td><%= post[5] %></td>
                 <td><%= post[6] %></td>
                 <td><button class="btn btn-warning fas fa-exclamation-triangle" data-toggle="modal"
-                            data-owner="<%= post[0] %>" data-title="<%= post[1] %>"
-                            data-target="#delete-report-post-modal" data-btn-type="report-post"></button></td>
+                            data-owner="<%= post[0] %>" data-title="<%= post[1] %>" data-post-id="<%= post[7] %>"
+                            data-target="#report-post-modal" data-btn-type="report-post"></button></td>
                 <td><button class="btn btn-danger fas fa-trash-alt" data-toggle="modal"
                             data-owner="<%= post[0] %>" data-title="<%= post[1] %>" data-post-id="<%= post[7] %>"
-                            data-target="#delete-report-post-modal" data-btn-type="delete-post"></button></td>
+                            data-target="#delete-post-modal" data-btn-type="delete-post"></button></td>
               </tr>
             <% end %>
             </tbody>
@@ -358,7 +364,7 @@
       </div>
       <div class="modal-footer">
         <form action="stop_being_admin" method="post">
-          <input id="hidden-admin-mail" type="hidden" name="user_mail"/>
+          <input id="hidden-admin-id" type="hidden" name="id"/>
           <button class="btn btn-outline-danger">Accept</button>
         </form>
       </div>
@@ -378,7 +384,7 @@
       </div>
       <div class="modal-footer">
         <form action="delete_user" method="post">
-          <input id="hidden-user-mail" type="hidden" name="user_mail"/>
+          <input id="hidden-user-id" type="hidden" name="id"/>
           <button class="btn btn-outline-danger">Accept</button>
         </form>
       </div>
@@ -386,11 +392,11 @@
   </div>
 </div>
 
-<div class="modal" id="delete-report-post-modal">
+<div class="modal" id="delete-post-modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 id="delete-report-title" class="modal-title"></h4>
+        <h4 class="modal-title">Delete post</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
@@ -398,8 +404,28 @@
       </div>
       <div class="modal-footer">
         <form action="delete_post" method="post">
-          <input type="hidden" id="hidden-post-id" name="post_id">
-          <button id="delete-report-button" class="btn">Accept</button>
+          <input type="hidden" id="hidden-post-id-delete" name="id">
+          <button id="delete-button" class="btn btn-outline-danger">Accept</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="report-post-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Report post</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+<!--        Are you sure that you want to <i id="delete-report-text"></i> the post <b id="post-title"></b> by <b id="post-owner"></b>?-->
+      </div>
+      <div class="modal-footer">
+        <form action="report_post" method="post">
+          <input type="hidden" id="hidden-post-id-report" name="id">
+          <button id="report-button" class="btn btn-outline-warning">Accept</button>
         </form>
       </div>
     </div>
@@ -443,6 +469,54 @@
           <button class="btn btn-outline-dark" type="submit">Accept</button>
         </form>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="edit-user-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit user</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <form action="edit_user" method="post">
+        <div class="modal-body">
+          <p><i>Edit</i> user's password <b id="password-user-email"></b></p>
+          <div class="form-group">
+            <label for="new-user-password">New password:</label>
+            <input type="password" class="form-control" id="new-user-password" name="user[password]">
+          </div>
+        </div>
+      <div class="modal-footer">
+        <input id="hidden-user-id-for-password" type="hidden" name="id"/>
+        <button class="btn btn-outline-info">Accept</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="edit-admin-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit administrator</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <form action="edit_admin" method="post">
+        <div class="modal-body">
+          <p><i>Edit</i> administrator's password <b id="password-admin-email"></b></p>
+          <div class="form-group">
+            <label for="new-admin-password">New password:</label>
+            <input type="password" class="form-control" id="new-admin-password" name="user[password]">
+          </div>
+          <input id="hidden-admin-id-for-password" type="hidden" name="id"/>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline-info">Accept</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
