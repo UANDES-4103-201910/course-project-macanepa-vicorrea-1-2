@@ -1,77 +1,74 @@
-
 <div class="mainbody container-fluid">
   <div class="row">
-  <div class="Following-Posts col-4">
-    <% if $user_type != 3 %>
-      <div class="h5 text-primary mx-auto">Following</div>
-      <hr>
-      <% if(!@user.nil?) %>
-      <% @following_posts.each do |post| %>
-        <%= render("posts/post_pill", post:post) %>
-      <%end %>
+    <div class="Following-Posts col-4">
+      <% if $user_type != 3 %>
+        <div class="h5 text-primary mx-auto">Following</div>
+        <hr>
+        <% if (!@user.nil?) %>
+          <% @following_posts.each do |post| %>
+            <%= render("posts/post_pill", post: post) %>
+          <% end %>
+        <% end %>
       <% end %>
-      <% end %>
-  </div>
+    </div>
 
     <div class="Main-Posts col-7">
       <% if $user_type != 3 %>
-      <div class="container-fluid">
-        <div class="text-primary h5">What are you thinking?</div>
-            <hr>
-        <div class="create-post-container">
-          <div class="col">
-          <div class="card card-default h-100">
-              <div class="card-header">
-                <div class="card-heading-container row">
-                  <div class="form-inline row m-2 w-100">
-                    <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-1 rounded-circle border border-primary">
-                    <input type="text" class="form-control" id="title" placeholder="Post's Title" name="title">
+        <div class="container-fluid">
+          <div class="text-primary h5">What are you thinking?</div>
+          <hr>
+          <div class="create-post-container">
+            <div class="col">
+              <form action="create_post" method="post">
+                <input type="hidden" name="post[user_id]" value="<%= $current_user.id %>">
+                <div class="card card-default h-100">
+                  <div class="card-header">
+                    <div class="card-heading-container row">
+                      <div class="form-inline row m-2 w-100">
+                        <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-1 rounded-circle border border-primary">
+                        <input type="text" class="form-control" id="title" placeholder="Post's Title" name="post[title]">
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="card-body">
+                    <textarea name="post[content]" class="w-100 min-x" style="min-height: 130px; max-height: 250px;"></textarea>
+
+                    <div class="bottom-actions">
+                      <div class="leftside form-inline" style="float: left;">
+                        <button class="btn btn-outline-primary mt-2" style="float: left;">Add Attachment</button>
+                        <button class="btn btn-outline-primary mt-2 ml-2" style="float: left;">Add Image</button>
+                        <input type="checkbox" class="form-check-input mt-2 ml-2" name="post[include_location]">
+                        <div class="p mt-2">Include location</div>
+                      </div>
+                      <!--                  <input type="checkbox" class="form-check-input my-3 ml-3" value="">-->
+                      <button class="btn btn-outline-primary mt-2" style="float: right;">Publish</button>
+                    </div>
                   </div>
                 </div>
-
-              </div>
-
-              <div class="card-body">
-                <textarea class="w-100 min-x" style="min-height: 130px; max-height: 250px;"></textarea>
-
-                <div class="bottom-actions">
-                  <div class="leftside form-inline" style="float: left;">
-                    <button class="btn btn-outline-primary mt-2" style="float: left;">Add Attachment</button>
-                    <button class="btn btn-outline-primary mt-2 ml-2" style="float: left;">Add Image</button>
-                    <input type="checkbox" class="form-check-input mt-2 ml-2" value="">
-                    <div class="p mt-2">Include location</div>
-                  </div>
-<!--                  <input type="checkbox" class="form-check-input my-3 ml-3" value="">-->
-                  <button class="btn btn-outline-primary mt-2" style="float: right;">Publish</button>
-                </div>
-
-
-
-
-              </div>
-
+              </form>
             </div>
           </div>
         </div>
-      </div>
-        <% end %>
+      <% end %>
       <% @posts.each do |post| %>
-        <%= render "posts/post_view", post:post %>
-      <%end %>
-    </div>
-  </div>
-</div>
-
-
-<!-- The Modal -->
-<div class="modal fade" id="myModal">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-
-      <!-- Modal body -->
-      <div class="modal-body">
-        <%#= render("posts/post_view", post:@posts.find(1)) %>
+        <%= render "posts/post_view", post: post %>
+      <% end %>
       </div>
     </div>
   </div>
-</div>
+
+
+  <!-- The Modal -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <%#= render("posts/post_view", post:@posts.find(1)) %>
+        </div>
+      </div>
+    </div>
+  </div>
