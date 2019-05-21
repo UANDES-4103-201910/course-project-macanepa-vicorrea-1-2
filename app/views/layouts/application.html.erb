@@ -41,10 +41,20 @@
   <% elsif $user_type == 2 %>
   <nav id="navbar-app" class="navbar navbar-expand-lg bg-light justify-content-between fixed-top">
     <a class="navbar-brand" href="/">AngryLusho</a>
-    <form class="form-inline">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search">
-      <a class="btn btn-outline-primary" href="<%= search_path %>" type="submit">Search</a>
+
+    <form class="form-inline" action=<%=search_path %>>
+      <input class="form-control mr-sm-2" type="text" name="input" placeholder="search...">
+      <select class="btn btn-secondary dropdown-toggle ml-2" name="search_type">
+        <option value="name">User</option>
+        <option value="location">Post</option>
+      </select>
+      <select class="btn btn-secondary dropdown-toggle ml-2" name="search_by">
+        <option value="name">Name</option>
+        <option value="location">Location</option>
+      </select>
+      <input class="btn btn-outline-primary ml-2" type="submit" value="Search">
     </form>
+
     <div class="nav-item">
       <form class="form-inline">
         <div class="nav-item dropdown">

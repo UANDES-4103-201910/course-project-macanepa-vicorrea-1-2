@@ -52,6 +52,7 @@ Rails.application.routes.draw do
   post 'admin/report_post', to: 'reports#create'
   post 'admin/edit_admin', to: 'users#update'
   post 'admin/edit_user', to: 'users#update'
+  post 'create_post', to: 'posts#create'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
