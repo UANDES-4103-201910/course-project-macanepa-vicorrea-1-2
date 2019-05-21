@@ -61,11 +61,10 @@ class PostsController < ApplicationController
   # DELETE /posts/1.json
   def destroy
     @post.destroy
-    format.html { redirect_to root_path, notice: 'Post was successfully destroyed.' }
-    # respond_to do |format|
-    #   format.html { redirect_to root_path, notice: 'Post was successfully destroyed.' }
-    #   format.json { head :no_content }
-    # end
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: root_path); flash[:notice] = 'The post was successfully deleted.' }
+      format.json { head :no_content }
+    end
   end
 
 
