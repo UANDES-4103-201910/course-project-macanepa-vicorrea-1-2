@@ -78,14 +78,6 @@ $(document).ready( function () {
     $('.user-suspension-list-row-have-exit-date').hide();
     $('.user-block-list-row-have-exit-date').hide();
 
-    setTimeout(function () {
-       $('#notice').hide();
-    }, 3000);
-
-    setTimeout(function () {
-        $('#alert').hide();
-    }, 3000);
-
     $('[data-btn-type="remove-from-dumpster"]').click(showInfoPostInDumpster);
     $('[data-btn-type="remove-from-list"]').click(showInfoRemoveFromList);
     $('[data-btn-type = "delete-post"]').click(showDeleteReportPost);
