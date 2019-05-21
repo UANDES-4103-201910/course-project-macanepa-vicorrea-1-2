@@ -1,5 +1,6 @@
 class ValidationsController < ApplicationController
   before_action :set_validation, only: [:show, :edit, :update, :destroy]
+  skip_before_action :verify_authenticity_token
 
   # GET /validations
   # GET /validations.json
@@ -28,7 +29,7 @@ class ValidationsController < ApplicationController
 
     respond_to do |format|
       if @validation.save
-        format.html { redirect_to @validation, notice: 'Validation was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Validation was successfully created.' }
         format.json { render :show, status: :created, location: @validation }
       else
         format.html { render :new }

@@ -4,44 +4,34 @@
       <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
 
       <ul>
-      <% post.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
-  </div>
+  <div class="card">
+    <div class="card-header">
+      <div class="field">
+        <%= form.text_field :title ,placeholder:"Post's Title..." ,style:"width:100%"%>
+      </div>
+    </div>
+    <div class="card-body">
 
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
-  </div>
-
-  <div class="field">
-    <%= form.label :content %>
-    <%= form.text_area :content %>
-  </div>
-
-  <div class="field">
-    <%= form.label :city %>
-    <%= form.text_field :city %>
-  </div>
-
-  <div class="field">
-    <%= form.label :country %>
-    <%= form.text_field :country %>
-  </div>
-
-  <div class="field">
-    <%= form.label :gps_location %>
-    <%= form.text_field :gps_location %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
+      <div class="field">
+        <%= form.text_area :content ,placeholder:"Content...", :rows => 8, style:"width:100%" %>
+      </div>
+    </div>
+    <div class="card-footer form-inline">
+      <div class="field form-inline">
+        <%= form.label :include_location %>
+        <%= form.check_box :include_location %>
+      </div>
+      <div class="col-1"></div>
+      <div class="actions" style="float: right;">
+        <%= form.submit %>
+      </div>
+    </div>
   </div>
 <% end %>

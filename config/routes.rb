@@ -50,6 +50,8 @@ Rails.application.routes.draw do
   post 'admin/remove_post_from_dumpster', to: 'admins#remove_post_from_dumpster'
   post 'admin/delete_post', to: 'admins#delete_post'
   post 'create_post', to: 'posts#create'
+  post 'create_validation', to: 'validations#create'
+  post 'create_comment', to: 'comments#create'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

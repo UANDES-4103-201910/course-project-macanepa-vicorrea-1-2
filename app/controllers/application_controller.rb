@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
 
   $user_type = 3
-  $current_user = User.find(1)
+  $current_user = User.find(2)
 
   def update_type_admin
     $user_type = 1
@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base
 
   def update_type_regular_user
     $user_type = 2
-    $current_user = User.find(1)
     redirect_to 'http://localhost:3000/?user_id=1'
   end
 

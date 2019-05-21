@@ -1,4 +1,3 @@
-TODO; Show correct username in navbar
-TODO: Got to correct profile (from navbar)
-
-TODO: Show correct options in display option on post (only owner can delete/edit post)
+TODO: Fix (show post after thehy are removed from dumpster (use exit date))
+TODO: Reply a Reply (fix the target)
+TODO: Fix password in edit profile

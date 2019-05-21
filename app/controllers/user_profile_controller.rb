@@ -1,7 +1,6 @@
 class UserProfileController < ApplicationController
   def view
-    user=1
-    if(!params[:user_id].nil?)
+    if(not params[:user_id].nil?)
       user=params[:user_id]
     end
     @user_profile = Profile.where(user_id: user)[0]

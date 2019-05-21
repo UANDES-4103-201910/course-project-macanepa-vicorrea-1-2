@@ -28,7 +28,8 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = Post.new(post_params)
-
+    @post.is_open = true
+    @post.is_solved = false
     respond_to do |format|
       if @post.save
         format.html { redirect_to root_path, notice: 'Post was successfully created.' }
@@ -44,14 +45,15 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/1
   # PATCH/PUT /posts/1.json
   def update
-    respond_to do |format|
+    # respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to @post, notice: 'Post was successfully updated.' }
-        format.json { render :show, status: :ok, location: @post }
-      else
-        format.html { render :edit }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
-      end
+        redirect_to root_path
+        # format.html { redirect_to @post, notice: 'Post was successfully updated.' }
+        # format.json { render :show, status: :ok, location: @post }
+      # else
+      #   format.html { render :edit }
+      #   format.json { render json: @post.errors, status: :unprocessable_entity }
+      # end
     end
   end
 
