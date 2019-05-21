@@ -76,6 +76,9 @@ class AdminsController < ApplicationController
     redirect_to admin_view_path, notice: "The post was successfully removed from the dumpster."
   end
 
+  def delete_post
+    puts params
+  end
   # ---------------------
 
   # GET /admins

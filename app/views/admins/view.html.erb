@@ -160,7 +160,7 @@
                             data-owner="<%= post[0] %>" data-title="<%= post[1] %>"
                             data-target="#delete-report-post-modal" data-btn-type="report-post"></button></td>
                 <td><button class="btn btn-danger fas fa-trash-alt" data-toggle="modal"
-                            data-owner="<%= post[0] %>" data-title="<%= post[1] %>"
+                            data-owner="<%= post[0] %>" data-title="<%= post[1] %>" data-post-id="<%= post[7] %>"
                             data-target="#delete-report-post-modal" data-btn-type="delete-post"></button></td>
               </tr>
             <% end %>
@@ -338,7 +338,7 @@
       </div>
       <div class="modal-footer">
         <form action="remove_post_from_dumpster" method="post">
-          <input id="hidden-post-id" type="hidden" name="post_id"/>
+          <input id="hidden-post-dumpster-id" type="hidden" name="post_id"/>
           <button class="btn btn-outline-dark" type="submit">Accept</button>
         </form>
       </div>
@@ -397,7 +397,10 @@
         Are you sure that you want to <i id="delete-report-text"></i> the post <b id="post-title"></b> by <b id="post-owner"></b>?
       </div>
       <div class="modal-footer">
-        <button id="delete-report-button" class="btn">Accept</button>
+        <form action="delete_post" method="post">
+          <input type="hidden" id="hidden-post-id" name="post_id">
+          <button id="delete-report-button" class="btn">Accept</button>
+        </form>
       </div>
     </div>
   </div>

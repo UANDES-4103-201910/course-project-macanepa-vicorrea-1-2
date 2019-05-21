@@ -3,10 +3,9 @@ function showInfoPostInDumpster(event) {
     var dumpsterTitle = data.dumpsterTitle;
     var dumpsterOwner = data.dumpsterOwner;
     var postId = data.postId;
-    console.log(postId, dumpsterOwner, dumpsterTitle);
     $('#dump-title').text(dumpsterTitle);
     $('#dump-owner').text(dumpsterOwner);
-    $('#hidden-post-id').attr("value", postId);
+    $('#hidden-post-dumpster-id').attr("value", postId);
 }
 
 function showInfoRemoveFromList(event) {
@@ -32,6 +31,7 @@ function showDeleteReportPost(event) {
         $('#delete-report-text').text("delete");
         actionButton.removeClass("btn-outline-warning");
         actionButton.addClass("btn-outline-danger");
+        $('#hidden-post-id').attr("value", data.postId)
     }
     else if (action === "report-post") {
         $('#delete-report-title').text("Report post");

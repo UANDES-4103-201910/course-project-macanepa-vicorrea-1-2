@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
 
   $user_type = 3
-  $current_user = nil
+  $current_user = User.find(1)
 
   def update_type_admin
     $user_type = 1

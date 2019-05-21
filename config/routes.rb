@@ -48,6 +48,7 @@ Rails.application.routes.draw do
   post 'admin/stop_being_admin', to: 'admins#stop_being_admin'
   post 'admin/make_user_admin', to: 'admins#make_user_admin'
   post 'admin/remove_post_from_dumpster', to: 'admins#remove_post_from_dumpster'
+  post 'admin/delete_post', to: 'admins#delete_post'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
