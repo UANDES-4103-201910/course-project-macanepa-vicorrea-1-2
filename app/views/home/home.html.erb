@@ -1,7 +1,7 @@
 <div class="mainbody container-fluid">
   <div class="row">
     <div class="Following-Posts col-4">
-      <% if $user_type != 3 %>
+      <% if current_user.nil?%>
         <div class="h5 text-primary mx-auto">Following</div>
         <hr>
         <% if (!@user.nil?) %>
@@ -13,14 +13,14 @@
     </div>
 
     <div class="Main-Posts col-7">
-      <% if $user_type != 3 %>
+      <% if not current_user.nil?%>
         <div class="container-fluid">
           <div class="text-primary h5">What are you thinking?</div>
           <hr>
           <div class="create-post-container">
             <div class="col">
               <form action="create_post" method="post">
-                <input type="hidden" name="post[user_id]" value="<%= $current_user.id %>">
+                <input type="hidden" name="post[user_id]" value="<%= current_user.id %>">
                 <div class="card card-default h-100">
                   <div class="card-header">
                     <div class="card-heading-container row">

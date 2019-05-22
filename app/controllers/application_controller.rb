@@ -1,23 +1,21 @@
 class ApplicationController < ActionController::Base
 
-  $user_type = 3
-  $current_user = User.find(2)
+  $user_type = 2
+  # $current_user = User.find(session["warden.user.user.key"][0][0])
 
-  def update_type_admin
-    $user_type = 1
-    $current_user = User.find(2)
-    redirect_to 'http://localhost:3000?user_id=2'
+  # def current_user
+  #   @current_user ||= session[:current_user_id] && User.find_by_id(session[:current_user_id])
+  # end
+
+  def is_user_logged_in?
+  #complete this method
+
+  logged_in = current_user
+  if current_user then true else redirect_to root_path end
   end
 
-  def update_type_regular_user
-    $user_type = 2
-    redirect_to 'http://localhost:3000/?user_id=1'
-  end
-
-  def update_type_guest_user
-    $user_type = 3
-    $current_user = nil
-    redirect_to 'http://localhost:3000'
+  def google_logged_in
+    if session["warden.user.user.key"] then true else false end
   end
 
 end

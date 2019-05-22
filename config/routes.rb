@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users, controllers: { omniauth_callbacks: 'callbacks' }
   get 'watch/watch'
   get 'search/search'
   resources :tags
@@ -28,6 +29,9 @@ Rails.application.routes.draw do
   end
 
   root to: 'home#home'
+  # root to: 'sessions#new'
+  # get 'sign_in', to: 'sessions#new'
+  delete '/log_out' => 'sessions#destroy', as: :log_out
   get 'user_profile/view', as: 'user_profile_view'
   get 'user_profile', to: 'user_profile#view'
   get 'user_profile/modify', as: 'user_profile_modify'

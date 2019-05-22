@@ -12,7 +12,8 @@
   <body>
   <% if $user_type == 1 %>
   <nav id="navbar-app" class="navbar navbar-expand-lg bg-light justify-content-between fixed-top">
-    <a class="navbar-brand" href="/">AngryLusho <small>admin</small></a>
+    <a class="navbar-brand" href="<%= root_path %>">AngryLusho <small>admin</small></a>
+    <button><%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %></button>
     <form class="form-inline">
       <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search">
       <a class="btn btn-outline-primary" href="<%= search_path %>" type="submit">Search</a>
@@ -26,21 +27,22 @@
           </a>
           <div class="dropdown-menu dropdown-menu-right">
             <div class="dropdown-item">
-              <h6><%=$current_user.name %><br>
-                <small><%=$current_user.email %></small>
+              <h6><%=current_user.name %><br>
+                <small><%=current_user.email %></small>
               </h6>
             </div>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="<%= user_profile_view_path(user_id: $current_user.id) %>">View profile</a>
+            <a class="dropdown-item" href="<%= user_profile_view_path(user_id: current_user.id) %>">View profile</a>
             <a class="dropdown-item" onclick="startGuestUser()">Log out</a>
           </div>
         </div>
       </form>
     </div>
   </nav>
-  <% elsif $user_type == 2 %>
+  <% elsif user_signed_in?%>
   <nav id="navbar-app" class="navbar navbar-expand-lg bg-light justify-content-between fixed-top">
     <a class="navbar-brand" href="/">AngryLusho</a>
+    <button><%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %></button>
 
     <form class="form-inline" action=<%=search_path %>>
       <input class="form-control mr-sm-2" type="text" name="input" placeholder="search...">
@@ -63,27 +65,32 @@
           </a>
           <div class="dropdown-menu dropdown-menu-right">
             <div class="dropdown-item">
-              <h6><%=$current_user.name %><br>
-                <small><%=$current_user.email %></small>
+              <h6><%=current_user.name %><br>
+                <small><%=current_user.email %></small>
               </h6>
             </div>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="<%= user_profile_view_path(user_id: $current_user.id) %>">View profile</a>
-            <a class="dropdown-item" onclick="startGuestUser()">Log out</a>
+            <a class="dropdown-item" href="<%= user_profile_view_path(user_id: current_user.id) %>">View profile</a>
+<!--            <a class="dropdown-item" onclick="startGuestUser()">Log out</a>-->
+<!--            <button><%#= link_to "Log Out", log_out_path, method: :delete %></button>-->
+            <%= link_to "Log out", destroy_user_session_path, method: :delete %>
           </div>
         </div>
       </form>
     </div>
   </nav>
-  <% elsif $user_type == 3 %>
+  <% else%>
     <nav id="navbar-app" class="navbar navbar-expand-lg bg-light justify-content-between fixed-top">
       <a class="navbar-brand" href="/">AngryLusho</a>
+      <button><%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %></button>
+
       <form class="form-inline">
         <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search">
         <a class="btn btn-outline-primary" href="<%= search_path %>" type="submit">Search</a>
       </form>
       <div class="nav-item">
         <form class="form-inline">
+<!--          <button><%#= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %></button>-->
           <a href="<%= session_login_path %>" class="btn btn-outline-primary mr-sm-2" role="button">Log in</a>
           <a href="<%= session_sign_up_path %>" class="btn btn-outline-primary" role="button">Sign Up</a>
         </form>

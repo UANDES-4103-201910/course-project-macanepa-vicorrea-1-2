@@ -2,6 +2,7 @@
   <div class="tab-content">
     <div id="create-account-nav" class="container tab-pane active"><br>
       <h2>Log in</h2>
+      <%= User.find(session["warden.user.user.key"][0][0]).name %>
       <div class="card">
         <div class="card-body">
 <!--          <form>-->

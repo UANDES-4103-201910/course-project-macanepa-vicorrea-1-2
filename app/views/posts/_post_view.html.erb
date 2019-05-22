@@ -30,20 +30,20 @@
               <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-                <% if ($current_user != nil) %>
-                  <a class="dropdown-item" href="#">Follow Post</a>
-                  <hr>
-                <% end %>
+                <%# if ($current_user != nil) %>
+                <a class="dropdown-item" href="#">Follow Post</a>
+                <hr>
+                <%# end %>
 
 
-                <% if ($current_user != nil) %>
-                  <% if (post.user.id == $current_user.id) %>
-<!--                    <a class="dropdown-item" href="#">Edit</a>-->
-                    <a class="dropdown-item" href="<%= edit_post_path(id: post.id, format: :html) %>">Edit</a>
-                    <a class="dropdown-item"><%= link_to 'Destroy', post, method: :delete, data: {confirm: 'Are you sure?'} %></a>
+                <%# if ($current_user != nil) %>
+                <%# if (post.user.id == $current_user.id) %>
+                <!--                    <a class="dropdown-item" href="#">Edit</a>-->
+                <a class="dropdown-item" href="<%= edit_post_path(id: post.id, format: :html) %>">Edit</a>
+                <a class="dropdown-item"><%= link_to 'Destroy', post, method: :delete, data: {confirm: 'Are you sure?'} %></a>
 
-                    <hr>
-                  <% end end %>
+                <hr>
+                <%# end end %>
                 <a class="dropdown-item" data-toggle="modal" data-target="#report-modal">Report</a>
               </div>
             </div>
@@ -77,92 +77,60 @@
           <div class="btn-group-xs">
 
             <form action="create_validation" , method="post">
-              <input type="hidden" name="validation[user_id]" value="<%= $current_user.id %>">
-              <input type="hidden" name="validation[post_id]" value="<%= post.id %>">
-              <i class="fa fa-thumbs-up" aria-hidden="true"> </i><input class="post-icon btn btn-default btn-xs" type="submit" name="validation[validation_type]" value="like"><%= likes_count %></a>
-              <i class="fa fa-thumbs-down" aria-hidden="true"> </i><input class="post-icon btn btn-default btn-xs" type="submit" name="validation[validation_type]" value="dislike"><%= dislikes_count %></a>
-              <a class="post-icon btn btn-default btn-xs"><i class="fa fa-retweet" aria-hidden="true"></i>
-                Reshare: <%= shares_count %></a>
-              <a class="post-icon btn btn-default btn-xs" data-toggle="collapse" href="#collapseComment-<%= post.id %>" role="button" aria-expanded="false" aria-controls="collapseComment"><i class="fa fa-comment" aria-hidden="true"></i>
-                Comment: <%= post.comments.count %></a>
-            </form>
+              <% if user_signed_in? %>
+                <input type="hidden" name="validation[user_id]" value="<%= current_user.id %>">
+                <input type="hidden" name="validation[post_id]" value="<%= post.id %>">
 
-          </div>
+                <i class="fa fa-thumbs-up" aria-hidden="true"> </i><input class="post-icon btn btn-default btn-xs" type="submit" name="validation[validation_type]" value="like"><%= likes_count %></a>
+                <i class="fa fa-thumbs-down" aria-hidden="true"> </i><input class="post-icon btn btn-default btn-xs" type="submit" name="validation[validation_type]" value="dislike"><%= dislikes_count %></a>
+              <% else %>
+                <i class="fa fa-thumbs-up" aria-hidden="true"> </i><small> like </small><%= likes_count %></a>
+                <i class="fa fa-thumbs-down" aria-hidden="true"> </i><small> dislike </small><%= dislikes_count %></a>
+            <% end %>
+                <a class="post-icon btn btn-default btn-xs"><i class="fa fa-retweet" aria-hidden="true"></i>
+                  Reshare: <%= shares_count %></a>
+                <a class="post-icon btn btn-default btn-xs" data-toggle="collapse" href="#collapseComment-<%= post.id %>" role="button" aria-expanded="false" aria-controls="collapseComment"><i class="fa fa-comment" aria-hidden="true"></i>
+                  Comment: <%= post.comments.count %></a>
 
-        </div>
+                </form>
 
-        <div style="height: 40px;"></div>
-        <div class="comment-container collapse" id="collapseComment-<%= post.id %>">
-          <div class="h5 text-primary">Comments</div>
-          <% if (post.is_open) %>
-            <form action="create_comment" method="post">
-              <div class="new-comment-container col mx-1">
-                <textarea name="comment[content]" class="w-100" style="max-height: 120px; min-height: 30px" placeholder="Enter comment"></textarea>
-                <input type="hidden" name="comment[user_id]" value="<%= $current_user.id %>">
-                <input type="hidden" name="comment[post_id]" value="<%= post.id %>">
-                <button style="float: right;" type="submit" class="btn btn-outline-primary mu-4">Publish</button>
-              </div>
-            </form>
-          <% end %>
-
-          <% this_post_comments = @comments.where(post_id: post.id) %>
-          <% this_post_comments.each do |comment| %>
-
-            <hr>
-            <% comment_user = User.find(comment.user_id) %>
-            <div class="comment-container my-3">
-              <div class="card card-default">
-
-                <div class="card-header">
-                  <div class="card-heading-container row">
-                    <div class="left-elements row m-2 pull-left">
-                      <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
-                      <a class="p text-primary mx-2 my-auto" href="<%= user_profile_view_path(user_id: comment_user.id) %>"><%= comment_user.name %> <%= comment_user.last_name %></a>
-                    </div>
-
-                    <% if ($current_user != nil) %>
-                      <% if (comment.user.id == $current_user.id) %>
-                        <div class="dropdown" style="float: right;">
-                          <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" data-toggle="modal" data-target="#edit-comment-modal">Edit</a>
-                          </div>
-                        </div>
-                      <% end end %>
-                  </div>
                 </div>
 
-                <div class="card-body">
-                  <div class="p text-secondary"><%= comment.content %></div>
-                  <div class="comment-container collapse mu-2" id="new-comment-reply-modal-<%= comment.id %>">
-                    <div class="new-comment-container col mx-1">
-                      <form action="create_comment" method="post">
-                        <div class="new-comment-container col mx-1">
-                          <textarea name="comment[content]" class="w-100" style="max-height: 120px; min-height: 30px" placeholder="Enter comment"></textarea>
-                          <input type="hidden" name="comment[user_id]" value="<%= $current_user.id %>">
-                          <input type="hidden" name="comment[post_id]" value="<%= post.id %>">
-                          <input type="hidden" name="comment[comment_id]" value="<%= comment.id %>">
-                          <button style="float: right;" type="submit" class="btn btn-outline-primary mu-4">Publish</button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                  <button style="float: right;" class="btn btn-link mu-2" data-toggle="collapse" data-target="#new-comment-reply-modal-<%= comment.id %>">Reply</button>
                 </div>
-              </div>
-            </div>
-            <div class="reply-container my-2">
-              <% this_replies = @replies.where(comment_id: comment.id) %>
-              <% this_replies.each do |reply| %>
-                <div class="row">
-                  <div class="col-2"></div>
-                  <div class="col-10 mt-2">
-                    <div class="card card-default">
-                      <div class="card-body">
-                        <div class="col">
-                          <div class="p text-secondary">
-                            <% if ($current_user != nil) %>
-                              <% if (reply.user.id == $current_user.id) %>
+
+                <div style="height: 40px;"></div>
+                <div class="comment-container collapse" id="collapseComment-<%= post.id %>">
+                  <div class="h5 text-primary">Comments</div>
+                  <% if (post.is_open) %>
+                    <% if user_signed_in? %>
+                    <form action="create_comment" method="post">
+                      <div class="new-comment-container col mx-1">
+                        <textarea name="comment[content]" class="w-100" style="max-height: 120px; min-height: 30px" placeholder="Enter comment"></textarea>
+                        <input type="hidden" name="comment[user_id]" value="<%= current_user.id %>">
+                        <input type="hidden" name="comment[post_id]" value="<%= post.id %>">
+                        <button style="float: right;" type="submit" class="btn btn-outline-primary mu-4">Publish</button>
+                      </div>
+                    </form>
+                      <% end %>
+                  <% end %>
+
+                  <% this_post_comments = @comments.where(post_id: post.id) %>
+                  <% this_post_comments.each do |comment| %>
+
+                    <hr>
+                    <% comment_user = User.find(comment.user_id) %>
+                    <div class="comment-container my-3">
+                      <div class="card card-default">
+
+                        <div class="card-header">
+                          <div class="card-heading-container row">
+                            <div class="left-elements row m-2 pull-left">
+                              <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
+                              <a class="p text-primary mx-2 my-auto" href="<%= user_profile_view_path(user_id: comment_user.id) %>"><%= comment_user.name %> <%= comment_user.last_name %></a>
+                            </div>
+
+                            <% if (current_user != nil) %>
+                              <% if (comment.user.id == current_user.id) %>
                                 <div class="dropdown" style="float: right;">
                                   <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -170,135 +138,178 @@
                                   </div>
                                 </div>
                               <% end end %>
+                          </div>
+                        </div>
 
-                            <a class="btn-link text-primary" href=<%= user_profile_view_path(user_id: reply.user.id) %>><%= reply.user.name %> <%= reply.user.last_name %></a>
-                            replying to
-                            <a class="btn-link text-primary" href=<%= user_profile_view_path(user_id: comment.user.id) %>><%= comment.user.name %> <%= comment.user.last_name %>
-                              : </a>
-                            <%= reply.content %></div>
-                          <div class="comment-container collapse mu-2" id="new-reply-modal-<%= reply.id %>">
+                        <div class="card-body">
+                          <div class="p text-secondary"><%= comment.content %></div>
+                          <div class="comment-container collapse mu-2" id="new-comment-reply-modal-<%= comment.id %>">
                             <div class="new-comment-container col mx-1">
+                              <% if user_signed_in? %>
                               <form action="create_comment" method="post">
                                 <div class="new-comment-container col mx-1">
                                   <textarea name="comment[content]" class="w-100" style="max-height: 120px; min-height: 30px" placeholder="Enter comment"></textarea>
-                                  <input type="hidden" name="comment[user_id]" value="<%= $current_user.id %>">
+                                  <input type="hidden" name="comment[user_id]" value="<%= current_user.id %>">
                                   <input type="hidden" name="comment[post_id]" value="<%= post.id %>">
-                                  <input type="hidden" name="comment[comment_id]" value="<%= reply.comment_id %>">
+                                  <input type="hidden" name="comment[comment_id]" value="<%= comment.id %>">
                                   <button style="float: right;" type="submit" class="btn btn-outline-primary mu-4">Publish</button>
                                 </div>
                               </form>
+                                <% end %>
                             </div>
                           </div>
-                          <button style="float: right;" class="btn btn-link mu-2" data-toggle="collapse" data-target="#new-reply-modal-<%= reply.id %>">Reply</button>
-
+                          <button style="float: right;" class="btn btn-link mu-2" data-toggle="collapse" data-target="#new-comment-reply-modal-<%= comment.id %>">Reply</button>
                         </div>
                       </div>
                     </div>
+                    <div class="reply-container my-2">
+                      <% this_replies = @replies.where(comment_id: comment.id) %>
+                      <% this_replies.each do |reply| %>
+                        <div class="row">
+                          <div class="col-2"></div>
+                          <div class="col-10 mt-2">
+                            <div class="card card-default">
+                              <div class="card-body">
+                                <div class="col">
+                                  <div class="p text-secondary">
+                                    <% if (current_user != nil) %>
+                                      <% if (reply.user.id == current_user.id) %>
+                                        <div class="dropdown" style="float: right;">
+                                          <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" data-toggle="modal" data-target="#edit-comment-modal">Edit</a>
+                                          </div>
+                                        </div>
+                                      <% end end %>
+
+                                    <a class="btn-link text-primary" href=<%= user_profile_view_path(user_id: reply.user.id) %>><%= reply.user.name %> <%= reply.user.last_name %></a>
+                                    replying to
+                                    <a class="btn-link text-primary" href=<%= user_profile_view_path(user_id: comment.user.id) %>><%= comment.user.name %> <%= comment.user.last_name %>
+                                      : </a>
+                                    <%= reply.content %></div>
+                                  <div class="comment-container collapse mu-2" id="new-reply-modal-<%= reply.id %>">
+                                    <div class="new-comment-container col mx-1">
+                                      <form action="create_comment" method="post">
+                                        <div class="new-comment-container col mx-1">
+                                          <textarea name="comment[content]" class="w-100" style="max-height: 120px; min-height: 30px" placeholder="Enter comment"></textarea>
+                                          <input type="hidden" name="comment[user_id]" value="<%= current_user.id %>">
+                                          <input type="hidden" name="comment[post_id]" value="<%= post.id %>">
+                                          <input type="hidden" name="comment[comment_id]" value="<%= reply.comment_id %>">
+                                          <button style="float: right;" type="submit" class="btn btn-outline-primary mu-4">Publish</button>
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                                  <button style="float: right;" class="btn btn-link mu-2" data-toggle="collapse" data-target="#new-reply-modal-<%= reply.id %>">Reply</button>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>
+
+
+                <!-- The Modal -->
+                <div class="modal fade" id="report-modal">
+                  <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+
+                      <div class="modal-header">
+                        <div class="h4">Report Post</div>
+                      </div>
+                      <!-- Modal body -->
+                      <div class="modal-body row">
+                        <div class="col-12">
+                          <textarea class="w-100 min-x" style="min-height: 130px; max-height: 250px;"></textarea>
+                        </div>
+                      </div>
+
+                      <div class="modal-footer">
+                        <button class="btn btn-primary">Report</button>
+                      </div>
+
+                    </div>
                   </div>
                 </div>
-              <% end %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
+                <div class="modal fade" id="edit-comment-modal">
+                  <div class="modal-dialog modal-md">
+                    <div class="modal-content">
 
+                      <div class="modal-header">
+                        <div class="h4">Edit Comment</div>
+                      </div>
+                      <!-- Modal body -->
+                      <div class="modal-body row">
+                        <div class="col-12">
+                          <textarea class="w-100 min-x" style="min-height: 130px; max-height: 250px;"></textarea>
+                        </div>
+                      </div>
 
-<!-- The Modal -->
-<div class="modal fade" id="report-modal">
-  <div class="modal-dialog modal-md">
-    <div class="modal-content">
+                      <div class="modal-footer">
+                        <button class="btn btn-primary">Save Changes</button>
+                      </div>
 
-      <div class="modal-header">
-        <div class="h4">Report Post</div>
-      </div>
-      <!-- Modal body -->
-      <div class="modal-body row">
-        <div class="col-12">
-          <textarea class="w-100 min-x" style="min-height: 130px; max-height: 250px;"></textarea>
-        </div>
-      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" id="display-images-modal">
+                  <div class="modal-dialog modal-md">
+                    <div class="modal-content">
 
-      <div class="modal-footer">
-        <button class="btn btn-primary">Report</button>
-      </div>
+                      <div class="modal-header">
+                        <div class="h4">Images</div>
+                      </div>
+                      <!-- Modal body -->
+                      <div class="modal-body row">
+                        <div class="col-12">
+                          <div class="h4 text-primary">In the final version images will be shown in this modal</div>
+                        </div>
+                      </div>
 
-    </div>
-  </div>
-</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" id="display-attachments-modal">
+                  <div class="modal-dialog modal-md">
+                    <div class="modal-content">
 
-<div class="modal fade" id="edit-comment-modal">
-  <div class="modal-dialog modal-md">
-    <div class="modal-content">
+                      <div class="modal-header">
+                        <div class="h4">Attachments</div>
+                      </div>
+                      <!-- Modal body -->
+                      <div class="modal-body row">
+                        <div class="col-12">
+                          <div class="h4 text-primary">In the final version attachments will be shown in this modal
+                          </div>
+                        </div>
+                      </div>
 
-      <div class="modal-header">
-        <div class="h4">Edit Comment</div>
-      </div>
-      <!-- Modal body -->
-      <div class="modal-body row">
-        <div class="col-12">
-          <textarea class="w-100 min-x" style="min-height: 130px; max-height: 250px;"></textarea>
-        </div>
-      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" id="display-map-modal">
+                  <div class="modal-dialog modal-md">
+                    <div class="modal-content">
 
-      <div class="modal-footer">
-        <button class="btn btn-primary">Save Changes</button>
-      </div>
+                      <div class="modal-header">
+                        <div class="h4">Location</div>
+                      </div>
+                      <!-- Modal body -->
+                      <div class="modal-body row">
+                        <div class="col-12">
+                          <div class="h4 text-primary">In the final version the map will be shown in this modal</div>
+                        </div>
+                      </div>
 
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="display-images-modal">
-  <div class="modal-dialog modal-md">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <div class="h4">Images</div>
-      </div>
-      <!-- Modal body -->
-      <div class="modal-body row">
-        <div class="col-12">
-          <div class="h4 text-primary">In the final version images will be shown in this modal</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="display-attachments-modal">
-  <div class="modal-dialog modal-md">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <div class="h4">Attachments</div>
-      </div>
-      <!-- Modal body -->
-      <div class="modal-body row">
-        <div class="col-12">
-          <div class="h4 text-primary">In the final version attachments will be shown in this modal</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="display-map-modal">
-  <div class="modal-dialog modal-md">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <div class="h4">Location</div>
-      </div>
-      <!-- Modal body -->
-      <div class="modal-body row">
-        <div class="col-12">
-          <div class="h4 text-primary">In the final version the map will be shown in this modal</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
+                    </div>
+                  </div>
+                </div>

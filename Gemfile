@@ -66,3 +66,6 @@ gem 'bootstrap', '~> 4.3.1'
 
 # Use jQuery
 gem 'jquery-rails'
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
