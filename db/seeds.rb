@@ -2,10 +2,10 @@
 
 # Users
 user01 = User.create!(name:"Matias",last_name:"Canepa",email:"macanepa@miuandes.cl",password:"123456789",last_access:Time.now)
-user02 = User.create!(name:"Vicente",last_name:"Correa",email:"vicorrea@miuandes.cl",password:"123",last_access:Time.now)
-user03 = User.create!(name:"Lusho",last_name:"el Angry",email:"angry_lusho@miuandes.cl",password:"123",last_access:Time.now)
-user04 = User.create!(name:"Giorgio",last_name:"Guggiana",email:"gaguggiana@miuandes.cl",password:"wuwu",last_access:Time.now)
-user05 = User.create!(name:"Tomas",last_name:"Turbado",email:"tomasturbado@miuandes.cl",password:"wuwu",last_access:Time.now)
+user02 = User.create!(name:"Vicente",last_name:"Correa",email:"vicorrea@miuandes.cl",password:"123456",last_access:Time.now)
+user03 = User.create!(name:"Lusho",last_name:"el Angry",email:"angry_lusho@miuandes.cl",password:"123456",last_access:Time.now)
+user04 = User.create!(name:"Giorgio",last_name:"Guggiana",email:"gaguggiana@miuandes.cl",password:"123456",last_access:Time.now)
+user05 = User.create!(name:"Tomas",last_name:"Turbado",email:"tomasturbado@miuandes.cl",password:"123456",last_access:Time.now)
 
 
 #Profiles

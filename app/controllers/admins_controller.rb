@@ -57,7 +57,6 @@ class AdminsController < ApplicationController
   # end
 
   def make_user_admin
-    puts params
     user_id = (User.where(email: params[:user_mail]).pluck(:id))[0]
     new_admin = Admin.new(user_id: user_id, geofence: "", super_admin: false)
     if new_admin.save

@@ -16,7 +16,6 @@ class SearchController < ApplicationController
         @users = User.all
       else
         @users = User.joins(:profile).where("city LIKE (?) or country LIKE (?)","%#{params[:input]}%","%#{params[:input]}%")
-        puts(@users)
       end
     end
 

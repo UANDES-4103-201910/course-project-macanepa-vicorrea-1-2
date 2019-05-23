@@ -27,7 +27,15 @@ class User < ApplicationRecord
       user.email = auth.info.email
       user.name = auth.info.name
       user.password = Devise.friendly_token[0, 20]
-      puts("INTENTANDO CREAR NUEVO USER!\n\n\n\n\n")
+    end
+  end
+
+  def is_admin
+    possible_admin = Admin.where(user_id: id).count
+    if possible_admin == 0
+      false
+    elsif possible_admin >= 1
+        true
     end
   end
 end

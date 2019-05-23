@@ -9,9 +9,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    puts "pasando por aqui!!!!!!!!!!!!!!!!!!!!"
     user = User.where(email: user_params[:email]).first
-    puts user
     if user && user.password == user_params[:password]
       # Save the user ID in the session so it can be used in
       # subsequent requests
