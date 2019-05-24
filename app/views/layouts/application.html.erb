@@ -8,120 +8,109 @@
     <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
-  <% if $user_type == 1 %>
   <nav id="navbar-app" class="navbar navbar-expand-lg bg-light justify-content-between fixed-top">
-    <a class="navbar-brand" href="<%= root_path %>">AngryLusho <small>admin</small></a>
-    <button><%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %></button>
+    <a class="navbar-brand" href="<%= root_path %>">AngryLusho <% if user_signed_in? && current_user.is_admin %><small>admin</small> <% end %></a>
     <form class="form-inline">
       <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search">
       <a class="btn btn-outline-primary" href="<%= search_path %>" type="submit">Search</a>
     </form>
     <div class="nav-item">
       <form class="form-inline">
-        <a href="<%= admin_view_path %>" class="btn btn-outline-dark" role="button">Admin</a>
-        <div class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-1 rounded-circle border border-primary">
-          </a>
-          <div class="dropdown-menu dropdown-menu-right">
-            <div class="dropdown-item">
-              <h6><%=current_user.name %><br>
-                <small><%=current_user.email %></small>
-              </h6>
+        <% if user_signed_in? && current_user.is_admin %>
+          <a href="<%= admin_view_path %>" class="btn btn-outline-dark" role="button">Admin</a>
+        <% end %>
+        <% if user_signed_in? %>
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-1 rounded-circle border border-primary">
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <div class="dropdown-item">
+                <h6><%=current_user.name %><br>
+                  <small><%=current_user.email %></small>
+                </h6>
+              </div>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="<%= user_profile_view_path(user_id: current_user.id) %>">View profile</a>
+              <%= link_to "Log out", destroy_user_session_path, method: :delete %>
             </div>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="<%= user_profile_view_path(user_id: current_user.id) %>">View profile</a>
-            <a class="dropdown-item" onclick="startGuestUser()">Log out</a>
           </div>
+        <% else %>
+          <div class="nav-item">
+            <form class="form-inline">
+              <button><%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %></button>
+              <a href="<%= session_login_path %>" class="btn btn-outline-primary mr-sm-2" role="button">Log in</a>
+              <a href="<%= session_sign_up_path %>" class="btn btn-outline-primary" role="button">Sign Up</a>
+            </form>
         </div>
+        <% end %>
       </form>
     </div>
   </nav>
-  <% elsif user_signed_in?%>
-  <nav id="navbar-app" class="navbar navbar-expand-lg bg-light justify-content-between fixed-top">
-    <a class="navbar-brand" href="/">AngryLusho</a>
-    <button><%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %></button>
+  <%# if user_signed_in?%>
+<!--  <nav id="navbar-app" class="navbar navbar-expand-lg bg-light justify-content-between fixed-top">-->
+<!--    <a class="navbar-brand" href="/">AngryLusho</a>-->
+<!--    <button><%#= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %></button>-->
 
-    <form class="form-inline" action=<%=search_path %>>
-      <input class="form-control mr-sm-2" type="text" name="input" placeholder="search...">
-      <select class="btn btn-secondary dropdown-toggle ml-2" name="search_type">
-        <option value="name">User</option>
-        <option value="location">Post</option>
-      </select>
-      <select class="btn btn-secondary dropdown-toggle ml-2" name="search_by">
-        <option value="name">Name</option>
-        <option value="location">Location</option>
-      </select>
-      <input class="btn btn-outline-primary ml-2" type="submit" value="Search">
-    </form>
+<!--    <form class="form-inline" action=<%#=search_path %>>-->
+<!--      <input class="form-control mr-sm-2" type="text" name="input" placeholder="search...">-->
+<!--      <select class="btn btn-secondary dropdown-toggle ml-2" name="search_type">-->
+<!--        <option value="name">User</option>-->
+<!--        <option value="location">Post</option>-->
+<!--      </select>-->
+<!--      <select class="btn btn-secondary dropdown-toggle ml-2" name="search_by">-->
+<!--        <option value="name">Name</option>-->
+<!--        <option value="location">Location</option>-->
+<!--      </select>-->
+<!--      <input class="btn btn-outline-primary ml-2" type="submit" value="Search">-->
+<!--    </form>-->
 
-    <div class="nav-item">
-      <form class="form-inline">
-        <div class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-1 rounded-circle border border-primary">
-          </a>
-          <div class="dropdown-menu dropdown-menu-right">
-            <div class="dropdown-item">
-              <h6><%=current_user.name %><br>
-                <small><%=current_user.email %></small>
-              </h6>
-            </div>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="<%= user_profile_view_path(user_id: current_user.id) %>">View profile</a>
+<!--    <div class="nav-item">-->
+<!--      <form class="form-inline">-->
+<!--        <div class="nav-item dropdown">-->
+<!--          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--            <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-1 rounded-circle border border-primary">-->
+<!--          </a>-->
+<!--          <div class="dropdown-menu dropdown-menu-right">-->
+<!--            <div class="dropdown-item">-->
+<!--              <h6><%#=current_user.name %><br>-->
+<!--                <small><%#=current_user.email %></small>-->
+<!--              </h6>-->
+<!--            </div>-->
+<!--            <div class="dropdown-divider"></div>-->
+<!--            <a class="dropdown-item" href="<%#= user_profile_view_path(user_id: current_user.id) %>">View profile</a>-->
 <!--            <a class="dropdown-item" onclick="startGuestUser()">Log out</a>-->
 <!--            <button><%#= link_to "Log Out", log_out_path, method: :delete %></button>-->
-            <%= link_to "Log out", destroy_user_session_path, method: :delete %>
-          </div>
-        </div>
-      </form>
-    </div>
-  </nav>
-  <% else%>
-    <nav id="navbar-app" class="navbar navbar-expand-lg bg-light justify-content-between fixed-top">
-      <a class="navbar-brand" href="/">AngryLusho</a>
-      <button><%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %></button>
+            <%#= link_to "Log out", destroy_user_session_path, method: :delete %>
+<!--          </div>-->
+<!--        </div>-->
+<!--      </form>-->
+<!--    </div>-->
+<!--  </nav>-->
+  <%# else%>
+<!--    <nav id="navbar-app" class="navbar navbar-expand-lg bg-light justify-content-between fixed-top">-->
+<!--      <a class="navbar-brand" href="/">AngryLusho</a>-->
+<!--      <button><%#= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %></button>-->
 
-      <form class="form-inline">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search">
-        <a class="btn btn-outline-primary" href="<%= search_path %>" type="submit">Search</a>
-      </form>
-      <div class="nav-item">
-        <form class="form-inline">
+<!--      <form class="form-inline">-->
+<!--        <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search">-->
+<!--        <a class="btn btn-outline-primary" href="<%#= search_path %>" type="submit">Search</a>-->
+<!--      </form>-->
+<!--      <div class="nav-item">-->
+<!--        <form class="form-inline">-->
 <!--          <button><%#= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %></button>-->
-          <a href="<%= session_login_path %>" class="btn btn-outline-primary mr-sm-2" role="button">Log in</a>
-          <a href="<%= session_sign_up_path %>" class="btn btn-outline-primary" role="button">Sign Up</a>
-        </form>
-      </div>
-    </nav>
-  <% end %>
+<!--          <a href="<%#= session_login_path %>" class="btn btn-outline-primary mr-sm-2" role="button">Log in</a>-->
+<!--          <a href="<%#= session_sign_up_path %>" class="btn btn-outline-primary" role="button">Sign Up</a>-->
+<!--        </form>-->
+<!--      </div>-->
+<!--    </nav>-->
+  <%# end %>
  <div id="page-app" class="page-content">
     <%= yield %>
     </div>
   <footer id="footer-app" class="footer">
-    <nav class="navbar navbar-expand-lg bg-light">
-      <div class="nav-item">
-        <button id="admin-start-button" onclick="startAdmin()" class="btn btn-outline-danger">View like admin</button>
-      </div>
-      <div class="nav-item">
-        <button id="regular-user-start-button" onclick="startRegularUser()" class="btn btn-outline-danger">View like regular user</button>
-      </div>
-      <div class="nav-item">
-        <button id="guest-user-start-button" onclick="startGuestUser()" class="btn btn-outline-danger">View like guest user</button>
-      </div>
-      <div class="nav-item mr-auto">
-        <% if $user_type == 1 %>
-          Admin <small>view</small>
-        <% elsif $user_type == 2 %>
-          Regular user <small>view</small>
-        <% elsif $user_type == 3 %>
-          Guest user <small>view</small>
-        <% end %>
-        (See README)
-      </div>
-      <div class="nav-divider"></div>
+    <nav class="navbar navbar-expand-lg bg-light justify-content-end">
       <div class="nav-item">
         <a class="nav-link text-primary" data-toggle="modal" data-target="#aup-modal">Acceptable Use Policy</a>
       </div>
@@ -132,9 +121,6 @@
   </footer>
   </body>
 </html>
-
-
-
 <div class="modal" id="tos-modal">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -159,7 +145,6 @@
       <div class="modal-body" id="remove-from-dumpster-modal-body">
         <p>Content of AUP.</p>
       </div>
-
     </div>
   </div>
 </div>

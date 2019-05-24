@@ -189,6 +189,7 @@
                                     <%= reply.content %></div>
                                   <div class="comment-container collapse mu-2" id="new-reply-modal-<%= reply.id %>">
                                     <div class="new-comment-container col mx-1">
+                                      <% if user_signed_in? %>
                                       <form action="create_comment" method="post">
                                         <div class="new-comment-container col mx-1">
                                           <textarea name="comment[content]" class="w-100" style="max-height: 120px; min-height: 30px" placeholder="Enter comment"></textarea>
@@ -198,6 +199,7 @@
                                           <button style="float: right;" type="submit" class="btn btn-outline-primary mu-4">Publish</button>
                                         </div>
                                       </form>
+                                        <% end %>
                                     </div>
                                   </div>
                                   <button style="float: right;" class="btn btn-link mu-2" data-toggle="collapse" data-target="#new-reply-modal-<%= reply.id %>">Reply</button>
