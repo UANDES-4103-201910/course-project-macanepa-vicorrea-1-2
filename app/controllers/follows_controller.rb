@@ -29,7 +29,8 @@ class FollowsController < ApplicationController
     @follow.user_id = current_user.id
     respond_to do |format|
       if @follow.save
-        format.html { redirect_to @follow, notice: 'Follow was successfully created.' }
+        # format.html { redirect_to @follow, notice: 'Follow was successfully created.' }
+        format.html { redirect_to root_path }
         format.json { render :show, status: :created, location: @follow }
       else
         format.html { render :new }
@@ -57,7 +58,9 @@ class FollowsController < ApplicationController
   def destroy
     @follow.destroy
     respond_to do |format|
-      format.html { redirect_to follows_url, notice: 'Follow was successfully destroyed.' }
+      # format.html { redirect_to follows_url, notice: 'Follow was successfully destroyed.' }
+      format.html { redirect_to root_path }
+
       format.json { head :no_content }
     end
   end
