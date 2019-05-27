@@ -20,7 +20,9 @@
             <div class="form-inline">
               <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
               <div class="col">
-                <a class="p text-primary my-auto" href="<%= user_profile_view_path(user_id: post.user.id) %>"><%= post.user.name %> <%= post.user.last_name %></a>
+                <% if(not post.user.profile.nil?) %>
+                  <a class="p text-primary my-auto" href="<%= user_profile_view_path(user_profile_id: post.user.profile.id) %>"><%= post.user.get_name %></a>
+                <% end %>
                 <a class="p text-secondary my-auto ml-4" href="<%= watch_path(post_id: post.id) %>"><%= post.title %></a>
                 <div class="text-secondary my-auto small"><%= post.created_at %> </div>
 
@@ -131,7 +133,13 @@
                           <div class="card-heading-container row">
                             <div class="left-elements row m-2 pull-left">
                               <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
-                              <a class="p text-primary mx-2 my-auto" href="<%= user_profile_view_path(user_id: comment_user.id) %>"><%= comment_user.name %> <%= comment_user.last_name %></a>
+
+                              <% if(not comment_user.profile.nil?) %>
+                                <a class="p text-primary mx-2 my-auto" href="<%= user_profile_view_path(user_profile_id: comment_user.profile.id) %>"><%= comment_user.get_name %></a>
+                              <% else %>
+                                <a><%= comment_user.get_name %></a>
+                              <% end %>
+
                             </div>
 
                             <% if (current_user != nil) %>
@@ -187,9 +195,9 @@
                                         </div>
                                       <% end end %>
 
-                                    <a class="btn-link text-primary" href=<%= user_profile_view_path(user_id: reply.user.id) %>><%= reply.user.name %> <%= reply.user.last_name %></a>
+                                    <a class="btn-link text-primary" href=<%= user_profile_view_path(user_profile_id: reply.user.profile.id) %>><%= reply.user.name %> <%= reply.user.last_name %></a>
                                     replying to
-                                    <a class="btn-link text-primary" href=<%= user_profile_view_path(user_id: comment.user.id) %>><%= comment.user.name %> <%= comment.user.last_name %>
+                                    <a class="btn-link text-primary" href=<%= user_profile_view_path(user_profile_id: comment.user.profile.id) %>><%= comment.user.name %> <%= comment.user.last_name %>
                                       : </a>
                                     <%= reply.content %></div>
                                   <div class="comment-container collapse mu-2" id="new-reply-modal-<%= reply.id %>">

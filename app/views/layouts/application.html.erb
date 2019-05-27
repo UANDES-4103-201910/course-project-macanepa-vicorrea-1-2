@@ -14,9 +14,21 @@
   <% end %>
   <nav id="navbar-app" class="navbar navbar-expand-lg bg-light justify-content-between fixed-top">
     <a class="navbar-brand" href="<%= root_path %>">AngryLusho <% if user_signed_in? && current_user.is_admin %><small>admin</small> <% end %></a>
-    <form class="form-inline">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search">
-      <a class="btn btn-primary" href="<%= search_path %>" type="submit">Search</a>
+    <form class="form-inline" action=<%=search_path %> >
+
+
+
+
+      <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search" name="input">
+
+      <select class="form-control mr-sm-2" name="search_by">
+        <option class="form-control" value="name">Name</option>
+        <option class="form-control" value="location">Location</option>
+      </select>
+
+      <button class="btn btn-primary" type="submit">Search</button>
+
+
     </form>
     <div class="nav-item">
       <form class="form-inline">

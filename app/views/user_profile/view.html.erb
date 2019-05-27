@@ -7,9 +7,9 @@
       <div class="card card-default">
         <div class="card-body justify-content-center">
           <img class="thumbnail img-responsive" src="https://lut.im/7JCpw12uUT/mY0Mb78SvSIcjvkf.png" width="100vw" height="100vw">
-          <h3><%= @user_profile.user.name %> <%= @user_profile.user.last_name %></h3>
-          <% if ($current_user != nil)
-               if ($current_user.id == @user_profile.user.id) %>
+<!--          <h3><%#= @user_profile.user.name %> <%#= @user_profile.user.last_name %></h3>-->
+          <% if (user_signed_in?)
+               if (current_user.id == @user_profile.user.id) %>
 <!--              <a class="text-primary" href="<%#= user_profile_modify_path(user_id: @user_profile.user.id) %>">Edit Profile</a>-->
               <a class="text-primary" href="<%= edit_profile_path(id: @user_profile.id) %>">Edit Profile</a>
             <% end end %>
@@ -66,9 +66,9 @@
                           %>
                           <div class="col">
                             <div class="content-container form-inline">
-                              <a class="p small text-primary my-auto" href="<%= user_profile_view_path(user_id: @user_profile.user.id) %>"><%= @user_profile.user.name %> <%= @user_profile.user.last_name %></a>
+                              <a class="p small text-primary my-auto" href="<%= user_profile_view_path(user_profile_id: @user_profile.user.profile.id) %>"><%= @user_profile.user.name %> <%= @user_profile.user.last_name %></a>
                               <p class="p small text-secondary my-auto ml-1"><%= content %></p>
-                              <a class="p small text-secondary my-auto ml-1" href="<%= watch_path(post_id: action.post.id) %>"><%= action.post.title %></a>
+                              <a class="p small text-secondary my-auto ml-1" href="<%= watch_path(post_id: action.post.id)%>"><%= action.post.title %></a>
                             </div>
                             <p class="p small text-secondary"><%= action.updated_at %></p>
                           </div>
