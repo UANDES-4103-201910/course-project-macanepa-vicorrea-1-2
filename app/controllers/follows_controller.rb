@@ -1,4 +1,5 @@
 class FollowsController < ApplicationController
+  # validates_uniqueness_of :post_id, scope: :user_id
   before_action :set_follow, only: [:show, :edit, :update, :destroy]
 
   # GET /follows
@@ -25,7 +26,7 @@ class FollowsController < ApplicationController
   # POST /follows.json
   def create
     @follow = Follow.new(follow_params)
-
+    @follow.user_id = current_user.id
     respond_to do |format|
       if @follow.save
         format.html { redirect_to @follow, notice: 'Follow was successfully created.' }

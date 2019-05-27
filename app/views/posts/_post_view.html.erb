@@ -32,6 +32,13 @@
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <% if(post.user_id != current_user.id) %>
                   <a class="dropdown-item" href="#">Follow Post</a>
+
+                  <%= form_for :follow, :url => {:controller => "follows", :action => "create"} do |follow_form| %>
+                    <%= follow_form.text_field :post_id, value: post.id, type:"hidden" %>
+                    <%= submit_tag "follow" %>
+                  <% end %>
+
+
                   <hr>
                 <%end %>
 

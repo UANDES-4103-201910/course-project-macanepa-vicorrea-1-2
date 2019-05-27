@@ -21,7 +21,7 @@
     <div class="nav-item">
       <form class="form-inline">
         <% if user_signed_in? && current_user.is_admin %>
-          <a href="<%= admin_view_path %>" class="btn btn-outline-dark" role="button">Admin</a>
+          <a href="<%= admin_view_path %>" class="btn btn-outline-dark mr-2" role="button">Admin</a>
         <% end %>
         <% if user_signed_in? && (not current_user.profile.nil?) %>
           <div class="nav-item dropdown">
@@ -42,7 +42,7 @@
         <% elsif(user_signed_in? && current_user.profile.nil?) %>
           <div class="nav-item">
             <form class="form-inline">
-              <p><%= current_user.name %></p>
+<!--              <p><%#= current_user.name %></p>-->
               <a href="<%= session_sign_up_path %>" class="btn btn-outline-primary" role="button">Create Profile</a>
               <%= link_to "Log out", destroy_user_session_path, method: :delete %>
             </form>
@@ -52,7 +52,7 @@
 <!--              <a href="<%#= session_login_path %>" class="btn btn-outline-primary" role="button">Log in</a>-->
               <a href="<%= new_user_session_path %>" class="btn btn-outline-primary" role="button">Log in</a>
 <!--              <a href="<%#= session_sign_up_path %>" class="btn btn-outline-primary ml-2" role="button">Sign Up</a>-->
-              <a href="<%= new_user_registration_path %>" class="btn btn-outline-primary ml-2" role="button">D.Sign Up</a>
+              <a href="<%= new_user_registration_path %>" class="btn btn-outline-primary ml-2" role="button">Sign Up</a>
             </form>
         <% end %>
       </form>
