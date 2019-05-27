@@ -26,27 +26,25 @@
 
               </div>
             </div>
-            <div class="dropdown">
+            <% if (user_signed_in?) %>
+              <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <% if(post.user_id != current_user.id) %>
+                  <a class="dropdown-item" href="#">Follow Post</a>
+                  <hr>
+                <%end %>
 
-                <%# if ($current_user != nil) %>
-                <a class="dropdown-item" href="#">Follow Post</a>
-                <hr>
-                <%# end %>
-
-
-                <%# if ($current_user != nil) %>
-                <%# if (post.user.id == $current_user.id) %>
-                <!--                    <a class="dropdown-item" href="#">Edit</a>-->
-                <a class="dropdown-item" href="<%= edit_post_path(id: post.id, format: :html) %>">Edit</a>
-                <a class="dropdown-item"><%= link_to 'Destroy', post, method: :delete, data: {confirm: 'Are you sure?'} %></a>
-
-                <hr>
+                <% if(post.user_id == current_user.id) %>
+                  <a class="dropdown-item" href="<%= edit_post_path(id: post.id, format: :html) %>">Edit</a>
+                  <a class="dropdown-item"><%= link_to 'Destroy', post, method: :delete, data: {confirm: 'Are you sure?'} %></a>
+                  <hr>
+                <%end %>
                 <%# end end %>
                 <a class="dropdown-item" data-toggle="modal" data-target="#report-modal">Report</a>
               </div>
             </div>
+            <%end %>
 
           </div>
 

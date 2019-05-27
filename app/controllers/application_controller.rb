@@ -1,5 +1,8 @@
 class ApplicationController < ActionController::Base
 
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
+
   $user_type = 2
   # $current_user = User.find(session["warden.user.user.key"][0][0])
 
@@ -16,6 +19,15 @@ class ApplicationController < ActionController::Base
 
   def google_logged_in
     if session["warden.user.user.key"] then true else false end
+  end
+
+
+  protected
+
+  def configure_permitted_parameters
+    added_attrs = [:name, :last_name, :email, :password, :password_confirmation, :remember_me]
+    devise_parameter_sanitizer.permit :sign_up, keys: added_attrs
+    devise_parameter_sanitizer.permit :account_update, keys: added_attrs
   end
 
 end

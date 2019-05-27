@@ -9,18 +9,21 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
+  <% if(user_signed_in? && current_user.profile.nil?) %>
+    <%# redirect_to session_sign_up_path  %>
+  <% end %>
   <nav id="navbar-app" class="navbar navbar-expand-lg bg-light justify-content-between fixed-top">
     <a class="navbar-brand" href="<%= root_path %>">AngryLusho <% if user_signed_in? && current_user.is_admin %><small>admin</small> <% end %></a>
     <form class="form-inline">
       <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search">
-      <a class="btn btn-outline-primary" href="<%= search_path %>" type="submit">Search</a>
+      <a class="btn btn-primary" href="<%= search_path %>" type="submit">Search</a>
     </form>
     <div class="nav-item">
       <form class="form-inline">
         <% if user_signed_in? && current_user.is_admin %>
           <a href="<%= admin_view_path %>" class="btn btn-outline-dark" role="button">Admin</a>
         <% end %>
-        <% if user_signed_in? %>
+        <% if user_signed_in? && (not current_user.profile.nil?) %>
           <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-1 rounded-circle border border-primary">
@@ -36,76 +39,26 @@
               <%= link_to "Log out", destroy_user_session_path, method: :delete %>
             </div>
           </div>
-        <% else %>
+        <% elsif(user_signed_in? && current_user.profile.nil?) %>
           <div class="nav-item">
             <form class="form-inline">
-              <button><%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %></button>
-              <a href="<%= session_login_path %>" class="btn btn-outline-primary mr-sm-2" role="button">Log in</a>
-              <a href="<%= session_sign_up_path %>" class="btn btn-outline-primary" role="button">Sign Up</a>
+              <p><%= current_user.name %></p>
+              <a href="<%= session_sign_up_path %>" class="btn btn-outline-primary" role="button">Create Profile</a>
+              <%= link_to "Log out", destroy_user_session_path, method: :delete %>
             </form>
-        </div>
+          </div>
+        <% else %>
+            <form class="form-inline">
+<!--              <a href="<%#= session_login_path %>" class="btn btn-outline-primary" role="button">Log in</a>-->
+              <a href="<%= new_user_session_path %>" class="btn btn-outline-primary" role="button">Log in</a>
+<!--              <a href="<%#= session_sign_up_path %>" class="btn btn-outline-primary ml-2" role="button">Sign Up</a>-->
+              <a href="<%= new_user_registration_path %>" class="btn btn-outline-primary ml-2" role="button">D.Sign Up</a>
+            </form>
         <% end %>
       </form>
     </div>
   </nav>
-  <%# if user_signed_in?%>
-<!--  <nav id="navbar-app" class="navbar navbar-expand-lg bg-light justify-content-between fixed-top">-->
-<!--    <a class="navbar-brand" href="/">AngryLusho</a>-->
-<!--    <button><%#= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %></button>-->
 
-<!--    <form class="form-inline" action=<%#=search_path %>>-->
-<!--      <input class="form-control mr-sm-2" type="text" name="input" placeholder="search...">-->
-<!--      <select class="btn btn-secondary dropdown-toggle ml-2" name="search_type">-->
-<!--        <option value="name">User</option>-->
-<!--        <option value="location">Post</option>-->
-<!--      </select>-->
-<!--      <select class="btn btn-secondary dropdown-toggle ml-2" name="search_by">-->
-<!--        <option value="name">Name</option>-->
-<!--        <option value="location">Location</option>-->
-<!--      </select>-->
-<!--      <input class="btn btn-outline-primary ml-2" type="submit" value="Search">-->
-<!--    </form>-->
-
-<!--    <div class="nav-item">-->
-<!--      <form class="form-inline">-->
-<!--        <div class="nav-item dropdown">-->
-<!--          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--            <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-1 rounded-circle border border-primary">-->
-<!--          </a>-->
-<!--          <div class="dropdown-menu dropdown-menu-right">-->
-<!--            <div class="dropdown-item">-->
-<!--              <h6><%#=current_user.name %><br>-->
-<!--                <small><%#=current_user.email %></small>-->
-<!--              </h6>-->
-<!--            </div>-->
-<!--            <div class="dropdown-divider"></div>-->
-<!--            <a class="dropdown-item" href="<%#= user_profile_view_path(user_id: current_user.id) %>">View profile</a>-->
-<!--            <a class="dropdown-item" onclick="startGuestUser()">Log out</a>-->
-<!--            <button><%#= link_to "Log Out", log_out_path, method: :delete %></button>-->
-            <%#= link_to "Log out", destroy_user_session_path, method: :delete %>
-<!--          </div>-->
-<!--        </div>-->
-<!--      </form>-->
-<!--    </div>-->
-<!--  </nav>-->
-  <%# else%>
-<!--    <nav id="navbar-app" class="navbar navbar-expand-lg bg-light justify-content-between fixed-top">-->
-<!--      <a class="navbar-brand" href="/">AngryLusho</a>-->
-<!--      <button><%#= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %></button>-->
-
-<!--      <form class="form-inline">-->
-<!--        <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search">-->
-<!--        <a class="btn btn-outline-primary" href="<%#= search_path %>" type="submit">Search</a>-->
-<!--      </form>-->
-<!--      <div class="nav-item">-->
-<!--        <form class="form-inline">-->
-<!--          <button><%#= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %></button>-->
-<!--          <a href="<%#= session_login_path %>" class="btn btn-outline-primary mr-sm-2" role="button">Log in</a>-->
-<!--          <a href="<%#= session_sign_up_path %>" class="btn btn-outline-primary" role="button">Sign Up</a>-->
-<!--        </form>-->
-<!--      </div>-->
-<!--    </nav>-->
-  <%# end %>
  <div id="page-app" class="page-content">
     <%= yield %>
     </div>
