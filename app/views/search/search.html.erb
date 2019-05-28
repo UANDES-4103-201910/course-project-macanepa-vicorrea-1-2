@@ -8,25 +8,7 @@
 <div class="main-container col-4 mx-auto">
   <% @users.each do |user| %>
     <% if (not user.nil?) %>
-      <div class="user-pill my-1">
-        <div class="card">
-
-          <div class="row">
-            <div class="pic ml-2 col-1">
-              <p>PIC</p>
-            </div>
-            <div class="notpic">
-              <div class="form-inline ml-2">
-                <a href="<%=user_profile_view_path(user_id:user.profile.id) %>"><%= user.name %> <%= user.last_name %> </a>
-              </div>
-              <div class="form-inline ml-2">
-                <p class="small text-secondary"><%= user.profile.city %>, <%= user.profile.country %> </p>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
+        <%= render "search/profile_pill", user:user %>
     <% end %>
   <% end %>
 </div>

@@ -19,7 +19,12 @@
             <div class="col-2 dropdown">
               <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Unfollow Post</a>
+<!--                <a class="dropdown-item" href="#">Unfollow Post</a>-->
+
+                <%= link_to 'Unfollow', Follow.where(user_id:current_user.id, post_id:post.id)[0], method: :delete%>
+
+
+
                 <hr>
                 <%if ($current_user != nil) %>
                   <% if($current_user.id == post.user.id) %>
