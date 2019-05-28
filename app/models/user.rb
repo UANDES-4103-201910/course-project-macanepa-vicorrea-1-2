@@ -42,17 +42,18 @@ class User < ApplicationRecord
 
   def get_name
     name = ""
-    if(not self.name.empty?)
-      name += self.name
-      name += " "
+    if not self.name.empty?
+      name = self.name
     end
-    if(not self.last_name.empty?)
-      name += self.last_name
-    end
-    if(name=="")
+    #   name += " "
+    # end
+    # if(not self.last_name.empty?)
+    #   name += self.last_name
+    # end
+    if name == ""
       name = self.email
     end
-    return name
+    name
   end
 
 end

@@ -1,4 +1,5 @@
 class SearchController < ApplicationController
+  before_action :check_profile
   def search
     @posts = Post.all.order(updated_at: :desc)
     @users = User.all

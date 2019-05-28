@@ -19,4 +19,13 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit :account_update, keys: added_attrs
   end
 
+  def check_profile
+    puts "\n----\ncheck_profile\n----\n"
+    puts "usuario logeado:", user_signed_in?
+    #puts "tiene perfil:", !current_user.profile.nil?
+    if user_signed_in? && current_user.profile.nil?
+      redirect_to new_profile_path, alert: "Create un perfil zi po"
+    end
+  end
+
 end

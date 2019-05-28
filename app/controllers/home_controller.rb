@@ -1,7 +1,6 @@
 class HomeController < ApplicationController
+  before_action :check_profile
   def home
-
-
     @posts = Post.all
     if(Dumpster.where(exit_date: nil).length > 0)
       @posts_no_dumpster = Post.where("posts.id NOT IN (?)", Dumpster.pluck(:post_id))
