@@ -35,27 +35,6 @@ class AdminsController < ApplicationController
     redirect_to admin_view_path, notice: "The user was successfully removed from the list."
   end
 
-  # def delete_user
-  #   user_id = User.where(email: params[:user_mail]).pluck(:id)
-  #   @user_to_delete = User.find(user_id).first
-  #   if @user_to_delete.destroy
-  #     redirect_to admin_view_path, notice: "The user was successfully deleted."
-  #   else
-  #     redirect_to admin_view_path, alert: "The user could not be deleted."
-  #   end
-  #
-  # end
-
-  # def stop_being_admin
-  #   admin_id = (User.where(email: params[:user_mail]).pluck(:id))[0]
-  #   admin_to_delete = Admin.where(user_id: admin_id).first
-  #   if admin_to_delete.destroy
-  #     redirect_to admin_view_path, notice: "The user successfully stopped being an administrator."
-  #   else
-  #     redirect_to admin_view_path, alert: "The user could not stop being an administrator."
-  #   end
-  # end
-
   def make_user_admin
     user_id = (User.where(email: params[:user_mail]).pluck(:id))[0]
     new_admin = Admin.new(user_id: user_id, geofence: "", super_admin: false)

@@ -29,8 +29,6 @@ Rails.application.routes.draw do
   end
 
   root to: 'home#home'
-  # root to: 'sessions#new'
-  # get 'sign_in', to: 'sessions#new'
   delete '/log_out' => 'sessions#destroy', as: :log_out
   get 'user_profile/view', as: 'user_profile_view'
   get 'user_profile', to: 'user_profile#view'
@@ -41,11 +39,9 @@ Rails.application.routes.draw do
   get '/admin', to: 'application#update_type_admin', as: 'view_like_admin'
   get '/regular', to: 'application#update_type_regular_user', as: 'view_like_regular_user'
   get '/guest', to: 'application#update_type_guest_user', as: 'view_like_guest_user'
-  # get '/search/search', to: 'search'
   get '/search', to: 'search#search', as: 'search'
   get '/posts/watch', to: 'posts#watch'
   get 'watch', to: 'watch#watch'
-  # get 'post/watch', as: 'post_watch'
 
   post 'admin/remove_user_from_list', to: 'admins#remove_user_from_list'
   post 'admin/delete_user', to: 'users#destroy'
