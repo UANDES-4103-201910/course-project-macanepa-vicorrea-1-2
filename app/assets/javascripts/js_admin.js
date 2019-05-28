@@ -94,8 +94,8 @@ $(document).ready( function () {
     $('.user-suspension-list-row-have-exit-date').hide();
     $('.user-block-list-row-have-exit-date').hide();
 
-    $('[data-btn-type="remove-from-dumpster"]').click(showInfoPostInDumpster);
-    $('[data-btn-type="remove-from-list"]').click(showInfoRemoveFromList);
+    $('[data-btn-type = "remove-from-dumpster"]').click(showInfoPostInDumpster);
+    $('[data-btn-type = "remove-from-list"]').click(showInfoRemoveFromList);
     $('[data-btn-type = "delete-post"]').click(showDeletePost);
     $('[data-btn-type = "report-post"]').click(showReportPost);
     $('[data-btn-type = "delete-user"]').click(showDeleteUserInfo);
