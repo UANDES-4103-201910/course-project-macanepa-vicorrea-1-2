@@ -1,5 +1,25 @@
 <div class="user-pill my-1">
-  <div class="card-header">
-    <div class="p"><%=user.email%></div>
+  <div class="card">
+    <div class="card-body">
+
+      <div class="row">
+        <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-2 rounded-circle border border-primary">
+
+        <div class="col">
+          <% if(not user.profile.nil?) %>
+            <a href=<%= user_profile_view_path(user_profile_id: user.profile.id) %>><%=user.get_name %></a>
+          <% else %>
+            <a><%=user.get_name %></a>
+          <% end %>
+
+          <div class="p small"><%=user.email%></div>
+          <%if(not user.profile.nil?) %>
+            <div class="p small text-secondary"><%=user.profile.city%>, <%=user.profile.country%></div>
+          <% end %>
+<!--          <div class="p">Posts: <%#=user.posts.count%></div>-->
+        </div>
+      </div>
+    </div>
   </div>
+
 </div>

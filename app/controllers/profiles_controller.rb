@@ -41,9 +41,11 @@ class ProfilesController < ApplicationController
   # PATCH/PUT /profiles/1.json
   def update
     # respond_to do |format|
+      puts("==============UPDATING PROFILE===============")
+      puts(profile_params)
       if @profile.update(profile_params)
         # format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
-        redirect_to root_path, notice: 'Profile was successfully updated.'
+        redirect_to home_path
         # redirect_to user_profile_view_path(user_id: @profile.user.id), notice: 'Profile was successfully updated.'
         # format.json { render :show, status: :ok, location: @profile }
       # else

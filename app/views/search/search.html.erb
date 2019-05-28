@@ -4,15 +4,17 @@
 
 
 <body>
-
-<div class="main-container col-4 mx-auto">
-  <% @users.each do |user| %>
-    <% if (not user.nil?) %>
-        <%= render "search/profile_pill", user:user %>
+  <div class="main-container col-4 mx-auto ">
+    <% @users.each do |user| %>
+      <% if (not user.nil?) %>
+          <%= render "search/profile_pill", user:user %>
+      <% end %>
     <% end %>
-  <% end %>
-</div>
 
+    <% if(@users.count==0) %>
+      <div class="h3 text-primary">No results found!</div>
+    <% end %>
 
+      </div>
 </body>
 
