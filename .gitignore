@@ -33,3 +33,6 @@
 #IDE
 .idea/
 venv/
+
+# Ignore env file
+.env
