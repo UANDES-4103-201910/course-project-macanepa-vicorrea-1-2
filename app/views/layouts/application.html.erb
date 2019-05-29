@@ -51,11 +51,11 @@
               <%= link_to "Log out", destroy_user_session_path, method: :delete %>
             </div>
           </div>
-        <% elsif(user_signed_in? && current_user.profile.nil?) %>
+        <% elsif user_signed_in? && current_user.profile.nil? %>
           <div class="nav-item">
             <form class="form-inline">
 <!--              <p><%#= current_user.name %></p>-->
-              <a href="<%= session_sign_up_path %>" class="btn btn-outline-primary" role="button">Create Profile</a>
+<!--              <a href="<%#= session_sign_up_path %>" class="btn btn-outline-primary" role="button">Create Profile</a>-->
               <%= link_to "Log out", destroy_user_session_path, method: :delete %>
             </form>
           </div>

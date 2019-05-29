@@ -36,7 +36,7 @@ class PostsController < ApplicationController
         format.json { render :show, status: :created, location: @post }
       else
         # format.html { render :new }
-        format.html { redirect_to root_path, notice: 'Error Creating Post' }
+        format.html { redirect_to root_path, alert: 'Error creating post.' }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
