@@ -14,19 +14,14 @@ Rails.application.routes.draw do
   resources :admins
   resources :profiles
   resources :comments
+  resources :posts
+  resources :users
   # resources :users do
   #   resources :posts do
   #     resources :comments
   #   end
   # end
   resources :home
-
-  defaults format: :json do
-    resources :posts
-  end
-  defaults format: :json do
-    resources :users
-  end
 
   root to: 'home#home'
   delete '/log_out' => 'sessions#destroy', as: :log_out

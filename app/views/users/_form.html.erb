@@ -11,32 +11,41 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="row">
+    <div class="col">
+
+      <div class="field">
+        <%= form.label :name %><br>
+        <%= form.text_field :name %>
+      </div>
+
+      <div class="field">
+        <%= form.label :last_name %><br>
+        <%= form.text_field :last_name %>
+      </div>
+
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :last_name %>
-    <%= form.text_field :last_name %>
-  </div>
+<!--  <div class="field">-->
+    <%#= form.label :email %>
+    <%#= form.text_field :email %>
+<!--  </div>-->
 
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email %>
-  </div>
+<!--  <div class="field">-->
+    <%#= form.label :password %>
+    <%#= form.text_field :password %>
+<!--  </div>-->
 
-  <div class="field">
-    <%= form.label :password %>
-    <%= form.text_field :password %>
-  </div>
+<!--  <div class="field">-->
+    <%#= form.label :last_access %>
+    <%#= form.datetime_select :last_access %>
+<!--  </div>-->
 
-  <div class="field">
-    <%= form.label :last_access %>
-    <%= form.datetime_select :last_access %>
-  </div>
-
+  <br>
   <div class="actions">
     <%= form.submit %>
   </div>
+  <br>
+
 <% end %>

@@ -48,8 +48,12 @@
       <div class="tab-content">
         <div id="manage-admins" class="container tab-pane active">
           <h3>Manage administrators</h3>
-          <p>You can create a new admin <a href="<%= session_sign_up_path %>">here</a>
-          or make a current user an admin</p>
+          <b>You have 2 options to create a new administrator:</b>
+          <ul>
+            <li>Make a current user an admin in the user administration section.</li>
+            <li>Create a new administrator. For that, <%= link_to "loggs out", destroy_user_session_path, method: :delete %>,
+              create a new user and then do it administrator.</li>
+          </ul>
           <table class="table table-bordered table-hover">
             <thead>
             <tr>
