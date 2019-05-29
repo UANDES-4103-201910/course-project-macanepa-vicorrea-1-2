@@ -46,7 +46,7 @@ class ProfilesController < ApplicationController
       puts(profile_params)
       if @profile.update(profile_params)
         # format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
-        redirect_to home_path
+        redirect_to user_profile_view_path(user_profile_id: current_user.profile.id)
         # redirect_to user_profile_view_path(user_id: @profile.user.id), notice: 'Profile was successfully updated.'
         # format.json { render :show, status: :ok, location: @profile }
       # else

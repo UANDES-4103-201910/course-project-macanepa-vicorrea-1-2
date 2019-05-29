@@ -6,7 +6,16 @@
     <div class="col-3">
       <div class="card card-default">
         <div class="card-body justify-content-center">
-          <img class="thumbnail img-responsive" src="https://lut.im/7JCpw12uUT/mY0Mb78SvSIcjvkf.png" width="100vw" height="100vw">
+
+          <% if not @user_profile.nil? %>
+            <% if not @user_profile.image.attached? %>
+              <img class="thumbnail img-responsive" src="https://lut.im/7JCpw12uUT/mY0Mb78SvSIcjvkf.png" width="100vw" height="100vw">
+            <% else %>
+              <%#= image_tag @user_profile.image.variant(resize: "200x200", gravity:center, crop:"150x150") %>
+              <%= image_tag @user_profile.image.variant(combine_options: {resize:'200x200', gravity: "Center", crop: '150x150+0+0' })%>
+            <% end %>
+          <% end %>
+
           <h3><%= @user_profile.user.get_name %></h3>
           <% if (user_signed_in?)
                if (current_user.id == @user_profile.user.id) %>

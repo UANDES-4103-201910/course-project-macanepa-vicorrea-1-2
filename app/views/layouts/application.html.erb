@@ -38,7 +38,13 @@
         <% if user_signed_in? && (not current_user.profile.nil?) %>
           <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-1 rounded-circle border border-primary">
+
+              <% if not current_user.profile.image.attached? %>
+                <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
+              <% else %>
+                <%= image_tag current_user.profile.image.variant(combine_options: {resize:'100x100', gravity: "Center", crop: '50x50+0+0' }), :class => "my-auto mx-4 rounded-circle border border-primary"%>
+              <% end %>
+
             </a>
             <div class="dropdown-menu dropdown-menu-right">
               <div class="dropdown-item">
