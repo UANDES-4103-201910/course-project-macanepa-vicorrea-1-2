@@ -7,8 +7,4 @@ $(document).ready(function () {
     setTimeout(function () {
         $('#alert').hide();
     }, 3000);
-
-    setTimeout(function () {
-        $('#warning').hide();
-    }, 3000);
 });
