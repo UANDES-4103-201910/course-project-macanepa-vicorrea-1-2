@@ -7,9 +7,9 @@ user05 = User.create!(name:"Tomas",last_name:"Turbado",email:"tomasturbado@miuan
 
 
 #Profiles
-profile03 = Profile.create!(user_id:user03.id,image:"foto enojon",biography:"Soy muy enojon. Me enojo por todo >:[",country:"Chile",city:"Santiago")
-profile04 = Profile.create!(user_id:user04.id,image:"jorge en la roca",biography:"rotsap im se natas",country:"Italia",city:"Milano")
-profile04 = Profile.create!(user_id:user05.id,image:"El tomi",biography:"rotsap im se natas",country:"China",city:"Milano")
+profile03 = Profile.create!(user_id:user03.id,biography:"Soy muy enojon. Me enojo por todo >:[",country:"Chile",city:"Santiago")
+profile04 = Profile.create!(user_id:user04.id,biography:"rotsap im se natas",country:"Italia",city:"Milano")
+profile04 = Profile.create!(user_id:user05.id,biography:"rotsap im se natas",country:"China",city:"Milano")
 
 #Admins
 admin01 = Admin.create!(user_id:user03.id,super_admin:true,geofence:nil)

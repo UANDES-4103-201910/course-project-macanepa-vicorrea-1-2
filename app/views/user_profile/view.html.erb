@@ -7,7 +7,7 @@
       <div class="card card-default">
         <div class="card-body justify-content-center">
           <img class="thumbnail img-responsive" src="https://lut.im/7JCpw12uUT/mY0Mb78SvSIcjvkf.png" width="100vw" height="100vw">
-<!--          <h3><%#= @user_profile.user.name %> <%#= @user_profile.user.last_name %></h3>-->
+          <h3><%= @user_profile.user.get_name %></h3>
           <% if (user_signed_in?)
                if (current_user.id == @user_profile.user.id) %>
 <!--              <a class="text-primary" href="<%#= user_profile_modify_path(user_id: @user_profile.user.id) %>">Edit Profile</a>-->
