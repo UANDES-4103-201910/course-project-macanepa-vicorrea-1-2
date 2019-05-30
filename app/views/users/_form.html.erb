@@ -48,4 +48,7 @@
   </div>
   <br>
 
+  <%= link_to 'Delete my account', user, method: :delete, data: { confirm: 'Are you sure you want to delete your account? There will be no turning back.' } %>
+  <%#= link_to "Delete my account", registration_path(current_user), data: { confirm: <%= link_to "Delete my account", registration_path(current_user), data: { confirm: "Are you sure you want to delete your account? There will be no turning back." }, method: :delete %>
+
 <% end %>
