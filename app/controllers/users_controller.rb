@@ -56,8 +56,6 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    @user_profile = Profile.where(user_id: @user.id).first
-    @user_profile.destroy
     if @user.id == current_user.id
       @user.destroy
       respond_to do |format|

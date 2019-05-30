@@ -4,18 +4,18 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :trackable,
          :omniauthable, omniauth_providers: [:google_oauth2]
 
-  has_one :profile
-  has_one :admin
+  has_one :profile, dependent: :destroy
+  has_one :admin, dependent: :destroy
   has_one :blacklist
   has_one :suspension_list
   has_one :block_list
-  has_many :comments
-  has_many :posts
-  has_many :validations
-  has_many :reports
-  has_many :shared_posts
-  has_many :follows
-  has_many :tags
+  has_many :comments, dependent: :delete_all
+  has_many :posts, dependent: :delete_all
+  has_many :validations, dependent: :delete_all
+  has_many :reports, dependent: :delete_all
+  has_many :shared_posts, dependent: :delete_all
+  has_many :follows, dependent: :delete_all
+  has_many :tags, dependent: :delete_all
 
   # validates :email, presence: true, format: {with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/}, uniqueness: true
   # validates :name, :last_name, :password, presence: true
