@@ -20,6 +20,10 @@
 
 <%- if devise_mapping.omniauthable? %>
   <%- resource_class.omniauth_providers.each do |provider| %>
-    <%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider) %><br />
+    <a role="button" href="<%= omniauth_authorize_path(resource_name, provider) %>" class="btn google-button">
+      <img src="https://ultimatemember.com/wp-content/uploads/bb-plugin/cache/google-circle.png" class="google-icon">
+      Sign in with Google
+    </a>
+<!--    <%#= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider) %><br />-->
   <% end %>
 <% end %>

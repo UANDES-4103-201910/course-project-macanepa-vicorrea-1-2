@@ -56,10 +56,18 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    if @user.id == current_user.id
+      @user.destroy
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: 'Your account was successfully deleted. We hope to see you again soon!' }
+        format.json { head :no_content }
+      end
+    else
     @user.destroy
     respond_to do |format|
       format.html { redirect_back(fallback_location: root_path); flash[:notice] = 'The user was successfully deleted.' }
       format.json { head :no_content }
+      end
     end
   end
 
