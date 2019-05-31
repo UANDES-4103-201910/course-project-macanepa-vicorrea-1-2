@@ -9,12 +9,17 @@ class UserProfileController < ApplicationController
       redirect_to root_path
     end
     @user=User.find(@user_profile.user.id)
-    @user_posts = Profile.find(user_profile_id)
+    @posts=Post.where(user_id:@user.id)
+    @posts+=Post.joins(:shared_posts)
+    #
+    # @user_posts = Profile.find(user_profile_id)
+    # @user_posts = Post.where(user_id: User.where(profile_id: user_profile_id)[0])
     # @posts_no_dumpster = Post.where("posts.id NOT IN (?)", Dumpster.pluck(:post_id))
 
     @vals = Validation.where(user_id: @user_profile.user.id)
     @vals += SharedPost.where(user_id: @user_profile.user.id)
     @vals += Comment.where(user_id: @user_profile.user.id)
+    @vals += SharedPost.where(user_id: @user_profile.user.id)
   end
 
   def modify

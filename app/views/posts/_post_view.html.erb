@@ -77,8 +77,8 @@
               Display Images
             </button>
             <button class="post-icon btn btn-link mx-2 my-auto btn-xs" data-toggle="modal" data-target="#display-attachments-modal" role="button" aria-expanded="false" aria-controls="collapseComment">
-              Display Attachments
             </button>
+            Display Attachments
             <button class="post-icon btn btn-link mx-2 my-auto btn-xs" data-toggle="modal" data-target="#display-map-modal" role="button" aria-expanded="false" aria-controls="collapseComment">
               View location on map
             </button>
@@ -86,26 +86,35 @@
 
         </div>
         <div class="form-inline card-footer-container my-auto">
-
+          <%= form_for :shared_post, :url => {:controller => "shared_posts", :action => "create"} do |shared_post_form| %>
+            <%= shared_post_form.text_field :post_id, value: post.id, type:"hidden" %>
+            <%= shared_post_form.text_field :user_id, value: current_user.id, type:"hidden" %>
+            <%= submit_tag "Share" %>
+          <% end %>
           <div class="btn-group-xs">
 
-            <form action="create_validation" , method="post">
               <% if user_signed_in? %>
+              <form action="create_validation" , method="post">
                 <input type="hidden" name="validation[user_id]" value="<%= current_user.id %>">
-                <input type="hidden" name="validation[post_id]" value="<%= post.id %>">
+                  <input type="hidden" name="validation[post_id]" value="<%= post.id %>">
 
-                <i class="fa fa-thumbs-up" aria-hidden="true"> </i><input class="post-icon btn btn-default btn-xs" type="submit" name="validation[validation_type]" value="like"><%= likes_count %></a>
-                <i class="fa fa-thumbs-down" aria-hidden="true"> </i><input class="post-icon btn btn-default btn-xs" type="submit" name="validation[validation_type]" value="dislike"><%= dislikes_count %></a>
-              <% else %>
-                <i class="fa fa-thumbs-up" aria-hidden="true"> </i><small> like </small><%= likes_count %></a>
-                <i class="fa fa-thumbs-down" aria-hidden="true"> </i><small> dislike </small><%= dislikes_count %></a>
+                  <i class="fa fa-thumbs-up" aria-hidden="true"> </i><input class="post-icon btn btn-default btn-xs" type="submit" name="validation[validation_type]" value="like"><%= likes_count %></a>
+                  <i class="fa fa-thumbs-down" aria-hidden="true"> </i><input class="post-icon btn btn-default btn-xs" type="submit" name="validation[validation_type]" value="dislike"><%= dislikes_count %></a>
+                <% else %>
+                  <i class="fa fa-thumbs-up" aria-hidden="true"> </i><small> like </small><%= likes_count %></a>
+                  <i class="fa fa-thumbs-down" aria-hidden="true"> </i><small> dislike </small><%= dislikes_count %></a>
+              </form>
+
             <% end %>
-                <a class="post-icon btn btn-default btn-xs"><i class="fa fa-retweet" aria-hidden="true"></i>
+
+              <a class="post-icon btn btn-default btn-xs"><i class="fa fa-retweet" aria-hidden="true"></i>
                   Reshare: <%= shares_count %></a>
                 <a class="post-icon btn btn-default btn-xs" data-toggle="collapse" href="#collapseComment-<%= post.id %>" role="button" aria-expanded="false" aria-controls="collapseComment"><i class="fa fa-comment" aria-hidden="true"></i>
                   Comment: <%= post.comments.count %></a>
 
-                </form>
+
+
+
 
                 </div>
 

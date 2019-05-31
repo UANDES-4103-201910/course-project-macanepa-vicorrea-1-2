@@ -39,7 +39,7 @@
       <h2>Recent Posts</h2>
       <hr>
       <!-- Simple post content example. -->
-      <% @user_profile.user.posts.each do |post| %>
+      <% @posts.each do |post| %>
         <%= render "posts/post_view", post: post %>
       <% end %>
 
