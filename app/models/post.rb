@@ -1,6 +1,5 @@
 class Post < ApplicationRecord
   belongs_to :user
-<<<<<<< HEAD
   has_one :dumpster
   has_many :comments
   has_many :follows
@@ -8,7 +7,6 @@ class Post < ApplicationRecord
   has_many :reports
   has_many :validations
   has_many :tags
-=======
   belongs_to :shared_post, optional: true
   has_one :dumpster
   has_many :comments, dependent: :delete_all
