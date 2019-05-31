@@ -30,8 +30,26 @@
                   <a class="p text-primary my-auto" href="<%= user_profile_view_path(user_profile_id: post.user.profile.id) %>"><%= post.user.get_name %></a>
                 <% end %>
                 <a class="p text-secondary my-auto ml-4" href="<%= watch_path(post_id: post.id) %>"><%= post.title %></a>
-                <div class="text-secondary my-auto small"><%= post.created_at %> </div>
 
+
+               <div class="form-inline">
+                  <div class="text-secondary my-auto small"><%= post.created_at %> </div>
+                  <div class="col-1"></div>
+                  <div style="float: right;" class="form-inline">
+                  <% if post.is_open %>
+                    <div class="text-warning my-auto small">Post Open</div>
+                  <% else %>
+                    <div class="text-muted my-auto small">Post Closed</div>
+                    <% if post.is_solved %>
+                      <div class="text-success my-auto small ml-2">Solved</div>
+                    <% else %>
+                      <div class="text-warning my-auto small ml-2">Uresolved</div>
+                    <% end %>
+                  <% end %>
+
+
+                </div>
+               </div>
               </div>
             </div>
             <% if (user_signed_in?) %>
@@ -39,18 +57,28 @@
               <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <% if(post.user_id != current_user.id) %>
-                  <a class="dropdown-item" href="#">Follow Post</a>
 
-                  <%= form_for :follow, :url => {:controller => "follows", :action => "create"} do |follow_form| %>
-                    <%= follow_form.text_field :post_id, value: post.id, type:"hidden" %>
-                    <%= submit_tag "follow" %>
-                  <% end %>
+                    <% if not Follow.where(post_id:post.id).pluck(:user_id).include? current_user.id %>
+                    <%= form_for :follow, :url => {:controller => "follows", :action => "create"} do |follow_form| %>
+                      <%= follow_form.text_field :post_id, value: post.id, type:"hidden" %>
+                      <%= submit_tag "Follow Post", :class => "dropdown-item"%>
+                    <% end %>
+                    <% else %>
+                      <%= link_to 'Unfollow', Follow.where(user_id:current_user.id, post_id:post.id)[0], method: :delete%>
+                    <% end %>
+
+
 
 
                   <hr>
                 <%end %>
 
+                <% if SharedPost.where(user_id: current_user.id, post_id: post.id).length!= 0 %>
+                  <a class="dropdown-item"><%= link_to 'Unshare', SharedPost.where(user_id: current_user.id, post_id: post.id).first, method: :delete, data: {confirm: 'Are you sure?'} %></a>
+                <% end %>
+
                 <% if(post.user_id == current_user.id) %>
+
                   <a class="dropdown-item" href="<%= edit_post_path(id: post.id, format: :html) %>">Edit</a>
                   <a class="dropdown-item"><%= link_to 'Destroy', post, method: :delete, data: {confirm: 'Are you sure?'} %></a>
                   <hr>
@@ -67,48 +95,55 @@
       </div>
 
       <div class="card-body">
+
         <div class="p text-secondary"><%= post.content %></div>
         <hr>
 
         <div class="form-inline card-footer-container my-auto">
           <div class="row">
             </button>
-            <button class="post-icon btn btn-link mx-2 my-auto btn-xs" data-toggle="modal" data-target="#display-images-modal" role="button" aria-expanded="false" aria-controls="collapseComment">
+            <button class="post-icon btn btn-link mx-2 my-auto btn-xs" data-toggle="collapse" data-target="#collapseImages-<%= post.id%>" role="button" aria-expanded="false" aria-controls="collapseImages">
               Display Images
             </button>
-            <button class="post-icon btn btn-link mx-2 my-auto btn-xs" data-toggle="modal" data-target="#display-attachments-modal" role="button" aria-expanded="false" aria-controls="collapseComment">
+
+            <button class="post-icon btn btn-link mx-2 my-auto btn-xs" data-toggle="collapse" data-target="#collapseFiles-<%= post.id%>" role="button" aria-expanded="false" aria-controls="collapseFiles">
+              Display Attachments
             </button>
-            Display Attachments
+
             <button class="post-icon btn btn-link mx-2 my-auto btn-xs" data-toggle="modal" data-target="#display-map-modal" role="button" aria-expanded="false" aria-controls="collapseComment">
               View location on map
             </button>
           </div>
 
+
         </div>
         <div class="form-inline card-footer-container my-auto">
-          <%= form_for :shared_post, :url => {:controller => "shared_posts", :action => "create"} do |shared_post_form| %>
-            <%= shared_post_form.text_field :post_id, value: post.id, type:"hidden" %>
-            <%= shared_post_form.text_field :user_id, value: current_user.id, type:"hidden" %>
-            <%= submit_tag "Share" %>
-          <% end %>
-          <div class="btn-group-xs">
+          <div class="btn-group-xs form-inline">
 
               <% if user_signed_in? %>
+
               <form action="create_validation" , method="post">
                 <input type="hidden" name="validation[user_id]" value="<%= current_user.id %>">
-                  <input type="hidden" name="validation[post_id]" value="<%= post.id %>">
-
-                  <i class="fa fa-thumbs-up" aria-hidden="true"> </i><input class="post-icon btn btn-default btn-xs" type="submit" name="validation[validation_type]" value="like"><%= likes_count %></a>
-                  <i class="fa fa-thumbs-down" aria-hidden="true"> </i><input class="post-icon btn btn-default btn-xs" type="submit" name="validation[validation_type]" value="dislike"><%= dislikes_count %></a>
-                <% else %>
-                  <i class="fa fa-thumbs-up" aria-hidden="true"> </i><small> like </small><%= likes_count %></a>
-                  <i class="fa fa-thumbs-down" aria-hidden="true"> </i><small> dislike </small><%= dislikes_count %></a>
+                <input type="hidden" name="validation[post_id]" value="<%= post.id %>">
+                <i class="fa fa-thumbs-up" aria-hidden="true"> </i><input class="post-icon btn btn-default btn-xs" type="submit" name="validation[validation_type]" value="like">:<%= likes_count %>
+                <i class="fa fa-thumbs-down" aria-hidden="true"></i><input class="post-icon btn btn-default btn-xs" type="submit" name="validation[validation_type]" value="dislike">:<%= dislikes_count %>
               </form>
+
+              <%= form_for :shared_post, :url => {:controller => "shared_posts", :action => "create"} do |shared_post_form| %>
+                <%= shared_post_form.text_field :post_id, value: post.id, type:"hidden" %>
+                <%= shared_post_form.text_field :user_id, value: current_user.id, type:"hidden" %>
+                <i class="fa fa-retweet ml-4" aria-hidden="true"></i><%= submit_tag "Reshare:", :class => "post-icon btn btn-default btn-xs" %></i><%= shares_count %>
+              <% end %>
+
+          <% else %>
+                                <i class="fa fa-thumbs-up" aria-hidden="true"> </i><small> like:</small><%= likes_count %>
+                                <i class="fa fa-thumbs-down" aria-hidden="true"> </i><small> dislike:</small><%= dislikes_count %>
+                                <i class="fa fa-retweet" aria-hidden="true"></i>Reshare:<%= shares_count %>
+
 
             <% end %>
 
-              <a class="post-icon btn btn-default btn-xs"><i class="fa fa-retweet" aria-hidden="true"></i>
-                  Reshare: <%= shares_count %></a>
+
                 <a class="post-icon btn btn-default btn-xs" data-toggle="collapse" href="#collapseComment-<%= post.id %>" role="button" aria-expanded="false" aria-controls="collapseComment"><i class="fa fa-comment" aria-hidden="true"></i>
                   Comment: <%= post.comments.count %></a>
 
@@ -117,29 +152,66 @@
 
 
                 </div>
+                </div>
+                <div style="height: 40px;"></div>
+                <div class="image-container collapse" id="collapseImages-<%= post.id %>">
+                  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+<!--                      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>-->
+                    </ol>
+                    <div class="carousel-inner">
+                      <div class="carousel-item active">
+                        <img class="d-block w-100" src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" alt="First slide">
+                      </div>
+                      <div class="carousel-item">
+                        <img class="d-block w-100" src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" alt="Second slide">
+                      </div>
+
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </div>
+
 
                 </div>
-
-                <div style="height: 40px;"></div>
-                <div class="comment-container collapse" id="collapseComment-<%= post.id %>">
+                <div class="file-container collapse" id="collapseFiles-<%= post.id %>">
+                  <h1>Files!</h1>
+                </div>
+                <div class="comment-container collapse col" id="collapseComment-<%= post.id %>">
                   <div class="h5 text-primary">Comments</div>
                   <% if (post.is_open) %>
                     <% if user_signed_in? %>
                     <form action="create_comment" method="post">
-                      <div class="new-comment-container col mx-1">
+                      <div class="new-comment-container mx-1">
                         <textarea name="comment[content]" class="w-100" style="max-height: 120px; min-height: 30px" placeholder="Enter comment"></textarea>
                         <input type="hidden" name="comment[user_id]" value="<%= current_user.id %>">
                         <input type="hidden" name="comment[post_id]" value="<%= post.id %>">
-                        <button style="float: right;" type="submit" class="btn btn-outline-primary mu-4">Publish</button>
+                        <button style="float: right;" type="submit" class="btn btn-outline-primary my-1">Publish</button>
+                        <br>
+                        <br>
+                        <br>
                       </div>
                     </form>
+
+                      <%form_for :comment, :url => {:controller => "comments", :action => "create"} do |comment_form| %>
+                          <% comment_form.text_area :user_id, value:current_user.id %>
+                      <% end %>
+
                       <% end %>
                   <% end %>
 
                   <% this_post_comments = @comments.where(post_id: post.id) %>
                   <% this_post_comments.each do |comment| %>
 
-                    <hr>
+                    <hr class="my-3">
                     <% comment_user = User.find(comment.user_id) %>
                     <div class="comment-container my-3">
                       <div class="card card-default">
@@ -241,6 +313,7 @@
                     </div>
                   <% end %>
                 </div>
+
                 </div>
                 </div>
                 </div>

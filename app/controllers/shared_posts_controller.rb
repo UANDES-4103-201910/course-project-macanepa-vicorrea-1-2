@@ -28,10 +28,11 @@ class SharedPostsController < ApplicationController
 
     respond_to do |format|
       if @shared_post.save
-        format.html { redirect_to @shared_post, notice: 'Shared post was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Shared post was successfully created.' }
         format.json { render :show, status: :created, location: @shared_post }
       else
-        format.html { render :new }
+        # format.html { render :new }
+        format.html { redirect_to root_path}
         format.json { render json: @shared_post.errors, status: :unprocessable_entity }
       end
     end
@@ -42,10 +43,11 @@ class SharedPostsController < ApplicationController
   def update
     respond_to do |format|
       if @shared_post.update(shared_post_params)
-        format.html { redirect_to @shared_post, notice: 'Shared post was successfully updated.' }
+        format.html { redirect_to root_path, notice: 'Shared post was successfully updated.' }
         format.json { render :show, status: :ok, location: @shared_post }
       else
-        format.html { render :edit }
+        # format.html { render :edit }
+        format.html { redirect_to root_path}
         format.json { render json: @shared_post.errors, status: :unprocessable_entity }
       end
     end
@@ -56,7 +58,7 @@ class SharedPostsController < ApplicationController
   def destroy
     @shared_post.destroy
     respond_to do |format|
-      format.html { redirect_to shared_posts_url, notice: 'Shared post was successfully destroyed.' }
+      format.html { redirect_to root_path, notice: 'Shared post was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

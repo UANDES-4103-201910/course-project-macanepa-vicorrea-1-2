@@ -19,7 +19,7 @@ class UserProfileController < ApplicationController
     @vals = Validation.where(user_id: @user_profile.user.id)
     @vals += SharedPost.where(user_id: @user_profile.user.id)
     @vals += Comment.where(user_id: @user_profile.user.id)
-    @vals += SharedPost.where(user_id: @user_profile.user.id)
+    @vals = (@vals.sort_by! &:created_at).reverse
   end
 
   def modify

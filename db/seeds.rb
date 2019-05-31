@@ -15,12 +15,13 @@ profile06 = Profile.create!(user_id:user06.id,biography:"La Matucha",country:"Ch
 
 #Admins
 admin01 = Admin.create!(user_id:user03.id,super_admin:true,geofence:nil)
+admin01 = Admin.create!(user_id:user06.id,super_admin:true,geofence:nil)
 admin02 = Admin.create!(user_id:user04.id,super_admin:false,geofence:"Chile y Argentina")
 
 
 #Posts
 post01 = Post.create!(user_id:user03.id,title:"Titulo",content:"Post de prueba",is_open:true,is_solved:false)
-post02 = Post.create!(user_id:user04.id,title:"Titulo 2",content:"Post de prueba 2",is_open:true,is_solved:false)
+post02 = Post.create!(user_id:user04.id,title:"Titulo 2",content:"Post de prueba 2",is_open:false,is_solved:true)
 
 
 # Comments
