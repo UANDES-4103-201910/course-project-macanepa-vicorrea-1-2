@@ -11,18 +11,36 @@
     </div>
   <% end %>
 
+  <div class="card-container col-7 mx-auto">
+    <div class="card">
+      <div class="card-header">
+        <h2>User Attributes</h2>
+      </div>
+
+      <div class="card-body">
   <div class="row">
     <div class="col">
 
-      <div class="field">
-        <%= form.label :name %><br>
-        <%= form.text_field :name %>
+      <div class="row">
+        <div class="field col-6">
+          <%= form.label :name %><br>
+          <%= form.text_field :name, class:"form-control"%>
+        </div>
+
+        <div class="field col-6">
+          <%= form.label :last_name %><br>
+          <%= form.text_field :last_name, class:"form-control" %>
+        </div>
       </div>
 
-      <div class="field">
-        <%= form.label :last_name %><br>
-        <%= form.text_field :last_name %>
-      </div>
+      <br>
+      <%= form.label :email %><br>
+      <%= form.text_field :email, readonly:true, class:"form-control" %>
+      <br>
+      <%= link_to "Change your password", edit_user_registration_path %>
+
+<!--      <%#= form.label :password %><br>-->
+      <%#= form.password_field :password, class:"form-control" %>
 
     </div>
   </div>
@@ -41,14 +59,24 @@
     <%#= form.label :last_access %>
     <%#= form.datetime_select :last_access %>
 <!--  </div>-->
+      </div>
 
-  <br>
-  <div class="actions">
-    <%= form.submit %>
+    <div class="card-footer">
+
+      <div class="actions col-3" style="float: right">
+        <%= form.submit class:"form-control"%>
+      </div>
+
+      <div class="mt-2">
+        <%= link_to 'Delete my account', user, method: :delete, data: { confirm: 'Are you sure you want to delete your account? There will be no turning back.' } %>
+      </div>
+
+    </div>
+
+    </div>
   </div>
   <br>
 
-  <%= link_to 'Delete my account', user, method: :delete, data: { confirm: 'Are you sure you want to delete your account? There will be no turning back.' } %>
   <%#= link_to "Delete my account", registration_path(current_user), data: { confirm: <%= link_to "Delete my account", registration_path(current_user), data: { confirm: "Are you sure you want to delete your account? There will be no turning back." }, method: :delete %>
 
 <% end %>

@@ -1,6 +1,5 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
-  skip_before_action :verify_authenticity_token
 
 
 
@@ -62,7 +61,7 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy
     respond_to do |format|
-      format.html { redirect_back(fallback_location: root_path); flash[:notice] = 'The post was successfully deleted.' }
+      format.html { redirect_to root_path, notice:'The post was successfully deleted.' }
       format.json { head :no_content }
     end
   end
