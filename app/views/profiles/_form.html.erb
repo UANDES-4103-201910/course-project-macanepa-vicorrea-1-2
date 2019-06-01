@@ -48,47 +48,58 @@
 <!--    </div>-->
   <%# end %>
 
+<div class="card-container col-7 mx-auto">
+  <div class="card">
+    <div class="card-header">
+      <h2>Profile Attributes</h2>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-4">
 
-  <div class="row">
-    <div class="col">
+          <div class="field">
+            <%= form.label :country %><br>
+            <%= form.text_field :country, class:"form-control"  %>
+          </div>
 
-      <div class="field">
-        <%= form.label :country %><br>
-        <%= form.text_field :country %>
+          <div class="field">
+            <%= form.label :city %><br>
+            <%= form.text_field :city, class:"form-control"  %>
+          </div>
+
+          <div class="field">
+            <%= form.label :gps_location %><br>
+            <%= form.text_field :gps_location, class:"form-control"  %>
+          </div>
+
+        </div>
+
+        <div class="col-8">
+
+          <div class="field">
+            <%= form.label :image %><br>
+            <%= form.file_field :image %><br><br>
+          </div>
+
+          <div class="field">
+            <%= form.label :biography %><br>
+            <%= form.text_area :biography, class:"form-control" %>
+          </div>
+
+        </div>
+
       </div>
 
-      <div class="field">
-        <%= form.label :city %><br>
-        <%= form.text_field :city %>
-      </div>
 
-      <div class="field">
-        <%= form.label :gps_location %><br>
-        <%= form.text_field :gps_location %>
-      </div>
+      <br>
 
     </div>
-
-    <div class="col">
-
-      <div class="field">
-        <%= form.label :image %><br>
-        <%= form.file_field :image %><br><br>
+    <div class="card-footer">
+      <div class="actions col-3" style="float: right">
+        <%= form.submit class:"form-control" %>
       </div>
-
-      <div class="field">
-        <%= form.label :biography %><br>
-        <%= form.text_area :biography %>
-      </div>
-
     </div>
-
-  </div>
-
-
-  <br>
-  <div class="actions">
-    <%= form.submit %>
+    </div>
   </div>
   <br>
 <% end %>

@@ -23,10 +23,6 @@ class UserProfileController < ApplicationController
   end
 
   def modify
-    if(params[:user_profile_id]!=nil)
-      @user= User.find(params[:user_profile_id])
-    else
-      @user = User.first
-    end
+      @user = current_user
   end
 end

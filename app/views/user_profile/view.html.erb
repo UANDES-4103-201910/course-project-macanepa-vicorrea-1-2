@@ -20,7 +20,8 @@
           <% if (user_signed_in?)
                if (current_user.id == @user_profile.user.id) %>
 <!--              <a class="text-primary" href="<%#= user_profile_modify_path(user_id: @user_profile.user.id) %>">Edit Profile</a>-->
-              <a class="text-primary" href="<%= edit_profile_path(id: @user_profile.id) %>">Edit Profile</a>
+<!--              <a class="text-primary" href="<%#= edit_profile_path(id: @user_profile.id) %>">Edit Profile</a>-->
+              <a class="text-primary" href="<%= user_profile_modify_path(user: @user_profile.user) %>">Edit Profile</a>
             <% end end %>
           <hr>
           <h4>Biography</h4>
