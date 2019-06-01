@@ -12,26 +12,35 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
+    <%#= form.label :user_id, type:"hidden" %>
+    <%= form.text_field :user_id, type:"hidden" %>
   </div>
 
   <div class="field">
-    <%= form.label :post_id %>
-    <%= form.text_field :post_id %>
+    <%#= form.label :post_id %>
+    <%= form.text_field :post_id, type:"hidden"   %>
   </div>
 
   <div class="field">
-    <%= form.label :comment_id %>
-    <%= form.text_field :comment_id %>
+    <%#= form.label :comment_id %>
+    <%= form.text_field :comment_id, type:"hidden"  %>
   </div>
 
-  <div class="field">
-    <%= form.label :content %>
-    <%= form.text_area :content %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
+  <div class="card-container col-7 mx-auto">
+    <div class="card">
+      <div class="card-header">
+        <h2>Edit Comment</h2>
+      </div>
+      <div class="card-body">
+        <div class="field">
+          <%= form.text_area :content, class:"form-control", style:"height:80%;" %>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="actions">
+          <%= form.submit class:"form-control"%>
+        </div>
+      </div>
+    </div>
   </div>
 <% end %>

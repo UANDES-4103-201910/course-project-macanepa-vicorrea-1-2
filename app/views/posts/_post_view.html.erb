@@ -64,7 +64,11 @@
                       <%= submit_tag "Follow Post", :class => "dropdown-item"%>
                     <% end %>
                     <% else %>
-                      <%= link_to 'Unfollow', Follow.where(user_id:current_user.id, post_id:post.id)[0], method: :delete%>
+                      <%#= link_to 'Unfollow', Follow.where(user_id:current_user.id, post_id:post.id)[0], method: :delete%>
+                      <% follow = Follow.where(user_id:current_user.id, post_id:post.id)[0] %>
+                      <%= form_for follow, method: :delete do |follow_form|%>
+                        <%= follow_form.submit value:"Unfollow Post", class:"dropdown-item"%>
+                      <% end %>
                     <% end %>
 
 
@@ -122,7 +126,10 @@
                   <% end %>
                   <hr>
                   <a class="dropdown-item" href="<%= edit_post_path(id: post.id, format: :html) %>">Edit</a>
-                  <a class="dropdown-item"><%= link_to 'Destroy', post, method: :delete, data: {confirm: 'Are you sure?'} %></a>
+                  <%= form_for post, method: :delete do |post_form|%>
+                    <%= post_form.submit value:"Delete", class:"dropdown-item"%>
+                  <% end %>
+
                   <hr>
                 <%end %>
                 <%# end end %>
@@ -163,12 +170,20 @@
 
               <% if user_signed_in? %>
 
-              <form action="create_validation" , method="post">
-                <input type="hidden" name="validation[user_id]" value="<%= current_user.id %>">
-                <input type="hidden" name="validation[post_id]" value="<%= post.id %>">
-                <i class="fa fa-thumbs-up" aria-hidden="true"> </i><input class="post-icon btn btn-default btn-xs" type="submit" name="validation[validation_type]" value="like">:<%= likes_count %>
-                <i class="fa fa-thumbs-down" aria-hidden="true"></i><input class="post-icon btn btn-default btn-xs" type="submit" name="validation[validation_type]" value="dislike">:<%= dislikes_count %>
-              </form>
+              <%=form_for :validation, :url => {:controller => "validations", :action => "create"} do |comment_form| %>
+                <%= comment_form.text_field :user_id, value:current_user.id, type:"hidden" %>
+                <%= comment_form.text_field :post_id, value:post.id, type:"hidden" %>
+
+                    <%= comment_form.submit value:"like", name:"validation[validation_type]", class:"btn btn-default"%>
+                    <i class="fa fa-thumbs-up" aria-hidden="true"> </i><%= likes_count %>
+
+                    <%= comment_form.submit value:"dislike", name:"validation[validation_type]", class:"btn btn-default"%>
+                    <i class="fa fa-thumbs-down" aria-hidden="true"> </i><%= dislikes_count %>
+
+
+
+              <% end %>
+
 
               <%= form_for :shared_post, :url => {:controller => "shared_posts", :action => "create"} do |shared_post_form| %>
                 <%= shared_post_form.text_field :post_id, value: post.id, type:"hidden" %>
@@ -230,20 +245,12 @@
                   <div class="h5 text-primary">Comments</div>
                   <% if (post.is_open) %>
                     <% if user_signed_in? %>
-                    <form action="create_comment" method="post">
-                      <div class="new-comment-container mx-1">
-                        <textarea name="comment[content]" class="w-100" style="max-height: 120px; min-height: 30px" placeholder="Enter comment"></textarea>
-                        <input type="hidden" name="comment[user_id]" value="<%= current_user.id %>">
-                        <input type="hidden" name="comment[post_id]" value="<%= post.id %>">
-                        <button style="float: right;" type="submit" class="btn btn-outline-primary my-1">Publish</button>
-                        <br>
-                        <br>
-                        <br>
-                      </div>
-                    </form>
 
-                      <%form_for :comment, :url => {:controller => "comments", :action => "create"} do |comment_form| %>
-                          <% comment_form.text_area :user_id, value:current_user.id %>
+                      <%=form_for :comment, :url => {:controller => "comments", :action => "create"} do |comment_form| %>
+                          <%= comment_form.text_field :user_id, value:current_user.id, type:"hidden" %>
+                          <%= comment_form.text_field :post_id, value:post.id, type:"hidden" %>
+                          <%= comment_form.text_area :content, class:"form-control", placeholder:"Enter Comment..." %>
+                          <%= comment_form.submit value:"Publish", class:"btn btn-outline-primary my-1", style:"float-right"%>
                       <% end %>
 
                       <% end %>
@@ -260,7 +267,16 @@
                         <div class="card-header">
                           <div class="card-heading-container row">
                             <div class="left-elements row m-2 pull-left">
-                              <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
+
+
+
+                              <% if not comment_user.profile.image.attached? %>
+                                <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
+                              <% else %>
+                                <%= image_tag comment_user.profile.image.variant(combine_options: {resize:'100x100', gravity: "Center", crop: '50x50+0+0' }), :class => "my-auto mx-4 rounded-circle border border-primary"%>
+                              <% end %>
+
+
 
                               <% if(not comment_user.profile.nil?) %>
                                 <a class="p text-primary mx-2 my-auto" href="<%= user_profile_view_path(user_profile_id: comment_user.profile.id) %>"><%= comment_user.get_name %></a>
@@ -275,7 +291,7 @@
                                 <div class="dropdown" style="float: right;">
                                   <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" data-toggle="modal" data-target="#edit-comment-modal">Edit</a>
+                                    <a class="dropdown-item" href="<%= edit_comment_path(id: comment.id) %>">Edit</a>
                                   </div>
                                 </div>
                               <% end end %>
@@ -297,15 +313,15 @@
                           <div class="comment-container collapse mu-2" id="new-comment-reply-modal-<%= comment.id %>">
                             <div class="new-comment-container col mx-1">
                               <% if user_signed_in? %>
-                              <form action="create_comment" method="post">
-                                <div class="new-comment-container col mx-1">
-                                  <textarea name="comment[content]" class="w-100" style="max-height: 120px; min-height: 30px" placeholder="Enter comment"></textarea>
-                                  <input type="hidden" name="comment[user_id]" value="<%= current_user.id %>">
-                                  <input type="hidden" name="comment[post_id]" value="<%= post.id %>">
-                                  <input type="hidden" name="comment[comment_id]" value="<%= comment.id %>">
-                                  <button style="float: right;" type="submit" class="btn btn-outline-primary mu-4">Publish</button>
-                                </div>
-                              </form>
+
+                                <%=form_for :comment, :url => {:controller => "comments", :action => "create"} do |comment_form| %>
+                                  <%= comment_form.text_field :user_id, value:current_user.id, type:"hidden" %>
+                                  <%= comment_form.text_field :post_id, value:post.id, type:"hidden" %>
+                                  <%= comment_form.text_field :comment_id, value:comment.id, type:"hidden" %>
+                                  <%= comment_form.text_area :content, class:"form-control", placeholder:"Enter Comment..." %>
+                                  <%= comment_form.submit value:"Publish", class:"btn btn-outline-primary my-1", style:"float-right"%>
+                                <% end %>
+
                                 <% end %>
                             </div>
                           </div>
@@ -333,7 +349,8 @@
 
                                           <% if post.is_open %>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                              <a class="dropdown-item" data-toggle="modal" data-target="#edit-comment-modal">Edit</a>
+<!--                                              <a class="dropdown-item" data-toggle="modal" data-target="#edit-comment-modal">Edit</a>-->
+                                              <a class="dropdown-item" href="<%= edit_comment_path(id: reply.id) %>">Edit</a>
                                             </div>
                                           <% end %>
                                         </div>

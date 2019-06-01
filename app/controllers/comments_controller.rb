@@ -52,7 +52,7 @@ class CommentsController < ApplicationController
 
       if @comment.update(comment_params)
         check_tags
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
+        format.html { redirect_to root_path, notice: 'Comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment }
       else
         format.html { render :edit }

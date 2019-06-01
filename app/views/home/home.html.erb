@@ -23,41 +23,51 @@
           <hr>
           <div class="create-post-container">
             <div class="col">
-              <form action="create_post" method="post">
-                <input type="hidden" name="post[user_id]" value="<%= current_user.id %>">
+
+              <%= form_for :post, :url => {:controller => "posts", :action => "create"} do |post_form| %>
+                <%= post_form.text_field :user_id, value:current_user.id, type:"hidden" %>
                 <div class="card card-default h-100">
                   <div class="card-header">
                     <div class="card-heading-container row">
                       <div class="form-inline row m-2 w-100">
-
-
                         <% if not current_user.profile.image.attached? %>
                           <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
                         <% else %>
                           <%= image_tag current_user.profile.image.variant(combine_options: {resize:'100x100', gravity: "Center", crop: '50x50+0+0' }), :class => "my-auto mx-4 rounded-circle border border-primary"%>
                         <% end %>
-
-                        <input type="text" class="form-control" id="title" placeholder="Post's Title" name="post[title]">
+                        <%= post_form.text_field :title, placeholder:"Post's Title", class:"form-control"%>
                       </div>
                     </div>
                   </div>
-
                   <div class="card-body">
-                    <textarea name="post[content]" class="w-100 min-x" style="min-height: 130px; max-height: 250px;"></textarea>
+                    <%= post_form.text_area :content, placeholder:"Write something", class:"form-control"%>
+                    <div class="cont">
+                      <div class="form-inline" style="float: left;">
 
-                    <div class="bottom-actions">
-                      <div class="leftside form-inline" style="float: left;">
-                        <button class="btn btn-outline-primary mt-2" style="float: left;">Add Attachment</button>
-                        <button class="btn btn-outline-primary mt-2 ml-2" style="float: left;">Add Image</button>
-                        <input type="checkbox" class="form-check-input mt-2 ml-2" name="post[include_location]">
+
+                        <label class="btn btn-outline-primary mt-2">
+                          Add Attachments
+                          <span style="display: none;">
+                        <%= post_form.file_field :attachments%>
+                        </span>
+                        </label>
+
+                        <label class="btn btn-outline-primary mt-2 ml-2">
+                          Add Images
+                        <span style="display: none;">
+                          <%= post_form.file_field :images%>
+                        </span>
+                        </label>
+
+
+                        <%= post_form.check_box :include_location, class:"form-control mt-2"%>
                         <div class="p mt-2">Include location</div>
                       </div>
-                      <!--                  <input type="checkbox" class="form-check-input my-3 ml-3" value="">-->
-                      <button class="btn btn-outline-primary mt-2" style="float: right;">Publish</button>
+                      <%= post_form.submit value:"Publish", class:"btn btn-outline-primary mt-2"%>
                     </div>
                   </div>
                 </div>
-              </form>
+                <% end %>
             </div>
           </div>
         </div>
