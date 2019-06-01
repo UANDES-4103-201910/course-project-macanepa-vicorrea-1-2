@@ -43,7 +43,7 @@
                     <% if post.is_solved %>
                       <div class="text-success my-auto small ml-2">Solved</div>
                     <% else %>
-                      <div class="text-warning my-auto small ml-2">Uresolved</div>
+                      <div class="text-danger my-auto small ml-2">Uresolved</div>
                     <% end %>
                   <% end %>
 
@@ -79,6 +79,48 @@
 
                 <% if(post.user_id == current_user.id) %>
 
+                    <% if post.is_open %>
+  <!--                    Set Solved-->
+                      <%= form_for post do |f| %>
+                        <%= f.text_field :is_solved, value:true, type:"hidden"%>
+                        <%= f.text_field :is_open, value:false, type:"hidden"%>
+                        <%= f.submit value:"Set Solved", class:"dropdown-item"%>
+                      <% end %>
+
+<!--                      Set Closed-->
+                      <%= form_for post do |f| %>
+                        <%= f.text_field :is_solved, value:false, type:"hidden"%>
+                        <%= f.text_field :is_open, value:false, type:"hidden"%>
+                        <%= f.submit value:"Set Closed", class:"dropdown-item"%>
+                      <% end %>
+
+                  <% else %>
+
+<!--                    Set Open-->
+                    <%= form_for post do |f| %>
+                      <%= f.text_field :is_solved, value:false, type:"hidden"%>
+                      <%= f.text_field :is_open, value:true, type:"hidden"%>
+                      <%= f.submit value:"Set Open", class:"dropdown-item"%>
+                    <% end %>
+
+                    <% if post.is_solved %>
+<!--                      Set Unresolved-->
+                      <%= form_for post do |f| %>
+                        <%= f.text_field :is_solved, value:false, type:"hidden"%>
+                        <%= f.text_field :is_open, value:false, type:"hidden"%>
+                        <%= f.submit value:"Set Unresolved", class:"dropdown-item"%>
+                      <% end %>
+                    <% else %>
+
+<!--                      Set Solved-->
+                      <%= form_for post do |f| %>
+                        <%= f.text_field :is_solved, value:true, type:"hidden"%>
+                        <%= f.text_field :is_open, value:false, type:"hidden"%>
+                        <%= f.submit value:"Set Solved", class:"dropdown-item"%>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                  <hr>
                   <a class="dropdown-item" href="<%= edit_post_path(id: post.id, format: :html) %>">Edit</a>
                   <a class="dropdown-item"><%= link_to 'Destroy', post, method: :delete, data: {confirm: 'Are you sure?'} %></a>
                   <hr>
@@ -230,7 +272,7 @@
                             </div>
 
                             <% if (current_user != nil) %>
-                              <% if (comment.user.id == current_user.id) %>
+                              <% if comment.user.id == current_user.id && post.is_open %>
                                 <div class="dropdown" style="float: right;">
                                   <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -258,7 +300,10 @@
                                 <% end %>
                             </div>
                           </div>
-                          <button style="float: right;" class="btn btn-link mu-2" data-toggle="collapse" data-target="#new-comment-reply-modal-<%= comment.id %>">Reply</button>
+
+                          <% if post.is_open %>
+                            <button style="float: right;" class="btn btn-link mu-2" data-toggle="collapse" data-target="#new-comment-reply-modal-<%= comment.id %>">Reply</button>
+                          <% end %>
                         </div>
                       </div>
                     </div>
@@ -272,13 +317,16 @@
                               <div class="card-body">
                                 <div class="col">
                                   <div class="p text-secondary">
-                                    <% if (current_user != nil) %>
-                                      <% if (reply.user.id == current_user.id) %>
+                                    <% if current_user != nil %>
+                                      <% if reply.user.id == current_user.id && post.is_open %>
                                         <div class="dropdown" style="float: right;">
                                           <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" data-toggle="modal" data-target="#edit-comment-modal">Edit</a>
-                                          </div>
+
+                                          <% if post.is_open %>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                              <a class="dropdown-item" data-toggle="modal" data-target="#edit-comment-modal">Edit</a>
+                                            </div>
+                                          <% end %>
                                         </div>
                                       <% end end %>
 
@@ -302,8 +350,9 @@
                                         <% end %>
                                     </div>
                                   </div>
-                                  <button style="float: right;" class="btn btn-link mu-2" data-toggle="collapse" data-target="#new-reply-modal-<%= reply.id %>">Reply</button>
-
+                                  <% if post.is_open %>
+                                    <button style="float: right;" class="btn btn-link mu-2" data-toggle="collapse" data-target="#new-reply-modal-<%= reply.id %>">Reply</button>
+                                  <% end %>
                                 </div>
                               </div>
                             </div>
