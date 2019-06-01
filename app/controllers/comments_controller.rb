@@ -35,6 +35,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     respond_to do |format|
       if @comment.save
+        check_tags
         format.html { redirect_to root_path, notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
       else
@@ -48,7 +49,9 @@ class CommentsController < ApplicationController
   # PATCH/PUT /comments/1.json
   def update
     respond_to do |format|
+
       if @comment.update(comment_params)
+        check_tags
         format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment }
       else
@@ -78,4 +81,24 @@ class CommentsController < ApplicationController
     def comment_params
       params.require(:comment).permit(:user_id, :post_id, :comment_id, :content)
     end
+
+    def check_tags
+      if @comment.content.include? "@"
+        sub_strings = @comment.content.split(" ")
+        emails = []
+          sub_strings.each do |sub_string|
+            if sub_string.include? "@"
+              emails << sub_string
+              u = User.where(email: sub_string)
+              if(u.length != 0)
+                u = u.first
+                Tag.create!(user_id: u.id, comment_id: @comment.id, post_id: @comment.post.id)
+              end
+            end
+        end
+      end
+      puts("\n\n\n\n\n\n #{emails} \n\n\n\n\n\n")
+
+    end
+
 end

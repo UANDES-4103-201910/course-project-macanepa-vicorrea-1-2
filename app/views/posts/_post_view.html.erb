@@ -137,7 +137,6 @@
       </div>
 
       <div class="card-body">
-
         <div class="p text-secondary"><%= post.content %></div>
         <hr>
 
@@ -284,7 +283,17 @@
                         </div>
 
                         <div class="card-body">
+
+
+
                           <div class="p text-secondary"><%= comment.content %></div>
+                          <%
+                            # text = "Check out my video on you tube http://youtu.be/OkCcD6cOKgs"
+                            text = comment.content
+                            html_text = text.gsub(URI.regexp, '<a href="\0">\0</a>').html_safe
+                          %>
+
+
                           <div class="comment-container collapse mu-2" id="new-comment-reply-modal-<%= comment.id %>">
                             <div class="new-comment-container col mx-1">
                               <% if user_signed_in? %>
