@@ -15,5 +15,7 @@ class Post < ApplicationRecord
   has_many :follows, dependent: :delete_all
   has_many :tags, dependent: :delete_all
 
+  has_many_attached :images
+
   validates :user_id, :title, :content, presence: true
 end
