@@ -6,8 +6,24 @@
   likes_count = likes.count
   dislikes = post.validations.where(validation_type: 'dislike')
   dislikes_count = dislikes.count
-  shares_count = SharedPost.where(post_id: post.id).count
+  shares = SharedPost.where(post_id: post.id)
+  shares_count = shares.count
 %>
+
+<% hover_likes_value = "" %>
+<% likes.each do |like| %>
+  <% hover_likes_value += like.user.get_name %>
+<% end %>
+
+<% hover_dislikes_value = "" %>
+<% dislikes.each do |dislike| %>
+  <% hover_dislikes_value += dislike.user.get_name %>
+<% end %>
+
+<% hover_shares_value = "" %>
+<% shares.each do |share| %>
+  <% hover_shares_value += share.user.get_name %>
+<% end %>
 
 <div class="container-fluid">
   <div class="col">
@@ -181,31 +197,25 @@
                 <%= comment_form.text_field :user_id, value:current_user.id, type:"hidden" %>
                 <%= comment_form.text_field :post_id, value:post.id, type:"hidden" %>
 
-                    <% hover_likes_value = "" %>
-                    <% likes.each do |like| %>
-                      <% hover_likes_value += like.user.get_name %>
-                    <% end %>
+
                     <%= comment_form.submit value:"like", name:"validation[validation_type]", class:"btn btn-default"%>
                     <i class="fa fa-thumbs-up" data-toggle="tooltip" title="<%= hover_likes_value %>" aria-hidden="true"> </i><%= likes_count %>
 
-                    <% hover_dislikes_value = "" %>
-                    <% dislikes.each do |dislike| %>
-                      <% hover_dislikes_value += dislike.user.get_name %>
-                   <% end %>
                     <%= comment_form.submit value:"dislike", name:"validation[validation_type]", class:"btn btn-default"%>
                     <i class="fa fa-thumbs-down" data-toggle="tooltip" title="<%= hover_dislikes_value %>" aria-hidden="true"> </i><%= dislikes_count %>
 
               <% end %>
+
               <%= form_for :shared_post, :url => {:controller => "shared_posts", :action => "create"} do |shared_post_form| %>
                 <%= shared_post_form.text_field :post_id, value: post.id, type:"hidden" %>
                 <%= shared_post_form.text_field :user_id, value: current_user.id, type:"hidden" %>
-                <i class="fa fa-retweet ml-4" aria-hidden="true"></i><%= submit_tag "Reshare:", :class => "post-icon btn btn-default btn-xs" %></i><%= shares_count %>
+                <i class="fa fa-retweet ml-4" data-toggle="tooltip" title="<%= hover_shares_value %>" aria-hidden="true"></i><%= submit_tag "Reshare:", :class => "post-icon btn btn-default btn-xs" %></i><%= shares_count %>
               <% end %>
 
           <% else %>
-              <i class="fa fa-thumbs-up" aria-hidden="true"> </i><small> like:</small><%= likes_count %>
-              <i class="fa fa-thumbs-down" aria-hidden="true"> </i><small> dislike:</small><%= dislikes_count %>
-              <i class="fa fa-retweet" aria-hidden="true"></i>Reshare:<%= shares_count %>
+              <i class="fa fa-thumbs-up" data-toggle="tooltip" title="<%= hover_likes_value %>" aria-hidden="true"> </i><small> like:</small><%= likes_count %>
+              <i class="fa fa-thumbs-down" data-toggle="tooltip" title="<%= hover_dislikes_value %>" aria-hidden="true"></i><small> dislike:</small><%= dislikes_count %>
+              <i class="fa fa-retweet" data-toggle="tooltip" title="<%= hover_shares_value %>" aria-hidden="true"></i>Reshare:<%= shares_count %>
             <% end %>
 
 
@@ -238,7 +248,7 @@
                               <div class="carousel-item active">
                             <% end %>
                                 <%= image_tag(url_for(image), class: "d-block w-100", alt: "image-" + counter.to_s) %>
-                              </div>
+                            </div>
                             <% counter_2 += 1 %>
                         <% end %>
                       </div>
