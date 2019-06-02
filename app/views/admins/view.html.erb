@@ -156,11 +156,32 @@
                 <td><%= post[6] %></td>
                 <td><button class="btn btn-warning fas fa-exclamation-triangle" data-toggle="modal"
                             data-owner="<%= post[0] %>" data-title="<%= post[1] %>" data-post-id="<%= post[7] %>"
-                            data-target="#report-post-modal" data-btn-type="report-post"></button></td>
+                            data-target="#report-modal-post-<%= post[7] %>" data-btn-type="report-post"></button></td>
                 <td><button class="btn btn-danger fas fa-trash-alt" data-toggle="modal"
                             data-owner="<%= post[0] %>" data-title="<%= post[1] %>" data-post-id="<%= post[7] %>"
                             data-target="#delete-post-modal" data-btn-type="delete-post"></button></td>
               </tr>
+              <div class="modal" id="report-modal-post-<%= post[7] %>">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Report post</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <%= form_for :report, :url => {:controller => "reports", :action => "create"} do |report_form| %>
+                      <%= report_form.text_field :user_id, value: current_user.id, type: "hidden" %>
+                      <%= report_form.text_field :post_id, value: post[7], type: "hidden" %>
+                      <div class="modal-body">
+                        Why you want to mark the post <b><%= post[1] %></b> by <b><%= post[0] %></b> as inappropiate?
+                        <%= report_form.text_area :content, class:"form-control", placeholder: "Write a short comment for justification..." %>
+                      </div>
+                      <div class="modal-footer">
+                        <%= report_form.submit value:"Report", class:"btn btn-outline-warning my-1", style:"float-right"%>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
             <% end %>
             </tbody>
           </table>
@@ -404,25 +425,25 @@
   </div>
 </div>
 
-<div class="modal" id="report-post-modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Report post</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
+<!--<div class="modal" id="report-post-modal">-->
+<!--  <div class="modal-dialog">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="modal-header">-->
+<!--        <h4 class="modal-title">Report post</h4>-->
+<!--        <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+<!--      </div>-->
+<!--      <div class="modal-body">-->
 <!--        Are you sure that you want to <i id="delete-report-text"></i> the post <b id="post-title"></b> by <b id="post-owner"></b>?-->
-      </div>
-      <div class="modal-footer">
-        <form action="report_post" method="post">
-          <input type="hidden" id="hidden-post-id-report" name="id">
-          <button id="report-button" class="btn btn-outline-warning">Accept</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+<!--      </div>-->
+<!--      <div class="modal-footer">-->
+<!--        <form action="report_post" method="post">-->
+<!--          <input type="hidden" id="hidden-post-id-report" name="id">-->
+<!--          <button id="report-button" class="btn btn-outline-warning">Accept</button>-->
+<!--        </form>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
 
 <div class="modal" id="make-user-admin-modal">
   <div class="modal-dialog">
@@ -512,6 +533,9 @@
     </div>
   </div>
 </div>
+
+
+
 <% else %>
   <div class="alert alert-danger alert-dismissible fade show">
     <b>Error!</b> You don't have permission to access here.
