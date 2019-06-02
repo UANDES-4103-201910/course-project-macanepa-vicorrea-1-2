@@ -16,6 +16,7 @@ class Post < ApplicationRecord
   has_many :tags, dependent: :delete_all
 
   has_many_attached :images
+  has_many_attached :attachments
 
   validates :user_id, :title, :content, presence: true
 end

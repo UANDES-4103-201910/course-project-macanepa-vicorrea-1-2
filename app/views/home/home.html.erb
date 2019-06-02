@@ -40,7 +40,7 @@
                     </div>
                   </div>
                   <div class="card-body">
-                    <%= post_form.text_area :content, placeholder:"Write something", class:"form-control"%>
+                    <%= post_form.text_area :content, placeholder:"Write something", :rows => 6, class:"form-control"%>
                     <div class="cont">
                       <div class="form-inline" style="float: left;">
 
@@ -48,7 +48,7 @@
                         <label class="btn btn-outline-primary mt-2">
                           Add Attachments
                           <span style="display: none;">
-                        <%= post_form.file_field :attachments%>
+                        <%= post_form.file_field :attachments, multiple: true %>
                         </span>
                         </label>
 
@@ -59,11 +59,10 @@
                         </span>
                         </label>
 
+                        <%= post_form.check_box :include_location, class:"form-control ml-2 mt-2" %><%= post_form.label :include_location, class:"mt-2"%>
 
-                        <%= post_form.check_box :include_location, class:"form-control mt-2"%>
-                        <div class="p mt-2">Include location</div>
                       </div>
-                      <%= post_form.submit value:"Publish", class:"btn btn-outline-primary mt-2"%>
+                      <%= post_form.submit value:"Publish", class:"btn btn-outline-primary ml-2 mt-2"%>
                     </div>
                   </div>
                 </div>

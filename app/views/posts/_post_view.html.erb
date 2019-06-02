@@ -149,18 +149,25 @@
 
         <div class="form-inline card-footer-container my-auto">
           <div class="row">
-            </button>
-            <button class="post-icon btn btn-link mx-2 my-auto btn-xs" data-toggle="collapse" data-target="#collapseImages-<%= post.id%>" role="button" aria-expanded="false" aria-controls="collapseImages">
-              Display Images
-            </button>
 
-            <button class="post-icon btn btn-link mx-2 my-auto btn-xs" data-toggle="collapse" data-target="#collapseFiles-<%= post.id%>" role="button" aria-expanded="false" aria-controls="collapseFiles">
-              Display Attachments
-            </button>
 
-            <button class="post-icon btn btn-link mx-2 my-auto btn-xs" data-toggle="modal" data-target="#display-map-modal" role="button" aria-expanded="false" aria-controls="collapseComment">
-              View location on map
-            </button>
+            <% if post.images.attached? %>
+              <button class="post-icon btn btn-link mx-2 my-auto btn-xs" data-toggle="collapse" data-target="#collapseImages-<%= post.id%>" role="button" aria-expanded="false" aria-controls="collapseImages">
+                Display Images
+              </button>
+            <% end %>
+            <% if post.attachments.attached? %>
+              <button class="post-icon btn btn-link mx-2 my-auto btn-xs" data-toggle="collapse" data-target="#collapseFiles-<%= post.id%>" role="button" aria-expanded="false" aria-controls="collapseFiles">
+                Display Attachments
+              </button>
+            <% end %>
+
+            <% if post.include_location &&  (not post.country.nil?)%>
+              <button class="post-icon btn btn-link mx-2 my-auto btn-xs" data-toggle="collapse" data-target="#collapseMap-<%= post.id%>" role="button" aria-expanded="false" aria-controls="collapseMap">
+                View location on map
+              </button>
+            <% end %>
+
           </div>
 
 
@@ -205,6 +212,7 @@
                 <div style="height: 40px;"></div>
                 <% if post.images.attached? %>
                   <div class="image-container collapse" id="collapseImages-<%= post.id %>">
+                    <div class="h2 text-primary">Images</div>
                     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                       <ol class="carousel-indicators">
                         <% counter = 0 %>
@@ -242,10 +250,21 @@
                     </div>
                   </div>
                 <% end %>
-        <div class="file-container collapse" id="collapseFiles-<%= post.id %>">
-                  <h1>Files!</h1>
+                <div class="file-container collapse" id="collapseFiles-<%= post.id %>">
+                  <div class="h2 text-primary">Attachments</div>
+                  <% post.attachments.each do |attachment| %>
+                    <%= link_to attachment.filename, rails_blob_path(attachment, disposition: 'attachment') %><br>
+                  <% end %>
                 </div>
-                <div class="comment-container collapse col" id="collapseComment-<%= post.id %>">
+                <div class="file-container collapse" id="collapseMap-<%= post.id %>">
+                  <div class="h2 text-primary">Map</div>
+                  <p><%= post.city %>, <%= post.country %></p>
+                  <p><%= post.gps_location %></p>
+                </div>
+
+
+
+        <div class="comment-container collapse col" id="collapseComment-<%= post.id %>">
                   <div class="h5 text-primary">Comments</div>
                   <% if (post.is_open) %>
                     <% if user_signed_in? %>
@@ -307,12 +326,6 @@
 
 
                           <div class="p text-secondary"><%= comment.content %></div>
-                          <%
-                            # text = "Check out my video on you tube http://youtu.be/OkCcD6cOKgs"
-                            text = comment.content
-                            html_text = text.gsub(URI.regexp, '<a href="\0">\0</a>').html_safe
-                          %>
-
 
                           <div class="comment-container collapse mu-2" id="new-comment-reply-modal-<%= comment.id %>">
                             <div class="new-comment-container col mx-1">

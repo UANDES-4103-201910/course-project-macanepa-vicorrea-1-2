@@ -29,6 +29,14 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.is_open = true
     @post.is_solved = false
+
+    if(post_params[:include_location]=="1")
+      @post.city="Santiago"
+      @post.country="Chile"
+      @post.gps_location="Latitude: -33.326802 | Longitude: -70.53883"
+    end
+
+
     respond_to do |format|
       if @post.save
         format.html { redirect_to root_path, notice: 'Post was successfully created.' }
@@ -45,6 +53,15 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/1.json
   def update
     # respond_to do |format|
+
+    if not post_params[:images].nil?
+        @post.images.purge
+      end
+
+      if not post_params[:attachments].nil?
+        @post.attachments.purge
+      end
+
       if @post.update(post_params)
         redirect_to root_path, notice: "Updated!"
         # format.html { redirect_to @post, notice: 'Post was successfully updated.' }
@@ -77,6 +94,6 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:user_id, :title, :content, :city, :country, :gps_location, :is_solved, :is_open, images: [])
+      params.require(:post).permit(:user_id, :title, :content, :city, :country, :gps_location, :is_solved, :is_open, :include_location, images: [], attachments: [])
     end
 end

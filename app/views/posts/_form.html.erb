@@ -14,19 +14,48 @@
   <div class="card">
     <div class="card-header">
       <div class="field">
-        <%= form.text_field :title ,placeholder:"Post's Title..." ,style:"width:100%"%>
+        <%= form.text_field :title ,placeholder:"Post's Title...", class:"form-control"%>
       </div>
     </div>
     <div class="card-body">
 
       <div class="field">
-        <%= form.text_area :content ,placeholder:"Content...", :rows => 8, style:"width:100%" %>
+        <%= form.text_area :content ,placeholder:"Content...", :rows => 8, class:"form-control" %>
       </div>
+
+      <hr>
+      <%# if post.attachments.attached? %>
+<!--        <div class="h5">Attachments (select to remove)</div>-->
+        <%# post.attachments.each do |attachment| %>
+<!--          <div class="form-inline">-->
+<!--            <%#= attachment.filename %><%#= form.check_box :attachment, default:true%><br>-->
+<!--            <%#= attachment.filename %><%#= form.submit :attachment, default:true%><br>-->
+<!--          </div>-->
+
+        <%# end %>
+      <%# end %>
+
+
     </div>
     <div class="card-footer form-inline">
       <div class="field form-inline">
-        <%= form.label :include_location %>
+
+        <label class="btn btn-outline-primary mt-2">
+          Add Attachments
+          <span style="display: none;">
+                        <%= form.file_field :attachments, multiple: true %>
+                        </span>
+        </label>
+
+        <label class="btn btn-outline-primary mt-2 ml-2">
+          Add Images
+          <span style="display: none;">
+                          <%= form.file_field :images, multiple: true %>
+                        </span>
+        </label>
+        <%= form.label :include_location, class:"ml-2"%>
         <%= form.check_box :include_location %>
+
       </div>
       <div class="col-1"></div>
       <div class="actions" style="float: right;">
