@@ -62,6 +62,7 @@
               <th>Is super admin</th>
               <th>Creation date</th>
               <th>Edit</th>
+              <th>View profile</th>
               <th>Stop being an administrator</th>
             </tr>
             </thead>
@@ -75,10 +76,12 @@
               <td><%= admin[3] %></td>
               <td><button class="btn btn-info fas fa-edit" data-toggle="modal"
                           data-target="#edit-admin-modal" data-email="<%= admin[0] %>"
-                          data-user-id="<%= admin[5] %>"
+                          data-user-id="<%= admin[5] %>" data-tooltip="tooltip" title="Edit admin"
                           data-admin-id="<%= admin[4] %>" data-btn-type="edit-admin"></button></td>
+              <td><a href="<%= user_profile_view_path(user_profile_id: admin[5]) %>" role="button"
+                     class="btn btn-primary fas fa-address-card" data-tooltip="tooltip" title="View admin profile"></a></td>
               <td><button class="btn btn-danger fas fa-user-lock" data-toggle="modal"
-                          data-admin-id="<%= admin[4] %>"
+                          data-admin-id="<%= admin[4] %>" data-tooltip="tooltip" title="Stop being an administrator"
                           data-email="<%= admin[0] %>" data-btn-type="stop-being-admin"
                           data-target="#stop-being-admin-modal"></button></td>
             </tr>
@@ -98,7 +101,8 @@
               <th>Creation date</th>
               <th>Edit</th>
               <%# if($current_user.admin.super_admin) %>
-                <th>Make admin</th>
+              <th>Make admin</th>
+              <th>View profile</th>
               <%# end %>
               <th>Delete</th>
             </tr>
@@ -111,16 +115,19 @@
               <td><%= user.email %></td>
               <td><%= user.last_access %></td>
               <td><%= user.created_at %></td>
-              <td><button class="btn btn-info fas fa-edit" data-toggle="modal"
+              <td><button class="btn btn-info fas fa-edit" data-toggle="modal" data-tooltip="tooltip" title="Edit user"
                           data-target="#edit-user-modal" data-email="<%= user.email %>"
                           data-user-id="<%= user.id %>" data-btn-type="edit-user"></button></td>
               <%# if ($current_user.admin.super_admin) %>
               <td><button class="btn btn-success fas fa-user-cog" data-toggle="modal"
-                          data-email="<%= user.email %>"
+                          data-email="<%= user.email %>" data-tooltip="tooltip" title="Make user admin"
                           data-target="#make-user-admin-modal" data-btn-type="make-user-admin"></button></td>
               <%# end %>
+<!--              <a class="dropdown-item" href="<%#= user_profile_view_path(user_profile_id: current_user.profile.id) %>">View profile</a>-->
+              <td><a href="<%= user_profile_view_path(user_profile_id: user.id) %>" role="button"
+                     class="btn btn-primary fas fa-address-card" data-tooltip="tooltip" title="View user profile"></a></td>
               <td><button class="btn btn-danger fas fa-trash-alt" data-toggle="modal"
-                          data-email="<%= user.email %>" data-user-id="<%= user.id %>"
+                          data-email="<%= user.email %>" data-user-id="<%= user.id %>" data-tooltip="tooltip" title="Delete user"
                           data-target="#delete-user-modal" data-btn-type="delete-user"></button></td>
             </tr>
               <% end %>
@@ -140,6 +147,7 @@
               <th>GPS location</th>
               <th>Creation date</th>
               <th>Report</th>
+              <th>View post</th>
               <th>Delete</th>
             </tr>
             </thead>
@@ -154,12 +162,13 @@
                 <td><%= post[4] %></td>
                 <td><%= post[5] %></td>
                 <td><%= post[6] %></td>
-                <td><button class="btn btn-warning fas fa-exclamation-triangle" data-toggle="modal"
+                <td><button class="btn btn-warning fas fa-exclamation-triangle" data-toggle="modal" data-tooltip="tooltip" title="Mark post as inappropriate"
                             data-owner="<%= post[0] %>" data-title="<%= post[1] %>" data-post-id="<%= post[7] %>"
                             data-target="#report-modal-post-<%= post[7] %>" data-btn-type="report-post"></button></td>
+                <td><a href="<%= watch_path(post_id: post[7]) %>" role="button" class="btn btn-primary fas fa-file-import" data-tooltip="tooltip" title="View post"></a></td>
                 <td><button class="btn btn-danger fas fa-trash-alt" data-toggle="modal"
                             data-owner="<%= post[0] %>" data-title="<%= post[1] %>" data-post-id="<%= post[7] %>"
-                            data-target="#delete-post-modal" data-btn-type="delete-post"></button></td>
+                            data-target="#delete-post-modal" data-btn-type="delete-post" data-tooltip="tooltip" title="Delete post"></button></td>
               </tr>
               <div class="modal" id="report-modal-post-<%= post[7] %>">
                 <div class="modal-dialog">
@@ -169,11 +178,11 @@
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <%= form_for :report, :url => {:controller => "reports", :action => "create"} do |report_form| %>
-                      <%= report_form.text_field :user_id, value: current_user.id, type: "hidden" %>
-                      <%= report_form.text_field :post_id, value: post[7], type: "hidden" %>
+                      <%= report_form.text_field :user_id, value: current_user.id, type: "hidden", id: "current_user_post_" + post[7].to_s %>
+                      <%= report_form.text_field :post_id, value: post[7], type: "hidden", id: "current_post_" + post[7].to_s %>
                       <div class="modal-body">
                         Why you want to mark the post <b><%= post[1] %></b> by <b><%= post[0] %></b> as inappropiate?
-                        <%= report_form.text_area :content, class:"form-control", placeholder: "Write a short comment for justification..." %>
+                        <%= report_form.text_area :content, class:"form-control", placeholder: "Write a short comment for justification...", id: "current_content_" + post[7].to_s %>
                       </div>
                       <div class="modal-footer">
                         <%= report_form.submit value:"Report", class:"btn btn-outline-warning my-1", style:"float-right"%>
@@ -210,7 +219,7 @@
                 <td><%= bl_user[0] %></td>
                 <td><%= bl_user[1] %></td>
                 <td><%= bl_user[2] %></td>
-                <td><button class="btn btn-dark fas fa-sign-out-alt"
+                <td><button class="btn btn-dark fas fa-sign-out-alt" data-tooltip="tooltip" title="Remove user from the blacklist"
                             data-target="#remove-from-list-modal" data-btn-type="remove-from-list"
                             data-removed-user="<%= bl_user[0] %>" data-object-id="<%= bl_user[3] %>"
                             data-list-type="Blacklist" data-toggle="modal"
@@ -250,7 +259,7 @@
                 <td><%= d_post[1] %></td>
                 <td><%= d_post[2] %></td>
                 <td><%= d_post[3] %></td>
-                <td><button class="btn btn-dark fas fa-sign-out-alt" data-toggle="modal"
+                <td><button class="btn btn-dark fas fa-sign-out-alt" data-toggle="modal" data-tooltip="tooltip" title="Remove post from the dumpster"
                             data-target="#remove-from-dumpster-modal" data-btn-type="remove-from-dumpster"
                             data-post-id="<%= d_post[4] %>"
                             data-dumpster-title="<%= d_post[0] %>" data-dumpster-owner="<%= d_post[1] %>"
@@ -288,7 +297,7 @@
                 <td><%= sl_user[0] %></td>
                 <td><%= sl_user[1] %></td>
                 <td><%= sl_user[2] %></td>
-                <td><button class="btn btn-dark fas fa-sign-out-alt"
+                <td><button class="btn btn-dark fas fa-sign-out-alt" data-tooltip="tooltip" title="Remove user from the suspension list"
                             data-toggle="modal" data-target="#remove-from-list-modal"
                             data-removed-user="<%= sl_user[0] %>" data-object-id="<%= sl_user[3] %>"
                             data-list-type="Suspension List" data-btn-type="remove-from-list"
@@ -327,7 +336,7 @@
                 <td><%= bl_user[1] %></td>
                 <td><%= bl_user[2] %></td>
                 <td><button class="btn btn-dark fas fa-sign-out-alt"
-                            data-removed-user="<%= bl_user[0] %>"
+                            data-removed-user="<%= bl_user[0] %>" data-tooltip="tooltip" title="Remove user from the block list"
                             data-target="#remove-from-list-modal" data-btn-type="remove-from-list"
                             data-list-type="Block List" data-toggle="modal" data-object-id="<%= bl_user[3] %>"
                             <% if not bl_user[2].nil? %>

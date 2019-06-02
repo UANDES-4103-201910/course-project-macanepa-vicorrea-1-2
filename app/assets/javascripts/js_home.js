@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('[data-toggle = "tooltip"]').tooltip();
+    $('[data-tooltip = "tooltip"]').tooltip();
 
     $('#add-attachments-button').attr('title', 'No selected attachments');
     $('#add-images-button').attr('title', 'No selected images');

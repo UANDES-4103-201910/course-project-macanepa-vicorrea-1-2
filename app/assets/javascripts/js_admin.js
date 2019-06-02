@@ -89,6 +89,10 @@ function showAllObjectsInList(object_type){
 }
 
 $(document).ready( function () {
+    $('[data-tooltip = "tooltip"]').tooltip({
+        trigger : 'hover'
+    });
+
     $('.user-blacklist-row-have-exit-date').hide();
     $('.post-dumpster-row-have-exit-date').hide();
     $('.user-suspension-list-row-have-exit-date').hide();

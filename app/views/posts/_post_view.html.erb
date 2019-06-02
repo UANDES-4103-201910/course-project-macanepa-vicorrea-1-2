@@ -205,23 +205,23 @@
 
 
                     <%= comment_form.submit value:"like", name:"validation[validation_type]", class:"btn btn-default"%>
-                    <i class="fa fa-thumbs-up" data-toggle="tooltip" title="<%= hover_likes_value %>" aria-hidden="true"> </i><%= likes_count %>
+                    <i class="fa fa-thumbs-up" data-tooltip="tooltip" title="<%= hover_likes_value %>" aria-hidden="true"> </i><%= likes_count %>
 
                     <%= comment_form.submit value:"dislike", name:"validation[validation_type]", class:"btn btn-default"%>
-                    <i class="fa fa-thumbs-down" data-toggle="tooltip" title="<%= hover_dislikes_value %>" aria-hidden="true"> </i><%= dislikes_count %>
+                    <i class="fa fa-thumbs-down" data-tooltip="tooltip" title="<%= hover_dislikes_value %>" aria-hidden="true"> </i><%= dislikes_count %>
 
               <% end %>
 
               <%= form_for :shared_post, :url => {:controller => "shared_posts", :action => "create"} do |shared_post_form| %>
                 <%= shared_post_form.text_field :post_id, value: post.id, type:"hidden" %>
                 <%= shared_post_form.text_field :user_id, value: current_user.id, type:"hidden" %>
-                <i class="fa fa-retweet ml-4" data-toggle="tooltip" title="<%= hover_shares_value %>" aria-hidden="true"></i><%= submit_tag "Reshare:", :class => "post-icon btn btn-default btn-xs" %></i><%= shares_count %>
+                <i class="fa fa-retweet ml-4" data-tooltip="tooltip" title="<%= hover_shares_value %>" aria-hidden="true"></i><%= submit_tag "Reshare:", :class => "post-icon btn btn-default btn-xs" %></i><%= shares_count %>
               <% end %>
 
           <% else %>
-              <i class="fa fa-thumbs-up" data-toggle="tooltip" title="<%= hover_likes_value %>" aria-hidden="true"> </i><small> like:</small><%= likes_count %>
-              <i class="fa fa-thumbs-down" data-toggle="tooltip" title="<%= hover_dislikes_value %>" aria-hidden="true"></i><small> dislike:</small><%= dislikes_count %>
-              <i class="fa fa-retweet" data-toggle="tooltip" title="<%= hover_shares_value %>" aria-hidden="true"></i>Reshare:<%= shares_count %>
+              <i class="fa fa-thumbs-up" data-tooltip="tooltip" title="<%= hover_likes_value %>" aria-hidden="true"> </i><small> like:</small><%= likes_count %>
+              <i class="fa fa-thumbs-down" data-tooltip="tooltip" title="<%= hover_dislikes_value %>" aria-hidden="true"></i><small> dislike:</small><%= dislikes_count %>
+              <i class="fa fa-retweet" data-tooltip="tooltip" title="<%= hover_shares_value %>" aria-hidden="true"></i>Reshare:<%= shares_count %>
             <% end %>
 
 
