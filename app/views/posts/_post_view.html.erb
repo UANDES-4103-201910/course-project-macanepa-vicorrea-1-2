@@ -250,11 +250,13 @@
                           <% post.images.each do |image| %>
                             <% if counter_2 > 0 %>
                               <div class="carousel-item">
+                                <%= image_tag(url_for(image), class: "d-block w-100", alt: "image-" + counter.to_s) %>
+                              </div>
                             <% else %>
                               <div class="carousel-item active">
-                            <% end %>
                                 <%= image_tag(url_for(image), class: "d-block w-100", alt: "image-" + counter.to_s) %>
-                            </div>
+                              </div>
+                          <% end %>
                             <% counter_2 += 1 %>
                         <% end %>
                       </div>
