@@ -11,18 +11,24 @@
 %>
 
 <% hover_likes_value = "" %>
+<% c1 = 1 %>
 <% likes.each do |like| %>
-  <% hover_likes_value += like.user.get_name %>
+  <% hover_likes_value += (" " + c1.to_s + ". " + like.user.get_name) %>
+  <% c1 += 1 %>
 <% end %>
 
 <% hover_dislikes_value = "" %>
+<% c2 = 1 %>
 <% dislikes.each do |dislike| %>
-  <% hover_dislikes_value += dislike.user.get_name %>
+  <% hover_dislikes_value += (" " + c2.to_s + ". " + dislike.user.get_name) %>
+  <% c2 += 1 %>
 <% end %>
 
 <% hover_shares_value = "" %>
+<% c3 = 1 %>
 <% shares.each do |share| %>
-  <% hover_shares_value += share.user.get_name %>
+  <% hover_shares_value += (" " + c3.to_s + ". " + share.user.get_name) %>
+  <% c3 += 1 %>
 <% end %>
 
 <div class="container-fluid">
@@ -94,7 +100,7 @@
                 <%end %>
 
                 <% if SharedPost.where(user_id: current_user.id, post_id: post.id).length!= 0 %>
-                  <a class="dropdown-item"><%= link_to 'Unshare', SharedPost.where(user_id: current_user.id, post_id: post.id).first, method: :delete, data: {confirm: 'Are you sure?'} %></a>
+                  <a class="dropdown-item"<%= link_to 'Unshare', SharedPost.where(user_id: current_user.id, post_id: post.id).first, method: :delete, data: {confirm: 'Are you sure?'} %></a>
                 <% end %>
 
                 <% if(post.user_id == current_user.id) %>
@@ -149,7 +155,7 @@
                   <hr>
                 <%end %>
                 <%# end end %>
-                <a class="dropdown-item" data-toggle="modal" data-target="#report-modal">Report</a>
+                <a class="dropdown-item" href="" data-toggle="modal" data-target="#report-modal-post-id-<%= post.id %>">Report</a>
               </div>
             </div>
             <%end %>
@@ -425,29 +431,27 @@
                 </div>
                 </div>
 
-
                 <!-- The Modal -->
-                <div class="modal fade" id="report-modal">
-                  <div class="modal-dialog modal-md">
-                    <div class="modal-content">
+<!--                <div class="modal fade" id="report-modal">-->
+<!--                  <div class="modal-dialog modal-md">-->
+<!--                    <div class="modal-content">-->
 
-                      <div class="modal-header">
-                        <div class="h4">Report Post</div>
-                      </div>
-                      <!-- Modal body -->
-                      <div class="modal-body row">
-                        <div class="col-12">
-                          <textarea class="w-100 min-x" style="min-height: 130px; max-height: 250px;"></textarea>
-                        </div>
-                      </div>
+<!--                      <div class="modal-header">-->
+<!--                        <div class="h4">Report Post</div>-->
+<!--                      </div>-->
+<!--                      <div class="modal-body row">-->
+<!--                        <div class="col-12">-->
+<!--                          <textarea class="w-100 min-x" style="min-height: 130px; max-height: 250px;"></textarea>-->
+<!--                        </div>-->
+<!--                      </div>-->
 
-                      <div class="modal-footer">
-                        <button class="btn btn-primary">Report</button>
-                      </div>
+<!--                      <div class="modal-footer">-->
+<!--                        <button class="btn btn-primary">Report</button>-->
+<!--                      </div>-->
 
-                    </div>
-                  </div>
-                </div>
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
 
                 <div class="modal fade" id="edit-comment-modal">
                   <div class="modal-dialog modal-md">
@@ -522,3 +526,27 @@
                     </div>
                   </div>
                 </div>
+
+<% if user_signed_in? %>
+  <div class="modal" id="report-modal-post-id-<%= post.id %>">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Report post</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <%= form_for :report, :url => {:controller => "reports", :action => "create"} do |report_form| %>
+          <%= report_form.text_field :user_id, value: current_user.id, type: "hidden" %>
+          <%= report_form.text_field :post_id, value: post.id, type: "hidden" %>
+          <div class="modal-body">
+            Why you want to mark the post <b><%= post.title %></b> by <b><%= post.user.email %></b> as inappropiate?
+            <%= report_form.text_area :content, class:"form-control", placeholder: "Write a short comment for justification..." %>
+          </div>
+          <div class="modal-footer">
+            <%= report_form.submit value:"Report", class:"btn btn-outline-danger my-1", style:"float-right"%>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
