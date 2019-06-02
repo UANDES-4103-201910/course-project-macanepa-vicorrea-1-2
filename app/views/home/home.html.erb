@@ -44,15 +44,14 @@
                     <div class="cont">
                       <div class="form-inline" style="float: left;">
 
-
-                        <label class="btn btn-outline-primary mt-2">
+                        <label id="add-attachments-button" class="btn btn-outline-primary mt-2">
                           Add Attachments
                           <span style="display: none;">
                         <%= post_form.file_field :attachments, multiple: true %>
                         </span>
                         </label>
 
-                        <label class="btn btn-outline-primary mt-2 ml-2">
+                        <label id="add-images-button" class="btn btn-outline-primary mt-2 ml-2">
                           Add Images
                         <span style="display: none;">
                           <%= post_form.file_field :images, multiple: true %>

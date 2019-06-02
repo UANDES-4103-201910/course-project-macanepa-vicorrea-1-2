@@ -181,17 +181,21 @@
                 <%= comment_form.text_field :user_id, value:current_user.id, type:"hidden" %>
                 <%= comment_form.text_field :post_id, value:post.id, type:"hidden" %>
 
+                    <% hover_likes_value = "" %>
+                    <% likes.each do |like| %>
+                      <% hover_likes_value += like.user.get_name %>
+                    <% end %>
                     <%= comment_form.submit value:"like", name:"validation[validation_type]", class:"btn btn-default"%>
-                    <i class="fa fa-thumbs-up" aria-hidden="true"> </i><%= likes_count %>
+                    <i class="fa fa-thumbs-up" data-toggle="tooltip" title="<%= hover_likes_value %>" aria-hidden="true"> </i><%= likes_count %>
 
+                    <% hover_dislikes_value = "" %>
+                    <% dislikes.each do |dislike| %>
+                      <% hover_dislikes_value += dislike.user.get_name %>
+                   <% end %>
                     <%= comment_form.submit value:"dislike", name:"validation[validation_type]", class:"btn btn-default"%>
-                    <i class="fa fa-thumbs-down" aria-hidden="true"> </i><%= dislikes_count %>
-
-
+                    <i class="fa fa-thumbs-down" data-toggle="tooltip" title="<%= hover_dislikes_value %>" aria-hidden="true"> </i><%= dislikes_count %>
 
               <% end %>
-
-
               <%= form_for :shared_post, :url => {:controller => "shared_posts", :action => "create"} do |shared_post_form| %>
                 <%= shared_post_form.text_field :post_id, value: post.id, type:"hidden" %>
                 <%= shared_post_form.text_field :user_id, value: current_user.id, type:"hidden" %>
@@ -213,15 +217,16 @@
                 <% if post.images.attached? %>
                   <div class="image-container collapse" id="collapseImages-<%= post.id %>">
                     <div class="h2 text-primary">Images</div>
-                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <div id="carouselExampleIndicatorsPost<%= post.id %>" class="carousel slide" data-ride="carousel">
                       <ol class="carousel-indicators">
                         <% counter = 0 %>
                         <% post.images.each do |image| %>
                           <% if counter > 0 %>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="<% counter %>"></li>
+                            <li data-target="#carouselExampleIndicatorsPost<%= post.id %>" data-slide-to="<%= counter %>"></li>
                           <% else %>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="<% counter %>" class="active"></li>
+                            <li data-target="#carouselExampleIndicatorsPost<%= post.id %>" data-slide-to="<%= counter %>" class="active"></li>
                           <% end %>
+                          <% counter += 1 %>
                         <% end %>
                       </ol>
                       <div class="carousel-inner">
@@ -229,27 +234,26 @@
                           <% post.images.each do |image| %>
                             <% if counter_2 > 0 %>
                               <div class="carousel-item">
-                                <%= image_tag(url_for(image), class: "d-block w-100", alt: "image-" + counter.to_s) %>
-                              </div>
-                              <% else %>
+                            <% else %>
                               <div class="carousel-item active">
+                            <% end %>
                                 <%= image_tag(url_for(image), class: "d-block w-100", alt: "image-" + counter.to_s) %>
                               </div>
-                              <% end %>
                             <% counter_2 += 1 %>
                         <% end %>
                       </div>
-                      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                      <a class="carousel-control-prev" href="#carouselExampleIndicatorsPost<%= post.id %>" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="sr-only">Previous</span>
                       </a>
-                      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                      <a class="carousel-control-next" href="#carouselExampleIndicatorsPost<%= post.id %>" role="button" data-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                       </a>
                     </div>
                   </div>
                 <% end %>
+                <br>
                 <div class="file-container collapse" id="collapseFiles-<%= post.id %>">
                   <div class="h2 text-primary">Attachments</div>
                   <% post.attachments.each do |attachment| %>
