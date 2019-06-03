@@ -19,4 +19,5 @@ class Post < ApplicationRecord
   has_many_attached :attachments
 
   validates :user_id, :title, :content, presence: true
+  validates :title, :content, length: { minimum: 5 }
 end

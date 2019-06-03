@@ -43,7 +43,7 @@ class PostsController < ApplicationController
         format.json { render :show, status: :created, location: @post }
       else
         # format.html { render :new }
-        format.html { redirect_to root_path, alert: 'Error creating post.' }
+        format.html { redirect_to root_path, alert: 'Error creating post. Recalls that both the length of the title and the content of the post must be at least 5 characters long.' }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end

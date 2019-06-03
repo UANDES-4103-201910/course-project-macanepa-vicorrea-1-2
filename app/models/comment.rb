@@ -5,4 +5,5 @@ class Comment < ApplicationRecord
   has_many :tags
 
   validates :user_id, :content, presence: true
+  validates :content, length: { minimum: 2 }
 end

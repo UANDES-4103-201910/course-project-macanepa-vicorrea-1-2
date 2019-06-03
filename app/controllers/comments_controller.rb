@@ -38,7 +38,8 @@ class CommentsController < ApplicationController
         format.html { redirect_to root_path, notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
       else
-        format.html { render :new }
+        # format.html { render :new }
+        format.html { redirect_to root_path, alert: 'Error creating comment. Remember that the length of the comment must be at least two characters.' }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
