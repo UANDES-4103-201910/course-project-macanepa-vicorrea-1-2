@@ -3,7 +3,7 @@
 # Users
 user03 = User.create!(name:"Lusho",last_name:"el Angry",email:"angry_lusho@miuandes.cl",password:"123456",last_access:Time.now)
 user04 = User.create!(name:"Giorgio",last_name:"Guggiana",email:"gaguggiana@miuandes.cl",password:"123456",last_access:Time.now)
-user05 = User.create!(name:"Tomas",last_name:"Turbado",email:"tomasturbado@miuandes.cl",password:"123456",last_access:Time.now)
+user05 = User.create!(name:"Tomas",last_name:"Turbado",email:"tt@miuandes.cl",password:"123456",last_access:Time.now)
 user06 = User.create!(name:"Mati",last_name:"Canepa",email:"matiasalbertocg@gmail.com",password:"123456",last_access:Time.now)
 
 
@@ -14,9 +14,9 @@ profile05 = Profile.create!(user_id:user05.id,biography:"rotsap im se natas",cou
 profile06 = Profile.create!(user_id:user06.id,biography:"La Matucha",country:"Chile",city:"Santiago")
 
 #Admins
-admin01 = Admin.create!(user_id:user03.id,super_admin:true,geofence:nil)
 admin01 = Admin.create!(user_id:user06.id,super_admin:true,geofence:nil)
-admin02 = Admin.create!(user_id:user04.id,super_admin:false,geofence:"Chile y Argentina")
+admin02 = Admin.create!(user_id:user04.id,super_admin:false,geofence:"Chile")
+admin03 = Admin.create!(user_id:user05.id,super_admin:true,geofence:nil)
 
 
 #Posts
