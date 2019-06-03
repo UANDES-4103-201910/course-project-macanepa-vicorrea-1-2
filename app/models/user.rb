@@ -18,7 +18,7 @@ class User < ApplicationRecord
   has_many :tags, dependent: :delete_all
 
   # validates :email, presence: true, format: {with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/}, uniqueness: true
-  # validates :name, :last_name, :password, presence: true
+  validates :name, presence: true
 
   def self.from_omniauth(auth)
     where(provider: auth.provider ,uid: auth.uid).first_or_create do |user|
