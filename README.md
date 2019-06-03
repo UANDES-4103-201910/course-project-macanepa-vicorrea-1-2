@@ -89,7 +89,27 @@ Developed by:
   - View post location on map
 - Comment threads for posts
   - Make the tag clickable to show profile.
+- Logic implementation for following lists (all of the elements included in these lists will be affected through out the entire web page. i.e posts included in dumpster wont be shown anywhere accessible by regular users).
+  - Blacklist
+  - Dumpster
+  - Suspension List
+  - Block List
 
 ## Bugs
 - Posts
   - Can't unlike a posts (or change from like to dislike)
+  
+  
+  
+# For Testing Purposes
+## You can see all the accounts at seeds.rb
+* Admin:
+  - email: gaguggiana@miuandes.cl
+  - password: 123456
+* Super Admin:
+  - email: tt@miuandes.cl
+  - password: 123456
+* Regular User:
+  - email: angry_lusho@miuandes.cl
+  - password: 123456
+  
