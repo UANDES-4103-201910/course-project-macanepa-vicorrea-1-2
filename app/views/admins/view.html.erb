@@ -60,8 +60,8 @@
               <th>User</th>
               <th>Geofence</th>
               <th>Is super admin</th>
-              <th>Creation date</th>
               <th>Last access</th>
+              <th>Creation date</th>
               <th>Edit</th>
               <th>View profile</th>
               <th>Stop being an administrator</th>
@@ -74,10 +74,10 @@
               <td><%= admin[0] %></td>
               <td><%= admin[1] %></td>
               <td><%= admin[2] %></td>
-              <td><%= admin[3] %></td>
               <td><%= admin[6] %></td>
+              <td><%= admin[3] %></td>
               <td><button class="btn btn-info fas fa-edit" data-toggle="modal"
-                          data-target="#edit-admin-modal" data-email="<%= admin[0] %>"
+                          data-target="#edit-admin-modal-<%= admin[5] %>" data-email="<%= admin[0] %>"
                           data-user-id="<%= admin[5] %>" data-tooltip="tooltip" title="Edit admin"
                           data-admin-id="<%= admin[4] %>" data-btn-type="edit-admin"></button></td>
               <td><a href="<%= user_profile_view_path(user_profile_id: admin[5]) %>" role="button"
@@ -87,6 +87,25 @@
                           data-email="<%= admin[0] %>" data-btn-type="stop-being-admin"
                           data-target="#stop-being-admin-modal"></button></td>
             </tr>
+              <div class="modal" id="edit-admin-modal-<%= admin[5] %>">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Edit administrator</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <%= form_for User.find(admin[5]) do |edit_admin_form| %>
+                      <div class="modal-body">
+                        <p><i>Edit</i> administrator's password <b><%= admin[0] %></b></p>
+                        <%= edit_admin_form.password_field :password, class:"form-control", placeholder: "Write the new password...", id: "new_admin_password_" + admin[5].to_s %>
+                      </div>
+                      <div class="modal-footer">
+                        <%= edit_admin_form.submit value:"Update", class:"btn btn-outline-info my-1", style:"float-right"%>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
             <% end %>
             </tbody>
           </table>
@@ -118,7 +137,7 @@
               <td><%= user.last_access %></td>
               <td><%= user.created_at %></td>
               <td><button class="btn btn-info fas fa-edit" data-toggle="modal" data-tooltip="tooltip" title="Edit user"
-                          data-target="#edit-user-modal" data-email="<%= user.email %>"
+                          data-target="#edit-user-modal-<%= user.id %>" data-email="<%= user.email %>"
                           data-user-id="<%= user.id %>" data-btn-type="edit-user"></button></td>
               <%# if ($current_user.admin.super_admin) %>
               <td><button class="btn btn-success fas fa-user-cog" data-toggle="modal"
@@ -132,7 +151,26 @@
                           data-email="<%= user.email %>" data-user-id="<%= user.id %>" data-tooltip="tooltip" title="Delete user"
                           data-target="#delete-user-modal" data-btn-type="delete-user"></button></td>
             </tr>
-              <% end %>
+              <div class="modal" id="edit-user-modal-<%= user.id %>">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Edit user</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <%= form_for user do |edit_form| %>
+                      <div class="modal-body">
+                        <p><i>Edit</i> user's password <b><%= user.email %></b></p>
+                        <%= edit_form.password_field :password, class:"form-control", placeholder: "Write the new password...", id: "new_user_password_" + user.id.to_s %>
+                      </div>
+                      <div class="modal-footer">
+                        <%= edit_form.submit value:"Update", class:"btn btn-outline-info my-1", style:"float-right"%>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
             </tbody>
           </table>
         </div>
@@ -497,53 +535,53 @@
   </div>
 </div>
 
-<div class="modal" id="edit-user-modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Edit user</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <form action="edit_user" method="post">
-        <div class="modal-body">
-          <p><i>Edit</i> user's password <b id="password-user-email"></b></p>
-          <div class="form-group">
-            <label for="new-user-password">New password:</label>
-            <input type="password" class="form-control" id="new-user-password" name="user[password]">
-          </div>
-        </div>
-      <div class="modal-footer">
-        <input id="hidden-user-id-for-password" type="hidden" name="id"/>
-        <button class="btn btn-outline-info">Accept</button>
-      </div>
-      </form>
-    </div>
-  </div>
-</div>
+<!--<div class="modal" id="edit-user-modal">-->
+<!--  <div class="modal-dialog">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="modal-header">-->
+<!--        <h4 class="modal-title">Edit user</h4>-->
+<!--        <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+<!--      </div>-->
+<!--      <form action="edit_user" method="post">-->
+<!--        <div class="modal-body">-->
+<!--          <p><i>Edit</i> user's password <b id="password-user-email"></b></p>-->
+<!--          <div class="form-group">-->
+<!--            <label for="new-user-password">New password:</label>-->
+<!--            <input type="password" class="form-control" id="new-user-password" name="user[password]">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      <div class="modal-footer">-->
+<!--        <input id="hidden-user-id-for-password" type="hidden" name="id"/>-->
+<!--        <button class="btn btn-outline-info">Accept</button>-->
+<!--      </div>-->
+<!--      </form>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
 
-<div class="modal" id="edit-admin-modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Edit administrator</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <form action="edit_admin" method="post">
-        <div class="modal-body">
-          <p><i>Edit</i> administrator's password <b id="password-admin-email"></b></p>
-          <div class="form-group">
-            <label for="new-admin-password">New password:</label>
-            <input type="password" class="form-control" id="new-admin-password" name="user[password]">
-          </div>
-          <input id="hidden-admin-id-for-password" type="hidden" name="id"/>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-outline-info">Accept</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
+<!--<div class="modal" id="edit-admin-modal">-->
+<!--  <div class="modal-dialog">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="modal-header">-->
+<!--        <h4 class="modal-title">Edit administrator</h4>-->
+<!--        <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+<!--      </div>-->
+<!--      <form action="edit_admin" method="post">-->
+<!--        <div class="modal-body">-->
+<!--          <p><i>Edit</i> administrator's password <b id="password-admin-email"></b></p>-->
+<!--          <div class="form-group">-->
+<!--            <label for="new-admin-password">New password:</label>-->
+<!--            <input type="password" class="form-control" id="new-admin-password" name="user[password]">-->
+<!--          </div>-->
+<!--          <input id="hidden-admin-id-for-password" type="hidden" name="id"/>-->
+<!--        </div>-->
+<!--        <div class="modal-footer">-->
+<!--          <button class="btn btn-outline-info">Accept</button>-->
+<!--        </div>-->
+<!--      </form>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
 
 
 
