@@ -9,11 +9,11 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
-  <% if(user_signed_in? && current_user.profile.nil?) %>
+  <% if user_signed_in? && current_user.profile.nil? %>
     <%# redirect_to session_sign_up_path  %>
   <% end %>
-  <nav id="navbar-app" class="navbar navbar-expand-lg bg-light justify-content-between fixed-top">
-    <a class="navbar-brand" href="<%= root_path %>">AngryLusho <% if user_signed_in? && current_user.is_admin %><small>admin</small> <% end %></a>
+  <nav id="navbar-app" class="navbar navbar-expand-lg bg-<%= if user_signed_in? && current_user.is_admin then 'dark' else 'primary' end %> justify-content-between fixed-top">
+    <a class="navbar-brand text-light" href="<%= root_path %>"><b>AngryLusho</b> <% if user_signed_in? && current_user.is_admin %><small>admin</small> <% end %></a>
     <form class="form-inline" action=<%=search_path %> >
 
 
@@ -26,23 +26,22 @@
         <option class="form-control" value="location">Location</option>
       </select>
 
-      <button class="btn btn-outline-primary" type="submit">Search</button>
+      <button class="btn btn-warning" type="submit"><i class="fas fa-search"></i> Search</button>
 
 
     </form>
     <div class="nav-item">
       <form class="form-inline">
         <% if user_signed_in? && current_user.is_admin %>
-          <a href="<%= admin_view_path %>" class="btn btn-outline-dark mr-2" role="button">Admin</a>
+          <a href="<%= admin_view_path %>" class="btn btn-danger mr-2" role="button"><i class="fas fa-user-cog"></i> Admin</a>
         <% end %>
         <% if user_signed_in? && (not current_user.profile.nil?) %>
           <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
+            <a id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <% if not current_user.profile.image.attached? %>
-                <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
+                <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle">
               <% else %>
-                <%= image_tag current_user.profile.image.variant(combine_options: {resize:'100x100', gravity: "Center", crop: '50x50+0+0' }), :class => "my-auto mx-4 rounded-circle border border-primary"%>
+                <%= image_tag current_user.profile.image.variant(combine_options: {resize:'100x100', gravity: "Center", crop: '50x50+0+0' }), :class => "my-auto mx-4 rounded-circle"%>
               <% end %>
 
             </a>
@@ -63,15 +62,15 @@
             <form class="form-inline">
 <!--              <p><%#= current_user.name %></p>-->
 <!--              <a href="<%#= session_sign_up_path %>" class="btn btn-outline-primary" role="button">Create Profile</a>-->
-              <a class="btn btn-outline-primary" role="button" <%= link_to "Log out", destroy_user_session_path, method: :delete %></a>
+              <a class="btn btn-danger" role="button" <%= link_to "Log out", destroy_user_session_path, method: :delete %></a>
             </form>
           </div>
         <% else %>
             <form class="form-inline">
 <!--              <a href="<%#= session_login_path %>" class="btn btn-outline-primary" role="button">Log in</a>-->
-              <a href="<%= new_user_session_path %>" class="btn btn-outline-primary" role="button">Log in</a>
+              <a href="<%= new_user_session_path %>" class="btn btn-danger" role="button">Log in</a>
 <!--              <a href="<%#= session_sign_up_path %>" class="btn btn-outline-primary ml-2" role="button">Sign Up</a>-->
-              <a href="<%= new_user_registration_path %>" class="btn btn-outline-primary ml-2" role="button">Sign Up</a>
+              <a href="<%= new_user_registration_path %>" class="btn btn-success ml-2" role="button">Sign Up</a>
             </form>
         <% end %>
       </form>
@@ -94,12 +93,12 @@
     <%= yield %>
     </div>
   <footer id="footer-app">
-    <nav class="navbar navbar-expand-lg bg-light justify-content-end">
+    <nav class="navbar navbar-expand-lg bg-<%= if user_signed_in? && current_user.is_admin then 'dark' else 'primary' end %> justify-content-end">
       <div class="nav-item">
-        <a class="nav-link text-primary" data-toggle="modal" data-target="#aup-modal">Acceptable Use Policy</a>
+        <a class="nav-link text-light" data-toggle="modal" data-target="#aup-modal">Acceptable Use Policy</a>
       </div>
       <div class="nav-item">
-        <a class="nav-link text-primary" data-toggle="modal" data-target="#tos-modal">Terms of Service</a>
+        <a class="nav-link text-light" data-toggle="modal" data-target="#tos-modal">Terms of Service</a>
       </div>
     </nav>
   </footer>
