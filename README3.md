@@ -39,7 +39,7 @@ Developed by:
 - Posts
   - View post
     - View title, description, location (temporary fake data) and creation date
-    - View upvotes and downvotes (quantity)
+    - View upvotes and downvotes
     - View images
     - View file attachments (and download them)
   - Delete post
