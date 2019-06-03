@@ -10,9 +10,11 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
-    user = User.where(email: params[:user][:email]).first
-    user.update(last_access: Time.now)
     super
+    user = User.where(email: params[:user][:email]).first
+    if not user.nil?
+      user.update(last_access: Time.now)
+    end
   end
 
   # DELETE /resource/sign_out
