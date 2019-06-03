@@ -1,6 +1,6 @@
 class SharedPostsController < ApplicationController
-  before_action :set_shared_post, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_shared_post, :check, only: [:show, :edit, :update, :destroy]
+  # before_action
   # GET /shared_posts
   # GET /shared_posts.json
   def index
@@ -25,7 +25,6 @@ class SharedPostsController < ApplicationController
   # POST /shared_posts.json
   def create
     @shared_post = SharedPost.new(shared_post_params)
-
     respond_to do |format|
       if @shared_post.save
         format.html { redirect_to root_path, notice: 'Shared post was successfully created.' }
@@ -69,8 +68,12 @@ class SharedPostsController < ApplicationController
       @shared_post = SharedPost.find(params[:id])
     end
 
+
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def shared_post_params
       params.require(:shared_post).permit(:user_id, :post_id, :content)
     end
+
+
 end

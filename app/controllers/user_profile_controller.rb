@@ -10,7 +10,15 @@ class UserProfileController < ApplicationController
     end
     @user=User.find(@user_profile.user.id)
     @posts=Post.where(user_id:@user.id)
-    @posts+=Post.joins(:shared_posts)
+    @shared_posts= SharedPost.where(user_id:@user_profile.id).pluck(:post_id)
+    @posts+=Post.where(id: @shared_posts)
+
+    # @posts+=Post.joins(:shared_posts)
+
+
+
+
+
     #
     # @user_posts = Profile.find(user_profile_id)
     # @user_posts = Post.where(user_id: User.where(profile_id: user_profile_id)[0])
