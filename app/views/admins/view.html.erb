@@ -61,6 +61,7 @@
               <th>Geofence</th>
               <th>Is super admin</th>
               <th>Creation date</th>
+              <th>Last access</th>
               <th>Edit</th>
               <th>View profile</th>
               <th>Stop being an administrator</th>
@@ -68,12 +69,13 @@
             </thead>
             <tbody>
             <% @admins.each do |admin| %>
-              <!--:email, :geofence, :super_admin, :created_at, :id, :user_id-->
+              <!--:email, :geofence, :super_admin, :created_at, :id, :user_id, :last_access-->
             <tr>
               <td><%= admin[0] %></td>
               <td><%= admin[1] %></td>
               <td><%= admin[2] %></td>
               <td><%= admin[3] %></td>
+              <td><%= admin[6] %></td>
               <td><button class="btn btn-info fas fa-edit" data-toggle="modal"
                           data-target="#edit-admin-modal" data-email="<%= admin[0] %>"
                           data-user-id="<%= admin[5] %>" data-tooltip="tooltip" title="Edit admin"

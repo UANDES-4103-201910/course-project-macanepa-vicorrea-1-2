@@ -14,7 +14,7 @@ class AdminsController < ApplicationController
     @posts = (Post.joins(:user).order(:title)).pluck(:email, :title, :content, :city, :country, :gps_location, :created_at, :id)
     @blacklist_users = (Blacklist.joins(:user).order(:email)).pluck(:email, :created_at, :exit_date, :id)
     @dumpster_posts = (Post.joins(:dumpster, :user).order(:title)).pluck(:title, :email, :created_at, :exit_date, :id)
-    @admins = (Admin.joins(:user).order(:email)).pluck(:email, :geofence, :super_admin, :created_at, :id, :user_id)
+    @admins = (Admin.joins(:user).order(:email)).pluck(:email, :geofence, :super_admin, :created_at, :id, :user_id, :last_access)
     @suspension_list_users = (User.joins(:suspension_list).order(:email)).pluck(:email, :created_at, :exit_date, :id)
     @block_list_users = (User.joins(:block_list).order(:email)).pluck(:email, :created_at, :exit_date, :id)
   end
