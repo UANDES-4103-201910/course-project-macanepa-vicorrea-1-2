@@ -5,9 +5,9 @@
       <div class="row">
         <% if not user.profile.nil? %>
           <% if not user.profile.image.attached? %>
-            <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-primary">
+            <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png" class="my-auto mx-4 rounded-circle border border-dark">
           <% else %>
-            <%= image_tag user.profile.image.variant(combine_options: {resize:'100x100', gravity: "Center", crop: '50x50+0+0' }), :class => "my-auto mx-4 rounded-circle border border-primary"%>
+            <%= image_tag user.profile.image.variant(combine_options: {resize:'100x100', gravity: "Center", crop: '50x50+0+0' }), :class => "my-auto mx-4 rounded-circle border border-dark"%>
           <% end %>
         <% end %>
 

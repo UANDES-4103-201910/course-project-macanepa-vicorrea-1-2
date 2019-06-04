@@ -62,15 +62,15 @@
           <div class="nav-item">
             <form class="form-inline">
 <!--              <p><%#= current_user.name %></p>-->
-<!--              <a href="<%#= session_sign_up_path %>" class="btn btn-outline-primary" role="button">Create Profile</a>-->
+<!--              <a href="<%#= session_sign_up_path %>" class="btn btn-outline-dark" role="button">Create Profile</a>-->
               <a class="btn btn-danger" role="button" <%= link_to "Log out", destroy_user_session_path, method: :delete %></a>
             </form>
           </div>
         <% else %>
             <form class="form-inline">
-<!--              <a href="<%#= session_login_path %>" class="btn btn-outline-primary" role="button">Log in</a>-->
-              <a href="<%= new_user_session_path %>" class="btn btn-info" role="button">Log in</a>
-<!--              <a href="<%#= session_sign_up_path %>" class="btn btn-outline-primary ml-2" role="button">Sign Up</a>-->
+<!--              <a href="<%#= session_login_path %>" class="btn btn-outline-dark" role="button">Log in</a>-->
+              <a href="<%= new_user_session_path %>" class="btn btn-primary" role="button">Log in</a>
+<!--              <a href="<%#= session_sign_up_path %>" class="btn btn-outline-dark ml-2" role="button">Sign Up</a>-->
               <a href="<%= new_user_registration_path %>" class="btn btn-success ml-2" role="button">Sign Up</a>
             </form>
         <% end %>
