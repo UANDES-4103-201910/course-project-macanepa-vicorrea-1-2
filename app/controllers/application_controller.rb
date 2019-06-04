@@ -25,4 +25,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def filter_posts(posts)
+    if(Dumpster.where(exit_date: nil).length > 0)
+      posts = posts.where("posts.id NOT IN (?)", Dumpster.where(exit_date: nil).pluck(:post_id))
+    end
+    return posts
+  end
+
 end

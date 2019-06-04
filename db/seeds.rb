@@ -22,7 +22,12 @@ admin03 = Admin.create!(user_id:user05.id,super_admin:true,geofence:nil)
 #Posts
 post01 = Post.create!(user_id:user03.id,title:"Titulo",content:"Post de prueba",is_open:true,is_solved:false)
 post02 = Post.create!(user_id:user04.id,title:"Hey listen",content:"I'm quite recognized for my eloquent decision making. People often say that I take 'Bad Choices'",is_open:false,is_solved:true)
+post03 = Post.create!(user_id:user04.id,title:"Dumpster",content:"Dumpster!",is_open:false,is_solved:true)
 
 
 # Comments
 comment01 = Comment.create!(post_id:post01.id, comment_id:nil, user_id:user04.id,content:"Ahh CTM")
+
+# Dumpster
+Dumpster.create!(post_id:post03.id, exit_date:Time.now.tomorrow)
+Dumpster.create!(post_id:post03.id)

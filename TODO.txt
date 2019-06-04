@@ -1,3 +1,1 @@
-TODO: Fix (show post after thehy are removed from dumpster (use exit date))
-TODO: Reply a Reply (fix the target)
-TODO: Fix password in edit profile
+TODO: Fix unshare (from profile & anywhere)
