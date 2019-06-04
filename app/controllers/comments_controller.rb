@@ -14,6 +14,7 @@ class CommentsController < ApplicationController
   # GET /comments/1.json
   def show
     @comment = Comment.where(id:params[:id], post_id: params[:post_id])
+    @content_list = format_content(@comment)
     respond_to do |format|
       format.json {render json: @comment.to_json}
     end
@@ -79,7 +80,18 @@ class CommentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-      params.require(:comment).permit(:user_id, :post_id, :comment_id, :content)
+      params.require(:comment).permit(:user_id, :post_id, :comment_id, :reply_id, :content)
+    end
+
+
+    def format_content(comment)
+      list = comment.split(" ")
+
+      for tag in @comment.tags
+        if list.include tag.email.user.email
+
+        end
+      end
     end
 
     def check_tags

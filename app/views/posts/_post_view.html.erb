@@ -351,6 +351,15 @@
                         <div class="card-body">
 
 
+                          <% if comment.tags.length > 0 %>
+                            <div class="form-inline">
+                              <div class="small text-secondary mr-2">tags:</div>
+                              <% comment.tags.each do |tag| %>
+                                <a class="btn-link small text-primary mr-2" href=<%= user_profile_view_path(user_profile_id: tag.user.profile.id) %>><%= tag.user.name %> <%= tag.user.last_name %></a>
+                              <% end %>
+                            </div>
+                            <hr>
+                          <% end %>
 
                           <div class="p text-secondary"><%= comment.content %></div>
 
@@ -400,11 +409,31 @@
                                         </div>
                                       <% end end %>
 
+
+
+
+
                                     <a class="btn-link text-primary" href=<%= user_profile_view_path(user_profile_id: reply.user.profile.id) %>><%= reply.user.name %> <%= reply.user.last_name %></a>
                                     replying to
-                                    <a class="btn-link text-primary" href=<%= user_profile_view_path(user_profile_id: comment.user.profile.id) %>><%= comment.user.name %> <%= comment.user.last_name %>
+                                    <% if reply.reply.nil? %>
+                                      <a class="btn-link text-primary" href=<%= user_profile_view_path(user_profile_id: comment.user.profile.id) %>><%= comment.user.name %> <%= comment.user.last_name %>
+                                    <% else %>
+                                      <a class="btn-link text-primary" href=<%= user_profile_view_path(user_profile_id: reply.reply.user.profile.id) %>><%= reply.reply.user.name %> <%= reply.reply.user.last_name %>
+                                    <% end %>
                                       : </a>
                                     <%= reply.content %></div>
+
+
+                                  <% if reply.tags.length > 0 %>
+                                    <hr>
+                                    <div class="form-inline">
+                                      <div class="small text-secondary mr-2">tags:</div>
+                                      <% reply.tags.each do |tag| %>
+                                        <a class="btn-link small text-primary mr-2" href=<%= user_profile_view_path(user_profile_id: tag.user.profile.id) %>><%= tag.user.name %> <%= tag.user.last_name %></a>
+                                      <% end %>
+                                    </div>
+                                  <% end %>
+
                                   <div class="comment-container collapse mu-2" id="new-reply-modal-<%= reply.id %>">
                                     <div class="new-comment-container col mx-1">
                                       <% if user_signed_in? %>
@@ -422,6 +451,7 @@
                                           <%= comment_form.text_field :user_id, value:current_user.id, type:"hidden" %>
                                           <%= comment_form.text_field :post_id, value:post.id, type:"hidden" %>
                                           <%= comment_form.text_field :comment_id, value:reply.comment.id, type:"hidden" %>
+                                          <%= comment_form.text_field :reply_id, value:reply.id, type:"hidden" %>
                                           <%= comment_form.text_area :content, class:"form-control", placeholder:"Enter Comment..." %>
                                           <%= comment_form.submit value:"Publish", class:"btn btn-outline-primary my-1", style:"float-right"%>
                                         <% end %>
