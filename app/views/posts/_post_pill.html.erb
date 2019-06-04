@@ -20,9 +20,13 @@
               <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-                <% follow = Follow.where(user_id:current_user.id, post_id:post.id)[0] %>
-                <%= form_for follow, method: :delete do |follow_form|%>
-                  <%= follow_form.submit value:"Unfollow Post", class:"dropdown-item"%>
+                <% if user_signed_in? %>
+                  <% follow = Follow.where(user_id:current_user.id, post_id:post.id)[0] %>
+                  <% if not follow.nil? %>
+                    <%= form_for follow, method: :delete do |follow_form|%>
+                      <%= follow_form.submit value:"Unfollow Post", class:"dropdown-item"%>
+                    <% end %>
+                  <% end %>
                 <% end %>
 
                 <hr>

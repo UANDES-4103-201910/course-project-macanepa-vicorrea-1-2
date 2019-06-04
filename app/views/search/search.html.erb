@@ -4,17 +4,178 @@
 
 
 <body>
-  <div class="main-container col-4 mx-auto ">
-    <% @users.each do |user| %>
-      <% if (not user.nil?) %>
-          <%= render "search/profile_pill", user:user %>
-      <% end %>
-    <% end %>
 
-    <% if(@users.count==0) %>
-      <div class="h3 text-primary">No results found!</div>
-    <% end %>
+
+    <div class="container col-md-6">
+      <ul class="nav nav-pills" role="tablist">
+<!--        <li class="nav-item">-->
+<!--          <a id="tab-step-1" class="nav-link active" data-toggle="pill" href="#all-results-nav">All</a>-->
+<!--        </li>-->
+        <li class="nav-item">
+          <a id="tab-step-2" class="nav-link active" data-toggle="pill" href="#profile-results-nav">Profiles</a>
+        </li>
+        <li class="nav-item">
+          <a id="tab-step-3" class="nav-link" data-toggle="pill" href="#post-results-nav">Posts</a>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+<!--        <div id="all-results-nav" class="container tab-pane active"><br>-->
+<!--          <h2>All</h2>-->
+<!--          <div class="card">-->
+<!--            <div class="card-body">-->
+<!--              <div class="main-container mx-auto ">-->
+                <%# @users.each do |user| %>
+                  <%# if (not user.nil?) %>
+                    <%#= render "search/profile_pill", user:user %>
+                  <%# end %>
+                <%# end %>
+                <%# if(@users.count==0) %>
+<!--                  <div class="h3 text-primary">No results found!</div>-->
+                <%# end %>
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+        <div id="profile-results-nav" class="container tab-pane active"><br>
+          <h2>Profiles</h2>
+
+
+
+
+
+
+          <div class="container">
+            <ul class="nav nav-pills" role="tablist">
+              <li class="nav-item">
+                <a id="tab-step-1-1" class="nav-link active" data-toggle="pill" href="#create-account-nav">Name</a>
+              </li>
+              <li class="nav-item">
+                <a id="tab-step-1-2" class="nav-link" data-toggle="pill" href="#create-profile-nav">Location</a>
+              </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div id="create-account-nav" class="container tab-pane active"><br>
+                <h2>Name</h2>
+                <div class="card">
+                  <div class="card-body">
+                    <div class="main-container mx-auto ">
+                      <% @users_name.each do |user| %>
+                        <% if (not user.nil?) %>
+                          <%= render "search/profile_pill", user:user %>
+                        <% end %>
+                      <% end %>
+                      <% if(@users_name.count==0) %>
+                        <div class="h3 text-primary">No results found!</div>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="create-profile-nav" class="container tab-pane"><br>
+                <h2>Location</h2>
+                <div class="card">
+                  <div class="card-body">
+                    <div class="main-container mx-auto ">
+                      <% @users_location.each do |user| %>
+                        <% if (not user.nil?) %>
+                          <%= render "search/profile_pill", user:user %>
+                        <% end %>
+                      <% end %>
+                      <% if(@users_location.count==0) %>
+                        <div class="h3 text-primary">No results found!</div>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+        </div>
+        <div id="post-results-nav" class="container tab-pane"><br>
+          <h2>Posts</h2>
+
+
+
+
+
+
+          <div class="container">
+            <ul class="nav nav-pills" role="tablist">
+              <li class="nav-item">
+                <a id="tab-step-2-1" class="nav-link active" data-toggle="pill" href="#post-content-nav">Content</a>
+              </li>
+              <li class="nav-item">
+                <a id="tab-step-2-2" class="nav-link" data-toggle="pill" href="#post-author-nav">Author</a>
+              </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div id="post-content-nav" class="container tab-pane active"><br>
+                <h2>Content</h2>
+                <div class="card">
+                  <div class="card-body">
+                    <div class="main-container mx-auto ">
+                      <% @posts_content.each do |post| %>
+                        <% if (not post.nil?) %>
+                          <%= render "posts/post_pill", post:post %>
+                        <% end %>
+                      <% end %>
+                      <% if(@posts_content.count==0) %>
+                        <div class="h3 text-primary">No results found!</div>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="post-author-nav" class="container tab-pane"><br>
+                <h2>Author</h2>
+                <div class="card">
+                  <div class="card-body">
+                    <div class="main-container mx-auto ">
+                      <% @posts_author.each do |post| %>
+                        <% if (not post.nil?) %>
+                          <%= render "posts/post_pill", post:post %>
+                        <% end %>
+                      <% end %>
+                      <% if(@posts_author.count==0) %>
+                        <div class="h3 text-primary">No results found!</div>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+        </div>
 
       </div>
+
+
+
+    </div>
+
+
+
+  </div>
+
+
 </body>
 
