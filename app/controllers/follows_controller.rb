@@ -15,6 +15,7 @@ class FollowsController < ApplicationController
 
   # GET /follows/new
   def new
+
     @follow = Follow.new
   end
 
@@ -27,6 +28,9 @@ class FollowsController < ApplicationController
   def create
     @follow = Follow.new(follow_params)
     @follow.user_id = current_user.id
+
+
+
     respond_to do |format|
       if @follow.save
         # format.html { redirect_to @follow, notice: 'Follow was successfully created.' }
