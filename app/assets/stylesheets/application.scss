@@ -26,6 +26,7 @@ footer {
 }
 
 body {
+  margin-top: 80px;
   margin-bottom: 80px;
 }
 
@@ -33,17 +34,18 @@ body {
   background-color: RoyalBlue;
 }
 
+
+.user-image {
+  border-style: outset;
+}
+
 .user-image:hover {
-  opacity: .6;
+  //opacity: .6;
+  border-style: inset;
 }
 
 .angry-lusho-text {
   text-shadow: 3px 2px black;
-}
-
-.page-content {
-  margin-top: 70px;
-  margin-bottom: 70px
 }
 
 .card-header{
