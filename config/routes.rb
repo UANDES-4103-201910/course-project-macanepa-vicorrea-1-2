@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :locations
   devise_for :users, controllers: { omniauth_callbacks: 'callbacks', sessions: "users/sessions" }
   get 'watch/watch'
   get 'search/search'

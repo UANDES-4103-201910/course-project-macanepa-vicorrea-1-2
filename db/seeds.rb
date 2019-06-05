@@ -31,3 +31,10 @@ comment01 = Comment.create!(post_id:post01.id, comment_id:nil, user_id:user04.id
 # Dumpster
 Dumpster.create!(post_id:post03.id, exit_date:Time.now.tomorrow)
 Dumpster.create!(post_id:post03.id)
+
+# Locations
+Location.create!([
+                  { "name": "Buckingham Palace", "latitude": "51.501564","longitude": "-0.141944"},
+                  { "name": "Westminster Abbey", "latitude": "51.499581", "longitude": "-0.127309"},
+                  { "name": "Big Ben", "latitude": "51.500792", "longitude": "-0.124613"}
+              ])
