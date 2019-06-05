@@ -287,6 +287,15 @@
                   <div class="h2 text-dark">Map</div>
                   <p><%= post.city %>, <%= post.country %></p>
                   <p><%= post.gps_location %></p>
+
+                  <% key = "AIzaSyCPyzjsnZ320er0gU62rJG9FhyrMwf3v98" %>
+                  <% if not post.location.nil? %>
+                    <p>
+                      <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?zoom=17&size=400x300&center=#{post.location.latitude},#{post.location.longitude}&key=#{key}", alt: "Map" %>
+                    </p>
+                    <%= "https://maps.googleapis.com/maps/api/staticmap?zoom=17&size=400x300&center=#{post.location.latitude},#{post.location.longitude}&key=#{key}" %>
+                  <% end %>
+
                 </div>
 
 

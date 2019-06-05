@@ -1,6 +1,7 @@
 class Post < ApplicationRecord
   belongs_to :user
   has_one :dumpster
+  belongs_to :location, optional: true
   has_many :comments
   has_many :follows
   has_many :shared_posts

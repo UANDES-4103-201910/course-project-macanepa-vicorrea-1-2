@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_04_164241) do
+ActiveRecord::Schema.define(version: 2019_06_05_152213) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -89,6 +89,14 @@ ActiveRecord::Schema.define(version: 2019_06_04_164241) do
     t.index ["user_id"], name: "index_follows_on_user_id"
   end
 
+  create_table "locations", force: :cascade do |t|
+    t.string "name"
+    t.decimal "longitude"
+    t.decimal "latitude"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "posts", force: :cascade do |t|
     t.integer "user_id"
     t.string "title"
@@ -101,6 +109,8 @@ ActiveRecord::Schema.define(version: 2019_06_04_164241) do
     t.boolean "is_open"
     t.boolean "is_solved"
     t.boolean "include_location"
+    t.integer "location_id"
+    t.index ["location_id"], name: "index_posts_on_location_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
