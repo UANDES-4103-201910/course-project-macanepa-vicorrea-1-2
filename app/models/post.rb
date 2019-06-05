@@ -21,4 +21,12 @@ class Post < ApplicationRecord
 
   validates :user_id, :title, :content, presence: true
   validates :title, :content, length: { minimum: 5 }
+
+  def get_email_owner
+    owner = User.find(user_id).email
+  end
+
+  def is_in_dumpster
+    is = !Dumpster.where(post_id: id, exit_date: nil).empty?
+  end
 end

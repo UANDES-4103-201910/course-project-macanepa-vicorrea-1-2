@@ -1,6 +1,6 @@
 class AdminsController < ApplicationController
   before_action :set_admin, only: [:show, :edit, :update, :destroy]
-  #skip_before_action :verify_authenticity_token
+  skip_before_action :verify_authenticity_token
   before_action :check_profile
   # ---------------------
 
@@ -13,10 +13,13 @@ class AdminsController < ApplicationController
     # end
 
     @users = User.all
-    @posts = (Post.joins(:user).order(:title)).pluck(:email, :title, :content, :city, :country, :gps_location, :created_at, :id)
-    @blacklist_users = (Blacklist.joins(:user).order(:email)).pluck(:email, :created_at, :exit_date, :id)
-    @dumpster_posts = (Post.joins(:dumpster, :user).order(:title)).pluck(:title, :email, :created_at, :exit_date, :id)
-    # @admins = (Admin.joins(:user).order(:email)).pluck(:email, :geofence, :super_admin, :created_at, :id, :user_id, :last_access)
+    # @posts = (Post.joins(:user).order(:title)).pluck(:email, :title, :content, :city, :country, :gps_location, :created_at, :id)
+    @posts = Post.all
+    # @blacklist_users = (Blacklist.joins(:user).order(:email)).pluck(:email, :created_at, :exit_date, :id)
+    @blacklist_users = Blacklist.all.order(:user_id)
+    # @dumpster_posts = (Post.joins(:dumpster, :user).order(:title)).pluck(:title, :email, :created_at, :exit_date, :id)
+    @dumpster_posts = Dumpster.all.order(:post_id)
+        # @admins = (Admin.joins(:user).order(:email)).pluck(:email, :geofence, :super_admin, :created_at, :id, :user_id, :last_access)
     # @admins = Admin.all
     @suspension_list_users = (User.joins(:suspension_list).order(:email)).pluck(:email, :created_at, :exit_date, :id)
     @block_list_users = (User.joins(:block_list).order(:email)).pluck(:email, :created_at, :exit_date, :id)
@@ -38,15 +41,15 @@ class AdminsController < ApplicationController
     redirect_to admin_view_path, notice: "The user was successfully removed from the list."
   end
 
-  def make_user_admin
-    user_id = (User.where(email: params[:user_mail]).pluck(:id))[0]
-    new_admin = Admin.new(user_id: user_id, geofence: "", super_admin: false)
-    if new_admin.save
-      redirect_to admin_view_path, notice: "The user was successfully made administrator."
-    else
-      redirect_to admin_view_path, alert: "The user could not become an administrator."
-    end
-  end
+  # def make_user_admin
+  #   user_id = (User.where(email: params[:user_mail]).pluck(:id))[0]
+  #   new_admin = Admin.new(user_id: user_id, geofence: "", super_admin: false)
+  #   if new_admin.save
+  #     redirect_to admin_view_path, notice: "The user was successfully made administrator."
+  #   else
+  #     redirect_to admin_view_path, alert: "The user could not become an administrator."
+  #   end
+  # end
 
   def remove_post_from_dumpster
     p = Dumpster.where(post_id: params[:post_id], exit_date: nil)

@@ -167,9 +167,8 @@
 
               <td><a href="<%= user_profile_view_path(user_profile_id: user.id) %>" role="button"
                      class="btn btn-primary fas fa-address-card" data-tooltip="tooltip" title="View user profile"></a></td>
-              <td><button class="btn btn-danger fas fa-trash-alt" data-toggle="modal"
-                          data-email="<%= user.email %>" data-user-id="<%= user.id %>" data-tooltip="tooltip" title="Delete user"
-                          data-target="#delete-user-modal" data-btn-type="delete-user"></button></td>
+              <td><button class="btn btn-danger fas fa-trash-alt" data-toggle="modal" data-tooltip="tooltip" title="Delete user"
+                          data-target="#delete-user-modal-<%= user.id %>" <%= "disabled" if !current_user.is_super_admin && user.is_admin %>></button></td>
             </tr>
               <div class="modal" id="edit-administration-modal-<%= user.id %>">
                 <div class="modal-dialog">
@@ -177,18 +176,18 @@
                     <% if user.is_admin %>
                       <div class="modal-header">
                         <h4 class="modal-title">Stop being an administrator</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <button class="close" data-dismiss="modal">&times;</button>
                       </div>
                     <div class="modal-body">
                       <p>Are you sure that you want <b><%= user.email %></b> to stop being an administrator?</p>
                     </div>
                     <div class="modal-footer">
-                      <%= link_to 'Accept', Admin.where(user_id: user.id).first, method: :delete, class: "btn btn-outline-danger" %>
+                      <%= link_to 'Accept', user.get_admin, method: :delete, class: "btn btn-outline-danger" %>
                     </div>
                     <% else %>
                       <div class="modal-header">
                         <h4 class="modal-title">Make user admin</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <button class="close" data-dismiss="modal">&times;</button>
                       </div>
                       <%= form_for :admin, :url => {:controller => "admins", :action => "create", id: "new_admin_form_" + user.id.to_s} do |new_admin_form| %>
                         <%= new_admin_form.text_field :user_id, value: user.id, type: "hidden", id: "hidden_new_admin_" + user.id.to_s %>
@@ -200,60 +199,78 @@
                           </div>
                         </div>
                         <div class="modal-footer">
-                          <%= new_admin_form.submit value:"Accept", class:"btn btn-outline-success my-1", id: "submit_new_admin_form_" + user.id.to_s %>
+                          <%= new_admin_form.submit value:"Accept", class:"actions btn btn-outline-success my-1", id: "submit_new_admin_form_" + user.id.to_s %>
                         </div>
                       <% end %>
                     <% end %>
                   </div>
                 </div>
               </div>
-            <div class="modal" id="edit-user-modal-<%= user.id %>">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h4 class="modal-title">Edit <b><%= user.email %></b></h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  </div>
-                  <div class="modal-body">
-                  <%= form_with(model: user, local: true, id: "edit_user_password_form_" + user.id.to_s) do |edit_user_password_form|  %>
-                    <%= edit_user_password_form.text_field :id, value: user.id, type: "hidden", id: "hidden_user_" + user.id.to_s %>
-                      <div class="field form-inline">
-                        Password:
-                        &nbsp;
-                        <%= edit_user_password_form.password_field :password, placeholder: "Write the new password...", id: "new_user_password_" + user.id.to_s %>
-                        &nbsp;
-                        <%= edit_user_password_form.submit value:"Update", class:"btn btn-outline-success my-1", id: "submit_edit_user_password_form_" + user.id.to_s %>
-                      </div>
-                  <% end %>
-
-                  <% if current_user.is_super_admin && user.is_admin %>
-
-                      <%= Admin.where(user_id: user.id).first %>
-                    <%= form_with(model: Admin.where(user_id: user.id).first, local: true, id: "edit_admin_password_form_" + user.id.to_s) do |edit_admin_geofence_form| %>
-                      <%= edit_admin_geofence_form.text_field :id, value: Admin.where(user_id: user.id).first.id, type: "hidden", id: "hidden_admin_" + Admin.where(user_id: user.id).first.id.to_s %>
-                      <div class="field form-inline">
-                        Geofence:
-                        &nbsp;
-                        <%= edit_admin_geofence_form.text_field :geofence, placeholder: "Write the new geofence...", id: "edit_admin_geofence_" + Admin.where(user_id: user.id).first.id.to_s %>
-                        &nbsp;
-                        <%= edit_admin_geofence_form.submit value:"Update", class:"btn btn-outline-primary my-1", id: "submit_edit_admin_geofence_form_" + user.id.to_s %>
-                      </div>
+              <div class="modal" id="edit-user-modal-<%= user.id %>">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Edit <b><%= user.email %></b></h4>
+                      <button class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                    <%= form_with(model: user, local: true, id: "edit_user_password_form_" + user.id.to_s) do |edit_user_password_form|  %>
+                      <%= edit_user_password_form.text_field :id, value: user.id, type: "hidden", id: "hidden_user_" + user.id.to_s %>
+                        <div class="field form-inline">
+                          Password:&nbsp;
+                          <%= edit_user_password_form.password_field :password, placeholder: "Write the new password...", id: "new_user_password_" + user.id.to_s %>&nbsp;
+                          <%= edit_user_password_form.submit value:"Update", class:"actions btn btn-outline-success my-1", id: "submit_edit_user_password_form_" + user.id.to_s %>
+                        </div>
                     <% end %>
-                  <% end %>
+
+                    <% if current_user.is_super_admin && user.is_admin %>
+
+                        <%= form_for user.get_admin do |edit_admin_geofence_form| %>
+                          <div class="field form-inline">
+                            Geofence:&nbsp;
+                            <%= edit_admin_geofence_form.text_field :geofence, placeholder: "Write the new geofence...", id: "edit_admin_geofence_" + user.get_admin.id.to_s %>&nbsp;
+                            <%= edit_admin_geofence_form.submit value:"Update", class:"actions btn btn-outline-primary my-1", id: "submit_edit_admin_geofence_form_" + user.id.to_s %>
+                          </div>
+                        <% end %>
+                        <!-- es lo mismo  -->
+                      <%#= form_with(model: user.get_admin, local: true, id: "edit_admin_geofence_form_" + user.id.to_s) do |edit_admin_geofence_form| %>
+                        <%#= edit_admin_geofence_form.text_field :id, value: user.get_admin.id, type: "hidden", id: "hidden_admin_" + user.get_admin.id.to_s %>
+<!--                        <div class="field form-inline">-->
+<!--                          Geofence:&nbsp;-->
+<!--                          <%#= edit_admin_geofence_form.text_field :geofence, placeholder: "Write the new geofence...", id: "edit_admin_geofence_" + user.get_admin.id.to_s %>&nbsp;-->
+                          <%#= edit_admin_geofence_form.submit value:"Update", class:"actions btn btn-outline-primary my-1", id: "submit_edit_admin_geofence_form_" + user.id.to_s %>
+<!--                        </div>-->
+                      <%# end %>
+                    <% end %>
+                    </div>
+                  </div>
+                </div>
+             </div>
+              <div class="modal" id="delete-user-modal-<%= user.id %>">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Stop being an administrator</h4>
+                      <button class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                      <p>Are you sure that you want to delete <b><%= user.email %></b>?</p>
+                    </div>
+                    <div class="modal-footer">
+                      <%= link_to 'Accept', user, method: :delete, class: "btn btn-outline-danger" %>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
             <% end %>
             </tbody>
           </table>
         </div>
 
-<!--    DE AQUÍ PARA ABAJO FALTA    -->
-
         <div id="manage-posts" class="container tab-pane fade">
           <h3>Manage posts</h3>
-          <table class="table table-bordered table-hover">
+          <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+          <table id="manage-posts-table" class="table table-bordered table-hover">
             <thead>
             <tr>
               <th>Title</th>
@@ -262,6 +279,7 @@
               <th>City</th>
               <th>Country</th>
               <th>GPS location</th>
+              <th>Is in dumpster</th>
               <th>Creation date</th>
               <th>Report</th>
               <th>View post</th>
@@ -271,40 +289,58 @@
             <tbody>
             <% @posts.each do |post| %>
               <tr>
-                <!--:email, :title, :content, :city, :country, :gps_location, :created_at, :id-->
-                <td><%= post[1] %></td>
-                <td><%= post[0] %></td>
-                <td><%= post[2] %></td>
-                <td><%= post[3] %></td>
-                <td><%= post[4] %></td>
-                <td><%= post[5] %></td>
-                <td><%= post[6] %></td>
-                <td><button class="btn btn-warning fas fa-exclamation-triangle" data-toggle="modal" data-tooltip="tooltip" title="Mark post as inappropriate"
-                            data-owner="<%= post[0] %>" data-title="<%= post[1] %>" data-post-id="<%= post[7] %>"
-                            data-target="#report-modal-post-<%= post[7] %>" data-btn-type="report-post"></button></td>
-                <td><a href="<%= watch_path(post_id: post[7]) %>" role="button" class="btn btn-primary fas fa-file-import" data-tooltip="tooltip" title="View post"></a></td>
+                <td><%= post.title %></td>
+                <td><%= post.get_email_owner %></td>
+                <td><%= post.content %></td>
+                <td><%= post.city %></td>
+                <td><%= post.country %></td>
+                <td><%= post.gps_location %></td>
+                <td>
+                  <% if post.is_in_dumpster %>
+                    <i class="far fa-check-circle" data-tooltip="tooltip" title="Yes"></i>
+                  <% else %>
+                    <i class="far fa-times-circle" data-tooltip="tooltip" title="No"></i>
+                  <% end %>
+                </td>
+                <td><%= post.created_at %></td>
+                <td><button class="btn btn-warning fas fa-exclamation-triangle" data-toggle="modal" data-tooltip="tooltip"
+                            title="Mark post as inappropriate" data-target="#report-modal-post-<%= post.id %>"></button></td>
+                <td><a href="<%= watch_path(post_id: post.id) %>" role="button" class="btn btn-primary fas fa-file-import" data-tooltip="tooltip" title="View post"></a></td>
                 <td><button class="btn btn-danger fas fa-trash-alt" data-toggle="modal"
-                            data-owner="<%= post[0] %>" data-title="<%= post[1] %>" data-post-id="<%= post[7] %>"
-                            data-target="#delete-post-modal" data-btn-type="delete-post" data-tooltip="tooltip" title="Delete post"></button></td>
+                            data-target="#delete-post-modal-<%= post.id %>" data-tooltip="tooltip" title="Delete post"></button></td>
               </tr>
-              <div class="modal" id="report-modal-post-<%= post[7] %>">
+              <div class="modal" id="delete-post-modal-<%= post.id %>">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Delete post</h4>
+                      <button class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                      <p>Are you sure that you want to delete the post <b><%= post.title %></b> by <b><%= post.get_email_owner %></b>?</p>
+                    </div>
+                    <div class="modal-footer">
+                      <%= link_to 'Accept', post, method: :delete, class: "btn btn-outline-danger" %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal" id="report-modal-post-<%= post.id %>">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h4 class="modal-title">Report post</h4>
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <button class="close" data-dismiss="modal">&times;</button>
                     </div>
-                    <%#= form_with(model: ) %>
-
                     <%= form_for :report, :url => {:controller => "reports", :action => "create"} do |report_form| %>
-                      <%= report_form.text_field :user_id, value: current_user.id, type: "hidden", id: "current_user_post_" + post[7].to_s %>
-                      <%= report_form.text_field :post_id, value: post[7], type: "hidden", id: "current_post_" + post[7].to_s %>
+                      <%= report_form.text_field :user_id, value: current_user.id, type: "hidden", id: "current_user_post_" + post.id.to_s %>
+                      <%= report_form.text_field :post_id, value: post.id, type: "hidden", id: "current_post_" + post.id.to_s %>
                       <div class="modal-body">
-                        Why you want to mark the post <b><%= post[1] %></b> by <b><%= post[0] %></b> as inappropiate?
-                        <%= report_form.text_area :content, class:"form-control", placeholder: "Write a short comment for justification...", id: "current_content_" + post[7].to_s %>
+                        <p>Why you want to mark the post <b><%= post.title %></b> by <b><%= post.get_email_owner %></b> as inappropiate?</p>
+                        <%= report_form.text_area :content, class:"form-control", placeholder: "Write a short comment for justification...", id: "current_content_" + post.id.to_s %>
                       </div>
                       <div class="modal-footer">
-                        <%= report_form.submit value:"Report", class:"btn btn-outline-warning my-1", style:"float-right"%>
+                        <%= report_form.submit value:"Report", class:"actions btn btn-outline-warning my-1", style:"float-right"%>
                       </div>
                     <% end %>
                   </div>
@@ -332,22 +368,48 @@
             <tr>
             </thead>
             <tbody>
-            <% @blacklist_users.each do |bl_user| %>
-              <!--:email, :created_at, :exit_date, :id-->
-              <tr class="user-blacklist-row-<%= if bl_user[2].nil? then "all" else "have-exit-date history" end %>">
-                <td><%= bl_user[0] %></td>
-                <td><%= bl_user[1] %></td>
-                <td><%= bl_user[2] %></td>
+            <% @blacklist_users.each do |blacklist_user| %>
+              <tr class="user-blacklist-row-<%= if blacklist_user.exit_date.nil? then "all" else "have-exit-date history" end %>">
+                <td><%= blacklist_user.get_owner_email %></td>
+                <td><%= blacklist_user.created_at %></td>
+                <td><%= blacklist_user.exit_date %></td>
                 <td><button class="btn btn-dark fas fa-sign-out-alt" data-tooltip="tooltip" title="Remove user from the blacklist"
-                            data-target="#remove-from-list-modal" data-btn-type="remove-from-list"
-                            data-removed-user="<%= bl_user[0] %>" data-object-id="<%= bl_user[3] %>"
-                            data-list-type="Blacklist" data-toggle="modal"
-                            <% if not bl_user[2].nil? %>
-                              disabled
-                            <% end %>
-                            >
+                            data-target="#remove-from-blacklist-modal-<%= blacklist_user.id %>" data-toggle="modal" <%= "disabled" if !blacklist_user.exit_date.nil? %>>
                 </button></td>
               </tr>
+              <div class="modal" id="remove-from-blacklist-modal-<%= blacklist_user.id %>">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Remove user from blacklist</h4>
+                      <button class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                      <p>Are you sure that you want to remove <b><%= blacklist_user.get_owner_email %></b> from the <b>blacklist</b>?</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+<!--              <div class="modal" id="remove-from-list-modal">-->
+<!--                <div class="modal-dialog">-->
+<!--                  <div class="modal-content">-->
+<!--                    <div class="modal-header">-->
+<!--                      <h4 id="modal-remove-from-list-title" class="modal-title"></h4>-->
+<!--                      <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+<!--                    </div>-->
+<!--                    <div class="modal-body">-->
+<!--                      <p>Are you sure that you want to <i>remove</i> <b id="removed-user-text"></b> from the <b id="removed-from-list-type-text"></b>?</p>-->
+<!--                    </div>-->
+<!--                    <div class="modal-footer">-->
+<!--                      <form action="remove_user_from_list" method="post">-->
+<!--                        <input id="hidden-object-id" type="hidden" name="object_id"/>-->
+<!--                        <input id="hidden-object-type" type="hidden" name="object_type"/>-->
+<!--                        <button class="btn btn-outline-dark" type="submit">Accept</button>-->
+<!--                      </form>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
             <% end %>
             </tbody>
           </table>
@@ -371,21 +433,14 @@
             <tr>
             </thead>
             <tbody>
-            <% @dumpster_posts.each do |d_post| %>
-              <!--:title, :email, :created_at, :exit_date, :id-->
-              <tr class="post-dumpster-row-<%= if d_post[3].nil? then "all" else "have-exit-date history" end %>">
-                <td><%= d_post[0] %></td>
-                <td><%= d_post[1] %></td>
-                <td><%= d_post[2] %></td>
-                <td><%= d_post[3] %></td>
+            <% @dumpster_posts.each do |dumpster_post| %>
+              <tr class="post-dumpster-row-<%= if dumpster_post.exit_date.nil? then "all" else "have-exit-date history" end %>">
+                <td><%= dumpster_post.get_post_title %></td>
+                <td><%= dumpster_post.get_email_owner %></td>
+                <td><%= dumpster_post.created_at %></td>
+                <td><%= dumpster_post.exit_date %></td>
                 <td><button class="btn btn-dark fas fa-sign-out-alt" data-toggle="modal" data-tooltip="tooltip" title="Remove post from the dumpster"
-                            data-target="#remove-from-dumpster-modal" data-btn-type="remove-from-dumpster"
-                            data-post-id="<%= d_post[4] %>"
-                            data-dumpster-title="<%= d_post[0] %>" data-dumpster-owner="<%= d_post[1] %>"
-                            <% if not d_post[3].nil? %>
-                              disabled
-                            <% end %>
-                            >
+                            data-target="#remove-from-dumpster-modal" <%= "disabled" if !dumpster_post.exit_date.nil? %>>
                 </button></td>
               </tr>
             <% end %>
@@ -513,45 +568,45 @@
 <!--  </div>-->
 <!--</div>-->
 
-<div class="modal" id="delete-user-modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Delete user</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p>Are you sure that you want to <i>delete</i> <b id="user-mail-text"></b>?</p>
-      </div>
-      <div class="modal-footer">
-        <form action="delete_user" method="post">
-          <input id="hidden-user-id" type="hidden" name="id"/>
-          <button class="btn btn-outline-danger">Accept</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+<!--<div class="modal" id="delete-user-modal">-->
+<!--  <div class="modal-dialog">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="modal-header">-->
+<!--        <h4 class="modal-title">Delete user</h4>-->
+<!--        <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+<!--      </div>-->
+<!--      <div class="modal-body">-->
+<!--        <p>Are you sure that you want to <i>delete</i> <b id="user-mail-text"></b>?</p>-->
+<!--      </div>-->
+<!--      <div class="modal-footer">-->
+<!--        <form action="delete_user" method="post">-->
+<!--          <input id="hidden-user-id" type="hidden" name="id"/>-->
+<!--          <button class="btn btn-outline-danger">Accept</button>-->
+<!--        </form>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
 
-<div class="modal" id="delete-post-modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Delete post</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        Are you sure that you want to <i id="delete-report-text"></i> the post <b id="post-title"></b> by <b id="post-owner"></b>?
-      </div>
-      <div class="modal-footer">
-        <form action="delete_post" method="post">
-          <input type="hidden" id="hidden-post-id-delete" name="id">
-          <button id="delete-button" class="btn btn-outline-danger">Accept</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+<!--<div class="modal" id="delete-post-modal">-->
+<!--  <div class="modal-dialog">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="modal-header">-->
+<!--        <h4 class="modal-title">Delete post</h4>-->
+<!--        <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+<!--      </div>-->
+<!--      <div class="modal-body">-->
+<!--        Are you sure that you want to <i id="delete-report-text"></i> the post <b id="post-title"></b> by <b id="post-owner"></b>?-->
+<!--      </div>-->
+<!--      <div class="modal-footer">-->
+<!--        <form action="delete_post" method="post">-->
+<!--          <input type="hidden" id="hidden-post-id-delete" name="id">-->
+<!--          <button id="delete-button" class="btn btn-outline-danger">Accept</button>-->
+<!--        </form>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
 
 <!--<div class="modal" id="report-post-modal">-->
 <!--  <div class="modal-dialog">-->
@@ -593,26 +648,26 @@
 <!--  </div>-->
 <!--</div>-->
 
-<div class="modal" id="remove-from-list-modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 id="modal-remove-from-list-title" class="modal-title"></h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p>Are you sure that you want to <i>remove</i> <b id="removed-user-text"></b> from the <b id="removed-from-list-type-text"></b>?</p>
-      </div>
-      <div class="modal-footer">
-        <form action="remove_user_from_list" method="post">
-          <input id="hidden-object-id" type="hidden" name="object_id"/>
-          <input id="hidden-object-type" type="hidden" name="object_type"/>
-          <button class="btn btn-outline-dark" type="submit">Accept</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+<!--<div class="modal" id="remove-from-list-modal">-->
+<!--  <div class="modal-dialog">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="modal-header">-->
+<!--        <h4 id="modal-remove-from-list-title" class="modal-title"></h4>-->
+<!--        <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+<!--      </div>-->
+<!--      <div class="modal-body">-->
+<!--        <p>Are you sure that you want to <i>remove</i> <b id="removed-user-text"></b> from the <b id="removed-from-list-type-text"></b>?</p>-->
+<!--      </div>-->
+<!--      <div class="modal-footer">-->
+<!--        <form action="remove_user_from_list" method="post">-->
+<!--          <input id="hidden-object-id" type="hidden" name="object_id"/>-->
+<!--          <input id="hidden-object-type" type="hidden" name="object_type"/>-->
+<!--          <button class="btn btn-outline-dark" type="submit">Accept</button>-->
+<!--        </form>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
 
 <!--<div class="modal" id="edit-user-modal">-->
 <!--  <div class="modal-dialog">-->

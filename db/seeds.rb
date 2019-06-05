@@ -24,13 +24,21 @@ post01 = Post.create!(user_id:user03.id,title:"Titulo",content:"Post de prueba",
 post02 = Post.create!(user_id:user04.id,title:"Hey listen",content:"I'm quite recognized for my eloquent decision making. People often say that I take 'Bad Choices'",is_open:false,is_solved:true)
 post03 = Post.create!(user_id:user04.id,title:"Dumpster",content:"Dumpster!",is_open:false,is_solved:true)
 
+# Blacklist
+bl01 = Blacklist.create!(user_id:user03.id,exit_date:Time.now.yesterday)
+bl02 = Blacklist.create!(user_id:user03.id,exit_date:Time.now)
+bl03 = Blacklist.create!(user_id:user04.id,exit_date:nil)
+bl04 = Blacklist.create!(user_id:user05.id,exit_date:Time.now)
+bl02 = Blacklist.create!(user_id:user03.id,exit_date:nil)
 
 # Comments
 comment01 = Comment.create!(post_id:post01.id, comment_id:nil, user_id:user04.id,content:"Ahh CTM")
 
 # Dumpster
 Dumpster.create!(post_id:post03.id, exit_date:Time.now.tomorrow)
+Dumpster.create!(post_id:post01.id)
 Dumpster.create!(post_id:post03.id)
+Dumpster.create!(post_id:post02.id, exit_date:Time.now)
 
 # Locations
 Location.create!([
