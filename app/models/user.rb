@@ -35,7 +35,7 @@ class User < ApplicationRecord
     if possible_admin == 0
       false
     elsif possible_admin >= 1
-        true
+      true
     end
   end
 
@@ -55,5 +55,31 @@ class User < ApplicationRecord
     return name
   end
 
+  def get_geofence
+    admin = Admin.where(user_id: id)
+    if admin.count == 0
+      ""
+    elsif admin.count >= 1
+      admin_geofence = admin.first.geofence
+      if admin_geofence.nil?
+        "None"
+      else
+        admin_geofence
+      end
+    end
+  end
+
+  def is_super_admin
+    admin = Admin.where(user_id: id)
+    if admin.count == 0
+      false
+    elsif admin.count >= 1
+      is_super = admin.first.super_admin
+    end
+  end
+
+  def get_admin
+    admin = Admin.where(user_id: id).first
+  end
 
 end

@@ -1,20 +1,23 @@
 class AdminsController < ApplicationController
   before_action :set_admin, only: [:show, :edit, :update, :destroy]
-  skip_before_action :verify_authenticity_token
+  #skip_before_action :verify_authenticity_token
   before_action :check_profile
   # ---------------------
 
   def view
-    admins_count = Admin.pluck(:user_id).length
-    if admins_count > 0
-      @users = User.where("id NOT IN (?)", Admin.pluck(:user_id)).order(:email)
-    else
-      @users = User.all.order(:email)
-    end
+    # admins_count = Admin.pluck(:user_id).length
+    # if admins_count > 0
+    #   @users = User.where("id NOT IN (?)", Admin.pluck(:user_id)).order(:email)
+    # else
+    #   @users = User.all.order(:email)
+    # end
+
+    @users = User.all
     @posts = (Post.joins(:user).order(:title)).pluck(:email, :title, :content, :city, :country, :gps_location, :created_at, :id)
     @blacklist_users = (Blacklist.joins(:user).order(:email)).pluck(:email, :created_at, :exit_date, :id)
     @dumpster_posts = (Post.joins(:dumpster, :user).order(:title)).pluck(:title, :email, :created_at, :exit_date, :id)
-    @admins = (Admin.joins(:user).order(:email)).pluck(:email, :geofence, :super_admin, :created_at, :id, :user_id, :last_access)
+    # @admins = (Admin.joins(:user).order(:email)).pluck(:email, :geofence, :super_admin, :created_at, :id, :user_id, :last_access)
+    # @admins = Admin.all
     @suspension_list_users = (User.joins(:suspension_list).order(:email)).pluck(:email, :created_at, :exit_date, :id)
     @block_list_users = (User.joins(:block_list).order(:email)).pluck(:email, :created_at, :exit_date, :id)
   end
@@ -112,6 +115,7 @@ class AdminsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -14,9 +14,9 @@ profile05 = Profile.create!(user_id:user05.id,biography:"rotsap im se natas",cou
 profile06 = Profile.create!(user_id:user06.id,biography:"La Matucha",country:"Chile",city:"Santiago")
 
 #Admins
-admin01 = Admin.create!(user_id:user06.id,super_admin:true,geofence:nil)
+admin01 = Admin.create!(user_id:user06.id,super_admin:false,geofence:nil)
 admin02 = Admin.create!(user_id:user04.id,super_admin:false,geofence:"Chile")
-admin03 = Admin.create!(user_id:user05.id,super_admin:true,geofence:nil)
+admin03 = Admin.create!(user_id:user03.id,super_admin:true,geofence:"Perú")
 
 
 #Posts

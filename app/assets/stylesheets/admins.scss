@@ -9,3 +9,16 @@
 .table {
   background-color: white;
 }
+
+#manage-users tr td:FIRST-CHILD{
+  background-color: white !important;
+  border: 1px solid white;
+  border-right: LightGray;
+}
+
+#manage-users tr th:FIRST-CHILD{
+  border: 1px solid white;
+  border-right: LightGray;
+}
+
+
