@@ -1,5 +1,5 @@
 class BlockListsController < ApplicationController
-  before_action :set_block_list, only: [:show, :edit, :update, :destroy]
+  before_action :set_block_list, only: [:show, :edit, :destroy]
 
   # GET /block_lists
   # GET /block_lists.json
@@ -40,6 +40,11 @@ class BlockListsController < ApplicationController
   # PATCH/PUT /block_lists/1
   # PATCH/PUT /block_lists/1.json
   def update
+    if params[:id].nil?
+      @block_list = BlockList.find(params[:block_list][:id])
+    else
+      set_block_list
+    end
     respond_to do |format|
       if @block_list.update(block_list_params)
         format.html { redirect_to @block_list, notice: 'Block list was successfully updated.' }

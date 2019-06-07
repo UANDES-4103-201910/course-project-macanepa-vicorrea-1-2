@@ -40,7 +40,6 @@ class BlacklistsController < ApplicationController
   # PATCH/PUT /blacklists/1
   # PATCH/PUT /blacklists/1.json
   def update
-    a = params
     if params[:id].nil?
       @blacklist = Blacklist.find(params[:blacklist][:id])
     else

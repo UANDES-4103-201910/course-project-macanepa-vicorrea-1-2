@@ -28,4 +28,9 @@ class Post < ApplicationRecord
   def is_in_dumpster
     is = !Dumpster.where(post_id: id, exit_date: nil).empty?
   end
+
+  def get_dumpster_instance_id
+    dump_ins_id = Dumpster.where(post_id: id, exit_date: nil).first.id
+  end
+
 end

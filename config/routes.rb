@@ -38,6 +38,9 @@ Rails.application.routes.draw do
   post 'admin/send_user_to_block_list', to: 'block_lists#create', as: 'send_user_to_block_list'
   post 'admin/send_post_to_dumpster', to: 'dumpsters#create', as: 'send_post_to_dumpster'
   post 'admin/remove_from_blacklist', to: 'blacklists#update', as: 'remove_from_blacklist'
+  post 'admin/remove_post_from_dumpster', to: 'dumpsters#update', as: 'remove_post_from_dumpster'
+  post 'admin/remove_from_suspension_list', to: 'suspension_lists#update', as: 'remove_from_suspension_list'
+  post 'admin/remove_from_block_list', to: 'block_lists#update', as: 'remove_from_block_list'
 
   post 'create_post', to: 'posts#create'
   post 'create_validation', to: 'validations#create'

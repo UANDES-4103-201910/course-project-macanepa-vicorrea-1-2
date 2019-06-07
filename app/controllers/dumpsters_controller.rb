@@ -1,5 +1,5 @@
 class DumpstersController < ApplicationController
-  before_action :set_dumpster, only: [:show, :edit, :update, :destroy]
+  before_action :set_dumpster, only: [:show, :edit, :destroy]
 
   # GET /dumpsters
   # GET /dumpsters.json
@@ -40,6 +40,11 @@ class DumpstersController < ApplicationController
   # PATCH/PUT /dumpsters/1
   # PATCH/PUT /dumpsters/1.json
   def update
+    if params[:id].nil?
+      @dumpster = Dumpster.find(params[:dumpster][:id])
+    else
+      set_dumpster
+    end
     respond_to do |format|
       if @dumpster.update(dumpster_params)
         format.html { redirect_to @dumpster, notice: 'Dumpster was successfully updated.' }
@@ -69,6 +74,6 @@ class DumpstersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def dumpster_params
-      params.require(:dumpster).permit(:post_id)
+      params.require(:dumpster).permit(:post_id, :exit_date)
     end
 end

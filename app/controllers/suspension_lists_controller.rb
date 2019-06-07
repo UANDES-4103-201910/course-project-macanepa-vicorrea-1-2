@@ -1,5 +1,5 @@
 class SuspensionListsController < ApplicationController
-  before_action :set_suspension_list, only: [:show, :edit, :update, :destroy]
+  before_action :set_suspension_list, only: [:show, :edit, :destroy]
 
   # GET /suspension_lists
   # GET /suspension_lists.json
@@ -40,6 +40,11 @@ class SuspensionListsController < ApplicationController
   # PATCH/PUT /suspension_lists/1
   # PATCH/PUT /suspension_lists/1.json
   def update
+    if params[:id].nil?
+      @suspension_list = SuspensionList.find(params[:suspension_list][:id])
+    else
+      set_suspension_list
+    end
     respond_to do |format|
       if @suspension_list.update(suspension_list_params)
         format.html { redirect_to @suspension_list, notice: 'Suspension list was successfully updated.' }

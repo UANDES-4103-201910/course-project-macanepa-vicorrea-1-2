@@ -55,9 +55,10 @@
               <th>Name</th>
               <th>Last name</th>
               <th>Email</th>
+              <th>Geofence</th>
               <th>Last access</th>
               <th>Creation date</th>
-              <th>Geofence</th>
+              <th>Is in</th>
               <th>Options</th>
             </tr>
             </thead>
@@ -77,9 +78,22 @@
               <td><%= user.name %></td>
               <td><%= user.last_name %></td>
               <td><%= user.email %></td>
+              <td><%= user.get_geofence %></td>
               <td><%= user.last_access %></td>
               <td><%= user.created_at %></td>
-              <td><%= user.get_geofence %></td>
+              <td>
+                <ul>
+                  <% if user.is_in_blacklist %>
+                    <li>Blacklist</li>
+                  <% end %>
+                  <% if user.is_in_suspension_list %>
+                    <li>Suspension list</li>
+                  <% end %>
+                  <% if user.is_in_block_list %>
+                    <li>Block list</li>
+                  <% end %>
+                </ul>
+              </td>
               <td>
                 <button class="btn btn-primary" data-toggle="dropdown"><i class="fas fa-tools"></i></button>
                 <div class="dropdown-menu dropdown-menu-right">
@@ -105,19 +119,35 @@
                          data-target="#make-user-admin-modal" data-email="<%= user.email %>">Make user admin</a>
                     <% end %>
                   <% end %>
+                  <% can_edit = false %>
                   <% if user.is_admin %>
                     <% text = "Delete admin" %>
                     <% if current_user.is_super_admin %>
-                      <%= link_to 'Send to the blacklist', send_user_to_blacklist_path("blacklist[user_id]": user.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send ' + user.email + 'to the blacklist?' } %>
-                      <%= link_to 'Send to the suspension list', send_user_to_suspension_list_path("suspension_list[user_id]": user.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send ' + user.email + 'to the suspension list?' } %>
-                      <%= link_to 'Send to the block list', send_user_to_block_list_path("block_list[user_id]": user.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send ' + user.email + 'to the block list?' } %>
-                      <%= link_to text, user, method: :delete, class: "dropdown-item", data: { confirm: 'Are you sure that you want to delete ' + user.email + '?' } %>
+                      <% can_edit = true %>
                     <% end %>
                   <% else %>
                     <% text = "Delete user" %>
-                    <%= link_to 'Send to the blacklist', send_user_to_blacklist_path("blacklist[user_id]": user.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send ' + user.email + 'to the blacklist?' } %>
-                    <%= link_to 'Send to the suspension list', send_user_to_suspension_list_path("suspension_list[user_id]": user.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send ' + user.email + 'to the suspension list?' } %>
-                    <%= link_to 'Send to the block list', send_user_to_block_list_path("block_list[user_id]": user.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send ' + user.email + 'to the block list?' } %>
+                    <% can_edit = true %>
+                  <% end %>
+                  <% if can_edit %>
+                    <% if user.is_in_blacklist %>
+                      <%= link_to 'Remove user from the blacklist', remove_from_blacklist_path("blacklist[id]": user.get_blacklist_instance_id, "blacklist[exit_date]": Time.now),
+                                  class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to remove ' + user.email + ' from the blacklist?' } %>
+                    <% else %>
+                      <%= link_to 'Send to the blacklist', send_user_to_blacklist_path("blacklist[user_id]": user.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send ' + user.email + 'to the blacklist?' } %>
+                    <% end %>
+                    <% if user.is_in_suspension_list %>
+                      <%= link_to 'Remove user from the suspension list', remove_from_suspension_list_path("suspension_list[id]": user.get_suspension_instance_id, "suspension_list[exit_date]": Time.now),
+                                  class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to remove ' + user.email + ' from the suspension list?' } %>
+                    <% else %>
+                      <%= link_to 'Send to the suspension list', send_user_to_suspension_list_path("suspension_list[user_id]": user.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send ' + user.email + 'to the suspension list?' } %>
+                    <% end %>
+                    <% if user.is_in_block_list %>
+                      <%= link_to 'Remove user from the block list', remove_from_block_list_path("block_list[id]": user.get_block_instance_id, "block_list[exit_date]": Time.now),
+                                  class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to remove ' + user.email + ' from the block list?' } %>
+                    <% else %>
+                      <%= link_to 'Send to the block list', send_user_to_block_list_path("block_list[user_id]": user.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send ' + user.email + 'to the block list?' } %>
+                    <% end %>
                     <%= link_to text, user, method: :delete, class: "dropdown-item", data: { confirm: 'Are you sure that you want to delete ' + user.email + '?' } %>
                   <% end %>
                 </div>
@@ -140,8 +170,8 @@
               <th>City</th>
               <th>Country</th>
               <th>GPS location</th>
-              <th>Is in dumpster</th>
               <th>Creation date</th>
+              <th>Is in dumpster</th>
               <th>Options</th>
             </tr>
             </thead>
@@ -154,16 +184,14 @@
                 <td><%= post.city %></td>
                 <td><%= post.country %></td>
                 <td><%= post.gps_location %></td>
+                <td><%= post.created_at %></td>
                 <td>
                   <% if post.is_in_dumpster %>
                     YES
-<!--                    <i class="far fa-check-circle" data-tooltip="tooltip" title="Yes"></i>-->
                   <% else %>
                     NO
-<!--                    <i class="far fa-times-circle" data-tooltip="tooltip" title="No"></i>-->
                   <% end %>
                 </td>
-                <td><%= post.created_at %></td>
                 <td>
                   <button class="btn btn-primary" data-toggle="dropdown"><i class="fas fa-tools"></i></button>
                   <div class="dropdown-menu dropdown-menu-right">
@@ -171,7 +199,12 @@
                     <a class="dropdown-item" data-toggle="modal" data-target="#report-modal-post"
                     data-owner="<%= post.get_email_owner %>" data-title="<%= post.title %>"
                     data-post-id="<%= post.id %>" data-btn-type="report-post">Mark post as inappropiate</a>
-                    <%= link_to 'Send post to the dumpster', send_post_to_dumpster_path("dumpster[post_id]": post.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send "' + post.title + '" by ' + post.get_email_owner + ' to the dumpster?' } %>
+                    <% if post.is_in_dumpster %>
+                      <%= link_to 'Remove post from the dumpster', remove_post_from_dumpster_path("dumpster[id]": post.get_dumpster_instance_id, "dumpster[exit_date]": Time.now),
+                                  class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to remove "' + post.title + '" by ' + post.get_email_owner + ' from the dumpster?' } %>
+                    <% else %>
+                      <%= link_to 'Send post to the dumpster', send_post_to_dumpster_path("dumpster[post_id]": post.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send "' + post.title + '" by ' + post.get_email_owner + ' to the dumpster?' } %>
+                    <% end %>
                     <%= link_to 'Delete post', post, method: :delete, class: "dropdown-item", data: { confirm: 'Are you sure that you want to delete "' + post.title + '" by ' + post.get_email_owner + '?' } %>
                   </div>
                 </td>
@@ -212,19 +245,6 @@
                   <% end %>
                 </td>
               </tr>
-              <div class="modal" id="remove-from-blacklist-modal-<%= blacklist_user.id %>">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h4 class="modal-title">Remove user from blacklist</h4>
-                      <button class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                      <p>Are you sure that you want to remove <b><%= blacklist_user.get_owner_email %></b> from the <b>blacklist</b>?</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
             <% end %>
             </tbody>
           </table>
@@ -254,9 +274,14 @@
                 <td><%= dumpster_post.get_email_owner %></td>
                 <td><%= dumpster_post.created_at %></td>
                 <td><%= dumpster_post.exit_date %></td>
-                <td><button class="btn btn-dark fas fa-sign-out-alt" data-toggle="modal" data-tooltip="tooltip" title="Remove post from the dumpster"
-                            data-target="#remove-from-dumpster-modal" <%= "disabled" if !dumpster_post.exit_date.nil? %>>
-                </button></td>
+                <td>
+                  <% if dumpster_post.exit_date.nil? %>
+                    <%= link_to "<button class='btn btn-dark fas fa-sign-out-alt' title='Remove post from the dumpster'></button>".html_safe, remove_post_from_dumpster_path("dumpster[id]": dumpster_post.id, "dumpster[exit_date]": Time.now),
+                                method: :post, data: { confirm: 'Are you sure that you want to remove "' + dumpster_post.get_post_title + '" by ' + dumpster_post.get_email_owner + ' from the dumpster?' } %>
+                  <% else %>
+                    <button class="btn btn-dark fas fa-sign-out-alt" disabled></button>
+                  <% end %>
+                </td>
               </tr>
             <% end %>
             </tbody>
@@ -280,21 +305,19 @@
             <tr>
             </thead>
             <tbody>
-            <% @suspension_list_users.each do |sl_user| %>
-              <!--:email, :created_at, :exit_date, :id-->
-              <tr class="user-suspension-list-row-<%= if sl_user[2].nil? then "all" else "have-exit-date history" end %>">
-                <td><%= sl_user[0] %></td>
-                <td><%= sl_user[1] %></td>
-                <td><%= sl_user[2] %></td>
-                <td><button class="btn btn-dark fas fa-sign-out-alt" data-tooltip="tooltip" title="Remove user from the suspension list"
-                            data-toggle="modal" data-target="#remove-from-list-modal"
-                            data-removed-user="<%= sl_user[0] %>" data-object-id="<%= sl_user[3] %>"
-                            data-list-type="Suspension List" data-btn-type="remove-from-list"
-                            <% if not sl_user[2].nil? %>
-                            disabled
-                            <% end %>
-                            >
-                </button></td>
+            <% @suspension_list_users.each do |suspension_list_user| %>
+              <tr class="user-suspension-list-row-<%= if suspension_list_user.exit_date.nil? then "all" else "have-exit-date history" end %>">
+                <td><%= suspension_list_user.get_user_email %></td>
+                <td><%= suspension_list_user.created_at %></td>
+                <td><%= suspension_list_user.exit_date %></td>
+                <td>
+                  <% if suspension_list_user.exit_date.nil? %>
+                    <%= link_to "<button class='btn btn-dark fas fa-sign-out-alt' title='Remove user from the suspension list'></button>".html_safe, remove_from_suspension_list_path("suspension_list[id]": suspension_list_user.id, "suspension_list[exit_date]": Time.now),
+                                method: :post, data: { confirm: 'Are you sure that you want to remove ' + suspension_list_user.get_user_email + ' from the suspension list?' } %>
+                  <% else %>
+                    <button class="btn btn-dark fas fa-sign-out-alt" disabled></button>
+                  <% end %>
+                </td>
               </tr>
             <% end %>
             </tbody>
@@ -318,46 +341,24 @@
             <tr>
             </thead>
             <tbody>
-            <% @block_list_users.each do |bl_user| %>
-              <!--:email, :created_at, :exit_date, :id-->
-              <tr class="user-block-list-row-<%= if bl_user[2].nil? then "all" else "have-exit-date history" end %>">
-                <td><%= bl_user[0] %></td>
-                <td><%= bl_user[1] %></td>
-                <td><%= bl_user[2] %></td>
-                <td><button class="btn btn-dark fas fa-sign-out-alt"
-                            data-removed-user="<%= bl_user[0] %>" data-tooltip="tooltip" title="Remove user from the block list"
-                            data-target="#remove-from-list-modal" data-btn-type="remove-from-list"
-                            data-list-type="Block List" data-toggle="modal" data-object-id="<%= bl_user[3] %>"
-                            <% if not bl_user[2].nil? %>
-                            disabled
-                            <% end %>
-                            >
-                </button></td>
+            <% @block_list_users.each do |block_list_user| %>
+              <tr class="user-block-list-row-<%= if block_list_user.exit_date.nil? then "all" else "have-exit-date history" end %>">
+                <td><%= block_list_user.get_user_email %></td>
+                <td><%= block_list_user.created_at %></td>
+                <td><%= block_list_user.exit_date %></td>
+                <td>
+                  <% if block_list_user.exit_date.nil? %>
+                    <%= link_to "<button class='btn btn-dark fas fa-sign-out-alt' title='Remove user from the block list'></button>".html_safe, remove_from_block_list_path("block_list[id]": block_list_user.id, "block_list[exit_date]": Time.now),
+                                method: :post, data: { confirm: 'Are you sure that you want to remove ' + block_list_user.get_user_email + ' from the block list?' } %>
+                  <% else %>
+                    <button class="btn btn-dark fas fa-sign-out-alt" disabled></button>
+                  <% end %>
+                </td>
               </tr>
             <% end %>
             </tbody>
           </table>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal" id="remove-from-dumpster-modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Remove user from Dumpster</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p>Are you sure that you want to <i>remove</i> the post <b id="dump-title"></b> by <b id="dump-owner"></b> from the dumpster?</p>
-      </div>
-      <div class="modal-footer">
-        <form action="remove_post_from_dumpster" method="post">
-          <input id="hidden-post-dumpster-id" type="hidden" name="post_id"/>
-          <button class="btn btn-outline-dark" type="submit">Accept</button>
-        </form>
       </div>
     </div>
   </div>

@@ -46,13 +46,13 @@ class User < ApplicationRecord
       name = self.name
       name += " "
     end
-    if(not self.last_name.nil?)
+    if not self.last_name.nil?
       name += self.last_name
       end
     if name == ""
       name = self.email
     end
-    return name
+    name
   end
 
   def get_geofence
@@ -80,6 +80,30 @@ class User < ApplicationRecord
 
   def get_admin
     admin = Admin.where(user_id: id).first
+  end
+
+  def is_in_blacklist
+    is = !Blacklist.where(user_id: id, exit_date: nil).empty?
+  end
+
+  def is_in_suspension_list
+    is = !SuspensionList.where(user_id: id, exit_date: nil).empty?
+  end
+
+  def is_in_block_list
+    is = !BlockList.where(user_id: id, exit_date: nil).empty?
+  end
+
+  def get_blacklist_instance_id
+    black_ins_id = Blacklist.where(user_id: id, exit_date: nil).first.id
+  end
+
+  def get_suspension_instance_id
+    suspension_ins_id = SuspensionList.where(user_id: id, exit_date: nil).first.id
+  end
+
+  def get_block_instance_id
+    block_ins_id = BlockList.where(user_id: id, exit_date: nil).first.id
   end
 
 end
