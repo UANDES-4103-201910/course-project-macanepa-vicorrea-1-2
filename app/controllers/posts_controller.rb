@@ -1,7 +1,22 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
-
+  def see_my_reports
+    reports = Report.where(post_id: params[:postId])
+    # c = 0
+    # @reports.each do |r|
+    #   c += 1
+    # end
+    respond_to do |f|
+      # response = { status: 'ok', message: 'Success', user: User.find(@reports.user_id).email, content: @reports.content }
+      responses = Array.new
+      reports.each do |r|
+        response = { status: 'ok', message: 'Success', content: r.content, user: User.find(r.user_id).email, date: r.created_at }
+        responses << response
+      end
+      f.json { render json: responses, status: :created, location: '/'}
+    end
+  end
 
   # GET /posts
   # GET /posts.json
@@ -30,7 +45,7 @@ class PostsController < ApplicationController
     @post.is_open = true
     @post.is_solved = false
 
-    if(post_params[:include_location]=="1")
+    if post_params[:include_location]=="1"
       @post.city="Santiago"
       @post.country="Chile"
       @post.gps_location="Latitude: -33.326802 | Longitude: -70.53883"

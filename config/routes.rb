@@ -42,6 +42,8 @@ Rails.application.routes.draw do
   post 'admin/remove_from_suspension_list', to: 'suspension_lists#update', as: 'remove_from_suspension_list'
   post 'admin/remove_from_block_list', to: 'block_lists#update', as: 'remove_from_block_list'
 
+  get 'post/see_my_reports', to: 'posts#see_my_reports', :defaults => { :format => 'json' }
+
   post 'create_post', to: 'posts#create'
   post 'create_validation', to: 'validations#create'
   post 'create_comment', to: 'comments#create'

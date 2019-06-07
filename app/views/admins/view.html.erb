@@ -26,9 +26,9 @@
         <li class="nav-item">
           <a class="nav-link" data-toggle="pill" href="#dumpster">Dumpster</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="pill" href="#suspension-list">Suspension list</a>
-        </li>
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link" data-toggle="pill" href="#suspension-list">Suspension list</a>-->
+<!--        </li>-->
         <li class="nav-item">
           <a class="nav-link" data-toggle="pill" href="#block-list">Block list</a>
         </li>
@@ -137,12 +137,11 @@
                     <% else %>
                       <%= link_to 'Send to the blacklist', send_user_to_blacklist_path("blacklist[user_id]": user.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send ' + user.email + 'to the blacklist?' } %>
                     <% end %>
-                    <% if user.is_in_suspension_list %>
-                      <%= link_to 'Remove user from the suspension list', remove_from_suspension_list_path("suspension_list[id]": user.get_suspension_instance_id, "suspension_list[exit_date]": Time.now),
-                                  class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to remove ' + user.email + ' from the suspension list?' } %>
-                    <% else %>
-                      <%= link_to 'Send to the suspension list', send_user_to_suspension_list_path("suspension_list[user_id]": user.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send ' + user.email + 'to the suspension list?' } %>
-                    <% end %>
+                    <%# if user.is_in_suspension_list %>
+                      <%#= link_to 'Remove user from the suspension list', remove_from_suspension_list_path("suspension_list[id]": user.get_suspension_instance_id, "suspension_list[exit_date]": Time.now), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to remove ' + user.email + ' from the suspension list?' } %>
+                    <%# else %>
+                      <%#= link_to 'Send to the suspension list', send_user_to_suspension_list_path("suspension_list[user_id]": user.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send ' + user.email + 'to the suspension list?' } %>
+                    <%# end %>
                     <% if user.is_in_block_list %>
                       <%= link_to 'Remove user from the block list', remove_from_block_list_path("block_list[id]": user.get_block_instance_id, "block_list[exit_date]": Time.now),
                                   class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to remove ' + user.email + ' from the block list?' } %>
@@ -197,6 +196,9 @@
                   <button class="btn btn-primary" data-toggle="dropdown"><i class="fas fa-tools"></i></button>
                   <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="<%= watch_path(post_id: post.id) %>">View post</a>
+                    <a class="dropdown-item" data-toggle="modal" data-target="#reports-modal"
+                       data-owner="<%= post.get_email_owner %>" data-title="<%= post.title %>"
+                       data-post-id="<%= post.id %>" data-btn-type="view-reports">View reports</a>
                     <a class="dropdown-item" data-toggle="modal" data-target="#report-modal-post"
                     data-owner="<%= post.get_email_owner %>" data-title="<%= post.title %>"
                     data-post-id="<%= post.id %>" data-btn-type="report-post">Mark post as inappropiate</a>
@@ -290,43 +292,43 @@
             </tbody>
           </table>
         </div>
-        <div id="suspension-list" class="container tab-pane fade">
-          <h3>Suspension list</h3>
-          <div class="form-check">
-            <label class="form-check-label">
-              <input id="checkbox-suspension-id" type="checkbox" class="form-check-input" onclick="if (this.checked){showOnlyCurrentObjectsInList('user-suspension-list')} else {showAllObjectsInList('user-suspension-list')}">
-              Show history (users who have passed through the suspension list)
-            </label>
-          </div>
-          <input type="text" class="form-control" id="inputSearchSuspensionList" onkeyup="searchInTable('inputSearchSuspensionList', 'manage-suspension-list-table', 'checkbox-suspension-id')" placeholder="Search users in suspension list..." style="margin-bottom: 10px">
-          <table id="manage-suspension-list-table" class="table table-bordered table-hover">
-            <thead>
-            <tr>
-              <th>User</th>
-              <th>Entry date</th>
-              <th>Exit date</th>
-              <th>Remove from the list</th>
-            <tr>
-            </thead>
-            <tbody>
-            <% @suspension_list_users.each do |suspension_list_user| %>
-              <tr class="user-suspension-list-row-<%= if suspension_list_user.exit_date.nil? then "all" else "have-exit-date history" end %>">
-                <td><%= suspension_list_user.get_user_email %></td>
-                <td><%= suspension_list_user.created_at %></td>
-                <td><%= suspension_list_user.exit_date %></td>
-                <td>
-                  <% if suspension_list_user.exit_date.nil? %>
-                    <%= link_to "<button class='btn btn-dark fas fa-sign-out-alt' title='Remove user from the suspension list'></button>".html_safe, remove_from_suspension_list_path("suspension_list[id]": suspension_list_user.id, "suspension_list[exit_date]": Time.now),
+<!--        <div id="suspension-list" class="container tab-pane fade">-->
+<!--          <h3>Suspension list</h3>-->
+<!--          <div class="form-check">-->
+<!--            <label class="form-check-label">-->
+<!--              <input id="checkbox-suspension-id" type="checkbox" class="form-check-input" onclick="if (this.checked){showOnlyCurrentObjectsInList('user-suspension-list')} else {showAllObjectsInList('user-suspension-list')}">-->
+<!--              Show history (users who have passed through the suspension list)-->
+<!--            </label>-->
+<!--          </div>-->
+<!--          <input type="text" class="form-control" id="inputSearchSuspensionList" onkeyup="searchInTable('inputSearchSuspensionList', 'manage-suspension-list-table', 'checkbox-suspension-id')" placeholder="Search users in suspension list..." style="margin-bottom: 10px">-->
+<!--          <table id="manage-suspension-list-table" class="table table-bordered table-hover">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--              <th>User</th>-->
+<!--              <th>Entry date</th>-->
+<!--              <th>Exit date</th>-->
+<!--              <th>Remove from the list</th>-->
+<!--            <tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+            <%# @suspension_list_users.each do |suspension_list_user| %>
+<!--              <tr class="user-suspension-list-row-<%#= if suspension_list_user.exit_date.nil? then "all" else "have-exit-date history" end %>">-->
+<!--                <td><%#= suspension_list_user.get_user_email %></td>-->
+<!--                <td><%#= suspension_list_user.created_at %></td>-->
+<!--                <td><%#= suspension_list_user.exit_date %></td>-->
+<!--                <td>-->
+                  <%# if suspension_list_user.exit_date.nil? %>
+<!--                    <%#= link_to "<button class='btn btn-dark fas fa-sign-out-alt' title='Remove user from the suspension list'></button>".html_safe, remove_from_suspension_list_path("suspension_list[id]": suspension_list_user.id, "suspension_list[exit_date]": Time.now),-->
                                 method: :post, data: { confirm: 'Are you sure that you want to remove ' + suspension_list_user.get_user_email + ' from the suspension list?' } %>
-                  <% else %>
-                    <button class="btn btn-dark fas fa-sign-out-alt" disabled></button>
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
-            </tbody>
-          </table>
-        </div>
+                  <%# else %>
+                    <button class="btn btn-dark fas fa-sign-out-alt" disabled></button>-->
+                  <%# end %>
+<!--                </td>-->
+<!--              </tr>-->
+            <%# end %>
+<!--            </tbody>-->
+<!--          </table>-->
+<!--        </div>-->
         <div id="block-list" class="container tab-pane fade">
           <h3>Block list</h3>
           <div class="form-check">
@@ -462,6 +464,36 @@
             <%= report_form.submit value:"Report", class:"btn btn-warning my-1", style:"float-right" %>
           </div>
         <% end %>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal" id="reports-modal">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Reports (<b id="reports-count"></b>)</h4>
+          <button class="close" data-dismiss="modal">&times;</button>
+        </div>
+          <div class="modal-body">
+            <div class="container">
+              <p>Reports in which "<b id="reported-post-title"></b>" of <b id="reported-post-owner"></b> has been marked as inappropriate.</p>
+              <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>Reporting user</th>
+                  <th>Comment</th>
+                  <th>Date</th>
+                </tr>
+                </thead>
+                <tbody id="reports-table-body">
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+          </div>
       </div>
     </div>
   </div>

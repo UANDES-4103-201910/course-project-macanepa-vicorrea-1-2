@@ -10,7 +10,6 @@ function showReportPost(event) {
 
 function showMakeUserAdmin(event) {
     var data = $(event.currentTarget).data();
-    console.log(data);
     var email = data.email;
     var userId = data.userId;
     $('#make-user-admin-email').text(email);
@@ -21,7 +20,6 @@ function showEditUser(event) {
     var data = $(event.currentTarget).data();
     var email = data.email;
     var userId = data.userId;
-    console.log(data, email, userId);
     $('#email-edit-user-modal').text(email);
     $('#hidden-user-id-for-password-user-modal').val(userId);
 }
@@ -38,6 +36,34 @@ function showEditAdmin(event) {
     $('#actual-geofence').val(geofence);
 }
 
+function showReportsAjax(event) {
+    var data = $(event.currentTarget).data();
+    var postTitle = data.title;
+    var postOwner = data.owner;
+    var postId = data.postId;
+    $('#reported-post-title').text(postTitle);
+    $('#reported-post-owner').text(postOwner);
+    tableBody = $('#reports-table-body');
+    $.get('/post/see_my_reports',
+        { postId: postId } )
+        .done((data) => {
+            tableBody.empty();
+            for (i = 0; i < data.length; i++){
+                var content = data[i].content;
+                var user = data[i].user;
+                var date = data[i].date;
+                tableBody.append("<tr>" +
+                    "<td>" + user + "</td>" +
+                    "<td>" + content + "</td>" +
+                    "<td>" + date + "</td>" +
+                    "</tr>")
+                }
+            $('#reports-count').text(i);
+        })
+        .fail((e) => {
+            // console.log("error");
+        })
+}
 
 function showOnlyCurrentObjectsInList(object_type){
     $('.' + object_type + '-row-have-exit-date').show();
@@ -134,4 +160,5 @@ $(document).ready( function () {
     $('[data-btn-type = "make-user-admin"]').click(showMakeUserAdmin);
     $('[data-btn-type = "edit-user"]').click(showEditUser);
     $('[data-btn-type = "edit-admin"]').click(showEditAdmin);
+    $('[data-btn-type = "view-reports"]').click(showReportsAjax);
 });
