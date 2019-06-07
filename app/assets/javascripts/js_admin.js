@@ -47,21 +47,75 @@ function showAllObjectsInList(object_type){
     $('.' + object_type + '-row-have-exit-date').hide();
 }
 
-function myFunction() {
+function searchInTable(inputSearchId, tableId, checkBoxId) {
     var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("myInput");
+    input = document.getElementById(inputSearchId);
     filter = input.value.toUpperCase();
-    table = document.getElementById("manage-posts-table");
+    table = document.getElementById(tableId);
     tr = table.getElementsByTagName("tr");
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
+    th = table.getElementsByTagName("th");
+    var haveHistory = false;
+    var exitDateCol;
+    if (inputSearchId === 'inputSearchBlacklist' || inputSearchId === 'inputSearchSuspensionList' || inputSearchId === 'inputSearchBlockList'){
+        haveHistory = true;
+        exitDateCol = 2;
+    }
+    else if (inputSearchId === 'inputSearchDumpster'){
+        haveHistory = true;
+        exitDateCol = 3;
+    }
+    var checkBox;
+    var checked;
+    if (checkBoxId){
+        checkBox = $('#' + checkBoxId);
+        checked = checkBox.prop('checked');
+    }
+    else {
+        checked = true;
+    }
+
+    for (i = 1; i < tr.length; i++) {
+        showThis = false;
+        haveExitDate = false;
+        var tdExitDate;
+        if (haveHistory){
+            tdExitDate = tr[i].getElementsByTagName(    "td")[exitDateCol];
+        }
+        if (tdExitDate){
+            if (tdExitDate.innerText.length > 0){
+                haveExitDate = true;
             }
+        }
+        if (checked){
+            for (col = 0; col < th.length - 1; col++) {
+                td = tr[i].getElementsByTagName("td")[col];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        showThis = true;
+                    }
+                }
+            }
+        }
+        else {
+            if (!haveExitDate){
+                for (col = 0; col < th.length - 1; col++) {
+                    td = tr[i].getElementsByTagName("td")[col];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            showThis = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (showThis){
+            tr[i].style.display = "";
+        }
+        else {
+            tr[i].style.display = "none";
         }
     }
 }

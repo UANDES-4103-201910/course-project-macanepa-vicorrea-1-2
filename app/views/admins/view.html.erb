@@ -48,7 +48,8 @@
                 create a new user and then do it administrator.</li>
             </ul>
           <% end %>
-          <table class="table table-bordered table-hover">
+          <input type="text" class="form-control" id="inputSearchUser" onkeyup="searchInTable('inputSearchUser', 'manage-users-table')" placeholder="Search users..." style="margin-bottom: 10px">
+          <table id="manage-users-table" class="table table-bordered table-hover">
             <thead>
             <tr>
               <th class="FIRST-CHILD"></th>
@@ -160,7 +161,7 @@
 
         <div id="manage-posts" class="container tab-pane fade">
           <h3>Manage posts</h3>
-          <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+          <input type="text" class="form-control" id="inputSearchPost" onkeyup="searchInTable('inputSearchPost', 'manage-posts-table')" placeholder="Search posts..." style="margin-bottom: 10px">
           <table id="manage-posts-table" class="table table-bordered table-hover">
             <thead>
             <tr>
@@ -217,11 +218,12 @@
           <h3>Blacklist</h3>
           <div class="form-check">
             <label class="form-check-label">
-              <input type="checkbox" class="form-check-input" onclick="if (this.checked){showOnlyCurrentObjectsInList('user-blacklist')} else {showAllObjectsInList('user-blacklist')}">
+              <input id="checkbox-blacklist-id" type="checkbox" class="form-check-input" onclick="if (this.checked){showOnlyCurrentObjectsInList('user-blacklist')} else {showAllObjectsInList('user-blacklist')}">
               Show history (users who have passed through the blacklist)
             </label>
           </div>
-          <table class="table table-bordered table-hover">
+          <input type="text" class="form-control" id="inputSearchBlacklist" onkeyup="searchInTable('inputSearchBlacklist', 'manage-blacklist-table', 'checkbox-blacklist-id')" placeholder="Search users in blacklist..." style="margin-bottom: 10px">
+          <table id="manage-blacklist-table" class="table table-bordered table-hover">
             <thead>
             <tr>
               <th>User</th>
@@ -253,11 +255,12 @@
           <h3>Dumpster</h3>
           <div class="form-check">
             <label class="form-check-label">
-              <input type="checkbox" class="form-check-input" onclick="if (this.checked){showOnlyCurrentObjectsInList('post-dumpster')} else {showAllObjectsInList('post-dumpster')}">
+              <input id="checkbox-dumpster-id" type="checkbox" class="form-check-input" onclick="if (this.checked){showOnlyCurrentObjectsInList('post-dumpster')} else {showAllObjectsInList('post-dumpster')}">
               Show history (posts that have gone through the dumpster)
             </label>
           </div>
-          <table class="table table-bordered table-hover">
+          <input type="text" class="form-control" id="inputSearchDumpster" onkeyup="searchInTable('inputSearchDumpster', 'manage-dumpster-table', 'checkbox-dumpster-id')" placeholder="Search posts in dumpster..." style="margin-bottom: 10px">
+          <table id="manage-dumpster-table" class="table table-bordered table-hover">
             <thead>
             <tr>
               <th>Post</th>
@@ -291,11 +294,12 @@
           <h3>Suspension list</h3>
           <div class="form-check">
             <label class="form-check-label">
-              <input type="checkbox" class="form-check-input" onclick="if (this.checked){showOnlyCurrentObjectsInList('user-suspension-list')} else {showAllObjectsInList('user-suspension-list')}">
+              <input id="checkbox-suspension-id" type="checkbox" class="form-check-input" onclick="if (this.checked){showOnlyCurrentObjectsInList('user-suspension-list')} else {showAllObjectsInList('user-suspension-list')}">
               Show history (users who have passed through the suspension list)
             </label>
           </div>
-          <table class="table table-bordered table-hover">
+          <input type="text" class="form-control" id="inputSearchSuspensionList" onkeyup="searchInTable('inputSearchSuspensionList', 'manage-suspension-list-table', 'checkbox-suspension-id')" placeholder="Search users in suspension list..." style="margin-bottom: 10px">
+          <table id="manage-suspension-list-table" class="table table-bordered table-hover">
             <thead>
             <tr>
               <th>User</th>
@@ -327,11 +331,12 @@
           <h3>Block list</h3>
           <div class="form-check">
             <label class="form-check-label">
-              <input type="checkbox" class="form-check-input" onclick="if (this.checked){showOnlyCurrentObjectsInList('user-block-list')} else {showAllObjectsInList('user-block-list')}">
+              <input id="checkbox-block-id" type="checkbox" class="form-check-input" onclick="if (this.checked){showOnlyCurrentObjectsInList('user-block-list')} else {showAllObjectsInList('user-block-list')}">
               Show history (users who have passed through the block list)
             </label>
           </div>
-          <table class="table table-bordered table-hover">
+          <input type="text" class="form-control" id="inputSearchBlockList" onkeyup="searchInTable('inputSearchBlockList', 'manage-block-list-table', 'checkbox-block-id')" placeholder="Search users in block list..." style="margin-bottom: 10px">
+          <table id="manage-block-list-table" class="table table-bordered table-hover">
             <thead>
             <tr>
               <th>User</th>
