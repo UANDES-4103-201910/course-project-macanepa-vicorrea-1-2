@@ -14,9 +14,6 @@
         <li class="nav-item">
           <h2>Administration</h2>
         </li>
-<!--        <li class="nav-item">-->
-<!--          <a class="nav-link active" data-toggle="pill" href="#manage-admins">Administrators</a>-->
-<!--        </li>-->
         <li class="nav-item">
           <a class="nav-link active" data-toggle="pill" href="#manage-users">Users</a>
         </li>
@@ -41,84 +38,6 @@
     <!-- Tab panes -->
     <div class="col-10">
       <div class="tab-content">
-<!--        <div id="manage-admins" class="container tab-pane active">-->
-<!--          <h3>Manage administrators</h3>-->
-<!--          <b>You have 2 options to create a new administrator:</b>-->
-<!--          <ul>-->
-<!--            <li>Make a current user an admin in the user administration section.</li>-->
-<!--            <li>Create a new administrator. For that, <%#= link_to "log out", destroy_user_session_path, method: :delete %>,-->
-<!--              create a new user and then do it administrator.</li>-->
-<!--          </ul>-->
-<!--          <table class="table table-bordered table-hover">-->
-<!--            <thead>-->
-<!--            <tr>-->
-<!--              <th>User</th>-->
-<!--              <th>Geofence</th>-->
-<!--              <th>Is super admin</th>-->
-<!--              <th>Last access</th>-->
-<!--              <th>Creation date</th>-->
-<!--              <th>Edit</th>-->
-<!--              <th>View profile</th>-->
-<!--              <th>Stop being an administrator</th>-->
-<!--            </tr>-->
-<!--            </thead>-->
-<!--            <tbody>-->
-            <%# @admins.each do |admin| %>
-<!--              <tr>-->
-<!--                <td><%#= admin.get_email %></td>-->
-<!--                <td><%#= admin.geofence %></td>-->
-<!--                <td><%#= admin.super_admin %></td>-->
-<!--                <td><%#= admin.get_last_access %></td>-->
-<!--                <td><%#= admin.created_at %></td>-->
-<!--                <td><button class="btn btn-info fas fa-edit" data-toggle="modal"-->
-<!--                            data-target="#edit-admin-modal-<%#= admin.id %>" data-tooltip="tooltip"-->
-<!--                            title="Edit admin"></button></td>-->
-<!--                <td><a href="<%#= user_profile_view_path(user_profile_id: admin.get_user_id) %>" role="button"-->
-<!--                       class="btn btn-primary fas fa-address-card" data-tooltip="tooltip" title="View admin profile"></a></td>-->
-<!--                <td><button class="btn btn-danger fas fa-user-lock" data-toggle="modal"-->
-<!--                            data-tooltip="tooltip" title="Stop being an administrator"-->
-<!--                            data-target="#stop-being-admin-modal-<%#= admin.id %>"></button></td>-->
-<!--              </tr>-->
-<!--              <div class="modal" id="edit-admin-modal-<%#= admin.id %>">-->
-<!--                <div class="modal-dialog">-->
-<!--                  <div class="modal-content">-->
-<!--                    <div class="modal-header">-->
-<!--                      <h4 class="modal-title">Edit administrator</h4>-->
-<!--                      <button type="button" class="close" data-dismiss="modal">&times;</button>-->
-<!--                    </div>-->
-                    <%#= form_with(model: admin.get_user, local: true) do |edit_admin_form| %>
-                      <%#= edit_admin_form.text_field :id, value: admin.get_user_id, type: "hidden", id: "hidden_admin_user_" + admin.get_user_id.to_s %>
-<!--                      <div class="modal-body">-->
-<!--                        <p><i>Edit</i> administrator's password <b><%#= admin.get_email %></b></p>-->
-                        <%#= edit_admin_form.password_field :password, class:"form-control", placeholder: "Write the new password...", id: "new_admin_password_" + admin.id.to_s %>
-<!--                      </div>-->
-<!--                      <div class="modal-footer">-->
-                        <%#= edit_admin_form.submit value:"Update", class:"btn btn-outline-info my-1", style:"float-right"%>
-<!--                      </div>-->
-                    <%# end %>
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="modal" id="stop-being-admin-modal-<%#= admin.id %>">-->
-<!--                <div class="modal-dialog">-->
-<!--                  <div class="modal-content">-->
-<!--                    <div class="modal-header">-->
-<!--                      <h4 class="modal-title">Stop being an administrator</h4>-->
-<!--                      <button type="button" class="close" data-dismiss="modal">&times;</button>-->
-<!--                    </div>-->
-<!--                    <div class="modal-body">-->
-<!--                      <p>Are you sure that you want <b><%#= admin.get_email %></b> to stop being an administrator?</p>-->
-<!--                    </div>-->
-<!--                    <div class="modal-footer">-->
-                      <%#= link_to 'Accept', admin, method: :delete, class: "btn btn-outline-danger" %>
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-            <%# end %>
-<!--            </tbody>-->
-<!--          </table>-->
-<!--        </div>-->
         <div id="manage-users" class="container tab-pane active">
           <h3>Manage users</h3>
           <% if current_user.is_super_admin %>
@@ -139,12 +58,7 @@
               <th>Last access</th>
               <th>Creation date</th>
               <th>Geofence</th>
-              <th>Edit</th>
-              <% if current_user.is_super_admin %>
-                <th>Change administration</th>
-              <% end %>
-              <th>View profile</th>
-              <th>Delete</th>
+              <th>Options</th>
             </tr>
             </thead>
             <tbody>
@@ -157,111 +71,37 @@
               <td><%= user.last_access %></td>
               <td><%= user.created_at %></td>
               <td><%= user.get_geofence %></td>
-              <td><button class="btn btn-info fas fa-edit" data-toggle="modal" data-tooltip="tooltip" title="Edit user"
-                          data-target="#edit-user-modal-<%= user.id %>" <%= "disabled" if !current_user.is_super_admin && user.is_admin %> ></button></td>
-              <% if current_user.is_super_admin %>
-                <td><button class="btn btn-<%= if user.is_admin then "danger fas fa-user-lock" else "success fas fa-user-cog" end %>" data-toggle="modal"
-                            data-tooltip="tooltip" title="<%= if user.is_admin then "Stop being an administrator" else "Make user admin" end %>"
-                            data-target="#edit-administration-modal-<%= user.id %>"></button></td>
-              <% end %>
-
-              <td><a href="<%= user_profile_view_path(user_profile_id: user.id) %>" role="button"
-                     class="btn btn-primary fas fa-address-card" data-tooltip="tooltip" title="View user profile"></a></td>
-              <td><button class="btn btn-danger fas fa-trash-alt" data-toggle="modal" data-tooltip="tooltip" title="Delete user"
-                          data-target="#delete-user-modal-<%= user.id %>" <%= "disabled" if !current_user.is_super_admin && user.is_admin %>></button></td>
-            </tr>
-              <div class="modal" id="edit-administration-modal-<%= user.id %>">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <% if user.is_admin %>
-                      <div class="modal-header">
-                        <h4 class="modal-title">Stop being an administrator</h4>
-                        <button class="close" data-dismiss="modal">&times;</button>
-                      </div>
-                    <div class="modal-body">
-                      <p>Are you sure that you want <b><%= user.email %></b> to stop being an administrator?</p>
-                    </div>
-                    <div class="modal-footer">
-                      <%= link_to 'Accept', user.get_admin, method: :delete, class: "btn btn-outline-danger" %>
-                    </div>
+              <td>
+                  <button class="btn btn-primary" data-toggle="dropdown"><i class="fas fa-tools"></i></button>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="<%= user_profile_view_path(user_profile_id: user.id) %>">View profile</a>
+                    <% if current_user.is_super_admin && user.is_admin %>
+                      <a class="dropdown-item" data-toggle="modal" data-btn-type="edit-admin" data-user-id="<%= user.id %>"
+                         data-target="#edit-admin-modal" data-email="<%= user.email %>"
+                         data-admin-id="<%= user.get_admin.id %>" data-geofence="<%= user.get_admin.geofence %>">Edit admin</a>
                     <% else %>
-                      <div class="modal-header">
-                        <h4 class="modal-title">Make user admin</h4>
-                        <button class="close" data-dismiss="modal">&times;</button>
-                      </div>
-                      <%= form_for :admin, :url => {:controller => "admins", :action => "create", id: "new_admin_form_" + user.id.to_s} do |new_admin_form| %>
-                        <%= new_admin_form.text_field :user_id, value: user.id, type: "hidden", id: "hidden_new_admin_" + user.id.to_s %>
-                        <div class="modal-body">
-                          <p>Are you sure that you want to make <b><%= user.email %></b> an admin?</p>
-                          <div class="field form-inline">
-                            Geofence:&nbsp;
-                            <%= new_admin_form.text_field :geofence, id: "new_admin_geofence_" + user.id.to_s %>
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <%= new_admin_form.submit value:"Accept", class:"actions btn btn-outline-success my-1", id: "submit_new_admin_form_" + user.id.to_s %>
-                        </div>
+                      <a class="dropdown-item" data-toggle="modal" data-btn-type="edit-user" data-user-id="<%= user.id %>"
+                         data-target="#edit-user-modal" data-email="<%= user.email %>">Edit user</a>
+                    <% end %>
+                    <% if current_user.is_super_admin %>
+                      <% if user.is_admin %>
+                        <%= link_to 'Stop being admin', user.get_admin, method: :delete, class: "dropdown-item", data: { confirm: 'Are you sure that you want ' + user.email + ' to stop being an administrator?' } %>
+                      <% else %>
+                        <%#= link_to 'Make user admin', create_admin_path("admin[user_id]": user.id), method: :post %>
+                        <a class="dropdown-item" data-toggle="modal" data-btn-type="make-user-admin" data-user-id="<%= user.id %>"
+                           data-target="#make-user-admin-modal" data-email="<%= user.email %>">Make user admin</a>
                       <% end %>
                     <% end %>
-                  </div>
-                </div>
-              </div>
-              <div class="modal" id="edit-user-modal-<%= user.id %>">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h4 class="modal-title">Edit <b><%= user.email %></b></h4>
-                      <button class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                    <%= form_with(model: user, local: true, id: "edit_user_password_form_" + user.id.to_s) do |edit_user_password_form|  %>
-                      <%= edit_user_password_form.text_field :id, value: user.id, type: "hidden", id: "hidden_user_" + user.id.to_s %>
-                        <div class="field form-inline">
-                          Password:&nbsp;
-                          <%= edit_user_password_form.password_field :password, placeholder: "Write the new password...", id: "new_user_password_" + user.id.to_s %>&nbsp;
-                          <%= edit_user_password_form.submit value:"Update", class:"actions btn btn-outline-success my-1", id: "submit_edit_user_password_form_" + user.id.to_s %>
-                        </div>
+                    <% text =  "" %>
+                    <% if user.is_admin %>
+                      <% text = "Delete admin" %>
+                    <% else %>
+                      <% text = "Delete user" %>
                     <% end %>
-
-                    <% if current_user.is_super_admin && user.is_admin %>
-
-                        <%= form_for user.get_admin do |edit_admin_geofence_form| %>
-                          <div class="field form-inline">
-                            Geofence:&nbsp;
-                            <%= edit_admin_geofence_form.text_field :geofence, placeholder: "Write the new geofence...", id: "edit_admin_geofence_" + user.get_admin.id.to_s %>&nbsp;
-                            <%= edit_admin_geofence_form.submit value:"Update", class:"actions btn btn-outline-primary my-1", id: "submit_edit_admin_geofence_form_" + user.id.to_s %>
-                          </div>
-                        <% end %>
-                        <!-- es lo mismo  -->
-                      <%#= form_with(model: user.get_admin, local: true, id: "edit_admin_geofence_form_" + user.id.to_s) do |edit_admin_geofence_form| %>
-                        <%#= edit_admin_geofence_form.text_field :id, value: user.get_admin.id, type: "hidden", id: "hidden_admin_" + user.get_admin.id.to_s %>
-<!--                        <div class="field form-inline">-->
-<!--                          Geofence:&nbsp;-->
-<!--                          <%#= edit_admin_geofence_form.text_field :geofence, placeholder: "Write the new geofence...", id: "edit_admin_geofence_" + user.get_admin.id.to_s %>&nbsp;-->
-                          <%#= edit_admin_geofence_form.submit value:"Update", class:"actions btn btn-outline-primary my-1", id: "submit_edit_admin_geofence_form_" + user.id.to_s %>
-<!--                        </div>-->
-                      <%# end %>
-                    <% end %>
-                    </div>
+                    <%= link_to text, user, method: :delete, class: "dropdown-item", data: { confirm: 'Are you sure that you want to delete ' + user.email + '?' } %>
                   </div>
-                </div>
-             </div>
-              <div class="modal" id="delete-user-modal-<%= user.id %>">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h4 class="modal-title">Stop being an administrator</h4>
-                      <button class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                      <p>Are you sure that you want to delete <b><%= user.email %></b>?</p>
-                    </div>
-                    <div class="modal-footer">
-                      <%= link_to 'Accept', user, method: :delete, class: "btn btn-outline-danger" %>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              </td>
+            </tr>
             <% end %>
             </tbody>
           </table>
@@ -390,26 +230,6 @@
                   </div>
                 </div>
               </div>
-<!--              <div class="modal" id="remove-from-list-modal">-->
-<!--                <div class="modal-dialog">-->
-<!--                  <div class="modal-content">-->
-<!--                    <div class="modal-header">-->
-<!--                      <h4 id="modal-remove-from-list-title" class="modal-title"></h4>-->
-<!--                      <button type="button" class="close" data-dismiss="modal">&times;</button>-->
-<!--                    </div>-->
-<!--                    <div class="modal-body">-->
-<!--                      <p>Are you sure that you want to <i>remove</i> <b id="removed-user-text"></b> from the <b id="removed-from-list-type-text"></b>?</p>-->
-<!--                    </div>-->
-<!--                    <div class="modal-footer">-->
-<!--                      <form action="remove_user_from_list" method="post">-->
-<!--                        <input id="hidden-object-id" type="hidden" name="object_id"/>-->
-<!--                        <input id="hidden-object-type" type="hidden" name="object_type"/>-->
-<!--                        <button class="btn btn-outline-dark" type="submit">Accept</button>-->
-<!--                      </form>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
             <% end %>
             </tbody>
           </table>
@@ -548,177 +368,79 @@
   </div>
 </div>
 
-<!--<div class="modal" id="stop-being-admin-modal">-->
-<!--  <div class="modal-dialog">-->
-<!--    <div class="modal-content">-->
-<!--      <div class="modal-header">-->
-<!--        <h4 class="modal-title">Stop being an administrator</h4>-->
-<!--        <button type="button" class="close" data-dismiss="modal">&times;</button>-->
-<!--      </div>-->
-<!--      <div class="modal-body">-->
-<!--        <p>Are you sure that you want <b id="admin-mail-text"></b> to stop being an administrator?</p>-->
-<!--      </div>-->
-<!--      <div class="modal-footer">-->
-<!--        <form action="stop_being_admin" method="post">-->
-<!--          <input id="hidden-admin-id" type="hidden" name="id"/>-->
-<!--          <button class="btn btn-outline-danger">Accept</button>-->
-<!--        </form>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
+  <div class="modal" id="edit-admin-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Edit <b id="edit-admin-email"></b></h4>
+          <button class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <%= form_for :user, :url => { controller: "users", action: "update"} do |edit_user_password_form| %>
+            <%= edit_user_password_form.text_field :id, type: "hidden", id: "hidden-user-id-for-password-admin-modal" %>
+            <div class="field form-inline">
+              Password:&nbsp;
+              <%= edit_user_password_form.text_field :password, type: "password", placeholder: "Write the new password...", id: "admin_new_password" %>&nbsp;
+              <%= edit_user_password_form.submit value: "Update", class:"btn btn-success my-1" %>
+            </div>
+          <% end %>
+          <% if current_user.is_super_admin %>
+            <%= form_for :admin, :url => { controller: "admins", action: "update"} do |edit_admin_geofence_form| %>
+              <%= edit_admin_geofence_form.text_field :id, type: "hidden", id: "hidden-admin-id-for-geofence" %>
+              <div class="field form-inline">
+                Geofence:&nbsp;
+                <%= edit_admin_geofence_form.text_field :geofence, id: "actual-geofence" %>&nbsp;
+                <%= edit_admin_geofence_form.submit value: "Update", class:"btn btn-primary my-1" %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="modal-body">
+        </div>
+      </div>
+    </div>
+  </div>
 
-<!--<div class="modal" id="delete-user-modal">-->
-<!--  <div class="modal-dialog">-->
-<!--    <div class="modal-content">-->
-<!--      <div class="modal-header">-->
-<!--        <h4 class="modal-title">Delete user</h4>-->
-<!--        <button type="button" class="close" data-dismiss="modal">&times;</button>-->
-<!--      </div>-->
-<!--      <div class="modal-body">-->
-<!--        <p>Are you sure that you want to <i>delete</i> <b id="user-mail-text"></b>?</p>-->
-<!--      </div>-->
-<!--      <div class="modal-footer">-->
-<!--        <form action="delete_user" method="post">-->
-<!--          <input id="hidden-user-id" type="hidden" name="id"/>-->
-<!--          <button class="btn btn-outline-danger">Accept</button>-->
-<!--        </form>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
-<!--<div class="modal" id="delete-post-modal">-->
-<!--  <div class="modal-dialog">-->
-<!--    <div class="modal-content">-->
-<!--      <div class="modal-header">-->
-<!--        <h4 class="modal-title">Delete post</h4>-->
-<!--        <button type="button" class="close" data-dismiss="modal">&times;</button>-->
-<!--      </div>-->
-<!--      <div class="modal-body">-->
-<!--        Are you sure that you want to <i id="delete-report-text"></i> the post <b id="post-title"></b> by <b id="post-owner"></b>?-->
-<!--      </div>-->
-<!--      <div class="modal-footer">-->
-<!--        <form action="delete_post" method="post">-->
-<!--          <input type="hidden" id="hidden-post-id-delete" name="id">-->
-<!--          <button id="delete-button" class="btn btn-outline-danger">Accept</button>-->
-<!--        </form>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
-<!--<div class="modal" id="report-post-modal">-->
-<!--  <div class="modal-dialog">-->
-<!--    <div class="modal-content">-->
-<!--      <div class="modal-header">-->
-<!--        <h4 class="modal-title">Report post</h4>-->
-<!--        <button type="button" class="close" data-dismiss="modal">&times;</button>-->
-<!--      </div>-->
-<!--      <div class="modal-body">-->
-<!--        Are you sure that you want to <i id="delete-report-text"></i> the post <b id="post-title"></b> by <b id="post-owner"></b>?-->
-<!--      </div>-->
-<!--      <div class="modal-footer">-->
-<!--        <form action="report_post" method="post">-->
-<!--          <input type="hidden" id="hidden-post-id-report" name="id">-->
-<!--          <button id="report-button" class="btn btn-outline-warning">Accept</button>-->
-<!--        </form>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
-<!--<div class="modal" id="make-user-admin-modal">-->
-<!--  <div class="modal-dialog">-->
-<!--    <div class="modal-content">-->
-<!--      <div class="modal-header">-->
-<!--        <h4 class="modal-title">Make user admin</h4>-->
-<!--        <button type="button" class="close" data-dismiss="modal">&times;</button>-->
-<!--      </div>-->
-<!--      <div class="modal-body">-->
-<!--        <p>Are you sure that you want to make <b id="make-user-admin-text"></b> an admin?</p>-->
-<!--      </div>-->
-<!--      <div class="modal-footer">-->
-<!--        <form action="make_user_admin" method="post">-->
-<!--          <input id="hidden-user-admin-mail" type="hidden" name="user_mail"/>-->
-<!--          <button class="btn btn-outline-success" type="submit">Accept</button>-->
-<!--        </form>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
-<!--<div class="modal" id="remove-from-list-modal">-->
-<!--  <div class="modal-dialog">-->
-<!--    <div class="modal-content">-->
-<!--      <div class="modal-header">-->
-<!--        <h4 id="modal-remove-from-list-title" class="modal-title"></h4>-->
-<!--        <button type="button" class="close" data-dismiss="modal">&times;</button>-->
-<!--      </div>-->
-<!--      <div class="modal-body">-->
-<!--        <p>Are you sure that you want to <i>remove</i> <b id="removed-user-text"></b> from the <b id="removed-from-list-type-text"></b>?</p>-->
-<!--      </div>-->
-<!--      <div class="modal-footer">-->
-<!--        <form action="remove_user_from_list" method="post">-->
-<!--          <input id="hidden-object-id" type="hidden" name="object_id"/>-->
-<!--          <input id="hidden-object-type" type="hidden" name="object_type"/>-->
-<!--          <button class="btn btn-outline-dark" type="submit">Accept</button>-->
-<!--        </form>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
-<!--<div class="modal" id="edit-user-modal">-->
-<!--  <div class="modal-dialog">-->
-<!--    <div class="modal-content">-->
-<!--      <div class="modal-header">-->
-<!--        <h4 class="modal-title">Edit user</h4>-->
-<!--        <button type="button" class="close" data-dismiss="modal">&times;</button>-->
-<!--      </div>-->
-<!--      <form action="edit_user" method="post">-->
-<!--        <div class="modal-body">-->
-<!--          <p><i>Edit</i> user's password <b id="password-user-email"></b></p>-->
-<!--          <div class="form-group">-->
-<!--            <label for="new-user-password">New password:</label>-->
-<!--            <input type="password" class="form-control" id="new-user-password" name="user[password]">-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      <div class="modal-footer">-->
-<!--        <input id="hidden-user-id-for-password" type="hidden" name="id"/>-->
-<!--        <button class="btn btn-outline-info">Accept</button>-->
-<!--      </div>-->
-<!--      </form>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
-<!--<div class="modal" id="edit-admin-modal">-->
-<!--  <div class="modal-dialog">-->
-<!--    <div class="modal-content">-->
-<!--      <div class="modal-header">-->
-<!--        <h4 class="modal-title">Edit administrator</h4>-->
-<!--        <button type="button" class="close" data-dismiss="modal">&times;</button>-->
-<!--      </div>-->
-<!--      <form action="edit_admin" method="post">-->
-<!--        <div class="modal-body">-->
-<!--          <p><i>Edit</i> administrator's password <b id="password-admin-email"></b></p>-->
-<!--          <div class="form-group">-->
-<!--            <label for="new-admin-password">New password:</label>-->
-<!--            <input type="password" class="form-control" id="new-admin-password" name="user[password]">-->
-<!--          </div>-->
-<!--          <input id="hidden-admin-id-for-password" type="hidden" name="id"/>-->
-<!--        </div>-->
-<!--        <div class="modal-footer">-->
-<!--          <button class="btn btn-outline-info">Accept</button>-->
-<!--        </div>-->
-<!--      </form>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
-
-
+  <div class="modal" id="edit-user-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Edit <b id="email-edit-user-modal"></b></h4>
+          <button class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <%= form_for :user, :url => { controller: "users", action: "update"} do |edit_user_password_form| %>
+            <%= edit_user_password_form.text_field :id, type: "hidden", id: "hidden-user-id-for-password-user-modal" %>
+            <div class="field form-inline">
+              Password:&nbsp;
+              <%= edit_user_password_form.text_field :password, type: "password", placeholder: "Write the new password...", id: "user_new_password" %>&nbsp;
+              <%= edit_user_password_form.submit value: "Update", class:"btn btn-success my-1" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="make-user-admin-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Make <b id="make-user-admin-email"></b> an administrator</h4>
+          <button class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <%= form_for :admin, :url => { controller: "admins", action: "create"} do |new_admin_form| %>
+        <div class="modal-body">
+          <%= new_admin_form.text_field :user_id, type: "hidden", id: "hidden_new_admin_user_id" %>
+          <div class="field form-inline">
+            Geofence:&nbsp;
+            <%= new_admin_form.text_field :geofence %>&nbsp;
+            <%= new_admin_form.submit value: "Accept", class: "btn btn-success" %>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 <% else %>
   <div class="alert alert-danger alert-dismissible fade show">
     <b>Error!</b> You don't have permission to access here.

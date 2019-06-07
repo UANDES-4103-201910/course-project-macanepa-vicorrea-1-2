@@ -6,9 +6,9 @@ class User < ApplicationRecord
 
   has_one :profile, dependent: :destroy
   has_one :admin, dependent: :destroy
-  has_one :blacklist
-  has_one :suspension_list
-  has_one :block_list
+  has_many :blacklists, dependent: :delete_all
+  has_many :suspension_lists, dependent: :delete_all
+  has_many :block_lists, dependent: :delete_all
   has_many :comments, dependent: :delete_all
   has_many :posts, dependent: :delete_all
   has_many :validations, dependent: :delete_all

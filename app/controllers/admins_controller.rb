@@ -1,5 +1,5 @@
 class AdminsController < ApplicationController
-  before_action :set_admin, only: [:show, :edit, :update, :destroy]
+  before_action :set_admin, only: [:show, :edit, :destroy]
   skip_before_action :verify_authenticity_token
   before_action :check_profile
   # ---------------------
@@ -21,8 +21,8 @@ class AdminsController < ApplicationController
     @dumpster_posts = Dumpster.all.order(:post_id)
         # @admins = (Admin.joins(:user).order(:email)).pluck(:email, :geofence, :super_admin, :created_at, :id, :user_id, :last_access)
     # @admins = Admin.all
-    @suspension_list_users = (User.joins(:suspension_list).order(:email)).pluck(:email, :created_at, :exit_date, :id)
-    @block_list_users = (User.joins(:block_list).order(:email)).pluck(:email, :created_at, :exit_date, :id)
+    @suspension_list_users = (User.joins(:suspension_lists).order(:email)).pluck(:email, :created_at, :exit_date, :id)
+    @block_list_users = (User.joins(:block_lists).order(:email)).pluck(:email, :created_at, :exit_date, :id)
   end
 
   def remove_user_from_list
@@ -98,6 +98,11 @@ class AdminsController < ApplicationController
   # PATCH/PUT /admins/1
   # PATCH/PUT /admins/1.json
   def update
+    if params[:id].nil?
+      @admin = Admin.find(params[:admin][:id])
+    else
+      set_admin
+    end
     respond_to do |format|
       if @admin.update(admin_params)
         format.html { redirect_to @admin, notice: 'Admin was successfully updated.' }
