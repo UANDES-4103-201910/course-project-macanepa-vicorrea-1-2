@@ -129,7 +129,7 @@ $(document).ready( function () {
     // $('[data-btn-type = "remove-from-dumpster"]').click(showInfoPostInDumpster);
     // $('[data-btn-type = "remove-from-list"]').click(showInfoRemoveFromList);
     // $('[data-btn-type = "delete-post"]').click(showDeletePost);
-    // $('[data-btn-type = "report-post"]').click(showReportPost);
+    $('[data-btn-type = "report-post"]').click(showReportPost);
     // $('[data-btn-type = "delete-user"]').click(showDeleteUserInfo);
     $('[data-btn-type = "make-user-admin"]').click(showMakeUserAdmin);
     // $('[data-btn-type = "stop-being-admin"]').click(showStopBeingAdmin);

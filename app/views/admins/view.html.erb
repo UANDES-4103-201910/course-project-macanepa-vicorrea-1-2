@@ -64,7 +64,16 @@
             <tbody>
             <% @users.each do |user| %>
             <tr>
-              <td <%= "data-tooltip=tooltip title=Admin" if user.is_admin %> class="FIRST-CHILD"><%= image_tag("gold_crown.png", height: "25px", width: "30px") if user.is_admin %></td>
+              <% if user.is_admin %>
+                <% if user.is_super_admin %>
+                  <td title="Super admin" class="FIRST-CHILD"><%= image_tag("gold_crown.png", height: "32px", width: "40px") %></td>
+                <% else %>
+                  <td title="Admin" class="FIRST-CHILD"><%= image_tag("gold_crown.png", height: "25px", width: "30px") %></td>
+            <% end %>
+                <% else %>
+                <td class="FIRST-CHILD"></td>
+              <% end %>
+<!--              <td <%#= "data-tooltip=tooltip title=Admin" if user.is_admin %> class="FIRST-CHILD"><%#= image_tag("gold_crown.png", height: "25px", width: "30px") if user.is_admin %></td>-->
               <td><%= user.name %></td>
               <td><%= user.last_name %></td>
               <td><%= user.email %></td>
@@ -72,10 +81,11 @@
               <td><%= user.created_at %></td>
               <td><%= user.get_geofence %></td>
               <td>
-                  <button class="btn btn-primary" data-toggle="dropdown"><i class="fas fa-tools"></i></button>
-                  <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="<%= user_profile_view_path(user_profile_id: user.id) %>">View profile</a>
-                    <% if current_user.is_super_admin && user.is_admin %>
+                <button class="btn btn-primary" data-toggle="dropdown"><i class="fas fa-tools"></i></button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a class="dropdown-item" href="<%= user_profile_view_path(user_profile_id: user.id) %>">View profile</a>
+                  <% if current_user.is_super_admin %>
+                    <% if user.is_admin %>
                       <a class="dropdown-item" data-toggle="modal" data-btn-type="edit-admin" data-user-id="<%= user.id %>"
                          data-target="#edit-admin-modal" data-email="<%= user.email %>"
                          data-admin-id="<%= user.get_admin.id %>" data-geofence="<%= user.get_admin.geofence %>">Edit admin</a>
@@ -83,23 +93,34 @@
                       <a class="dropdown-item" data-toggle="modal" data-btn-type="edit-user" data-user-id="<%= user.id %>"
                          data-target="#edit-user-modal" data-email="<%= user.email %>">Edit user</a>
                     <% end %>
-                    <% if current_user.is_super_admin %>
-                      <% if user.is_admin %>
-                        <%= link_to 'Stop being admin', user.get_admin, method: :delete, class: "dropdown-item", data: { confirm: 'Are you sure that you want ' + user.email + ' to stop being an administrator?' } %>
-                      <% else %>
-                        <%#= link_to 'Make user admin', create_admin_path("admin[user_id]": user.id), method: :post %>
-                        <a class="dropdown-item" data-toggle="modal" data-btn-type="make-user-admin" data-user-id="<%= user.id %>"
-                           data-target="#make-user-admin-modal" data-email="<%= user.email %>">Make user admin</a>
-                      <% end %>
-                    <% end %>
-                    <% text =  "" %>
+                  <% elsif not user.is_admin %>
+                    <a class="dropdown-item" data-toggle="modal" data-btn-type="edit-user" data-user-id="<%= user.id %>"
+                       data-target="#edit-user-modal" data-email="<%= user.email %>">Edit user</a>
+                  <% end %>
+                  <% if current_user.is_super_admin %>
                     <% if user.is_admin %>
-                      <% text = "Delete admin" %>
+                      <%= link_to 'Stop being admin', user.get_admin, method: :delete, class: "dropdown-item", data: { confirm: 'Are you sure that you want ' + user.email + ' to stop being an administrator?' } %>
                     <% else %>
-                      <% text = "Delete user" %>
+                      <a class="dropdown-item" data-toggle="modal" data-btn-type="make-user-admin" data-user-id="<%= user.id %>"
+                         data-target="#make-user-admin-modal" data-email="<%= user.email %>">Make user admin</a>
                     <% end %>
+                  <% end %>
+                  <% if user.is_admin %>
+                    <% text = "Delete admin" %>
+                    <% if current_user.is_super_admin %>
+                      <%= link_to 'Send to the blacklist', send_user_to_blacklist_path("blacklist[user_id]": user.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send ' + user.email + 'to the blacklist?' } %>
+                      <%= link_to 'Send to the suspension list', send_user_to_suspension_list_path("suspension_list[user_id]": user.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send ' + user.email + 'to the suspension list?' } %>
+                      <%= link_to 'Send to the block list', send_user_to_block_list_path("block_list[user_id]": user.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send ' + user.email + 'to the block list?' } %>
+                      <%= link_to text, user, method: :delete, class: "dropdown-item", data: { confirm: 'Are you sure that you want to delete ' + user.email + '?' } %>
+                    <% end %>
+                  <% else %>
+                    <% text = "Delete user" %>
+                    <%= link_to 'Send to the blacklist', send_user_to_blacklist_path("blacklist[user_id]": user.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send ' + user.email + 'to the blacklist?' } %>
+                    <%= link_to 'Send to the suspension list', send_user_to_suspension_list_path("suspension_list[user_id]": user.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send ' + user.email + 'to the suspension list?' } %>
+                    <%= link_to 'Send to the block list', send_user_to_block_list_path("block_list[user_id]": user.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send ' + user.email + 'to the block list?' } %>
                     <%= link_to text, user, method: :delete, class: "dropdown-item", data: { confirm: 'Are you sure that you want to delete ' + user.email + '?' } %>
-                  </div>
+                  <% end %>
+                </div>
               </td>
             </tr>
             <% end %>
@@ -121,9 +142,7 @@
               <th>GPS location</th>
               <th>Is in dumpster</th>
               <th>Creation date</th>
-              <th>Report</th>
-              <th>View post</th>
-              <th>Delete</th>
+              <th>Options</th>
             </tr>
             </thead>
             <tbody>
@@ -137,55 +156,26 @@
                 <td><%= post.gps_location %></td>
                 <td>
                   <% if post.is_in_dumpster %>
-                    <i class="far fa-check-circle" data-tooltip="tooltip" title="Yes"></i>
+                    YES
+<!--                    <i class="far fa-check-circle" data-tooltip="tooltip" title="Yes"></i>-->
                   <% else %>
-                    <i class="far fa-times-circle" data-tooltip="tooltip" title="No"></i>
+                    NO
+<!--                    <i class="far fa-times-circle" data-tooltip="tooltip" title="No"></i>-->
                   <% end %>
                 </td>
                 <td><%= post.created_at %></td>
-                <td><button class="btn btn-warning fas fa-exclamation-triangle" data-toggle="modal" data-tooltip="tooltip"
-                            title="Mark post as inappropriate" data-target="#report-modal-post-<%= post.id %>"></button></td>
-                <td><a href="<%= watch_path(post_id: post.id) %>" role="button" class="btn btn-primary fas fa-file-import" data-tooltip="tooltip" title="View post"></a></td>
-                <td><button class="btn btn-danger fas fa-trash-alt" data-toggle="modal"
-                            data-target="#delete-post-modal-<%= post.id %>" data-tooltip="tooltip" title="Delete post"></button></td>
+                <td>
+                  <button class="btn btn-primary" data-toggle="dropdown"><i class="fas fa-tools"></i></button>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="<%= watch_path(post_id: post.id) %>">View post</a>
+                    <a class="dropdown-item" data-toggle="modal" data-target="#report-modal-post"
+                    data-owner="<%= post.get_email_owner %>" data-title="<%= post.title %>"
+                    data-post-id="<%= post.id %>" data-btn-type="report-post">Mark post as inappropiate</a>
+                    <%= link_to 'Send post to the dumpster', send_post_to_dumpster_path("dumpster[post_id]": post.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send "' + post.title + '" by ' + post.get_email_owner + ' to the dumpster?' } %>
+                    <%= link_to 'Delete post', post, method: :delete, class: "dropdown-item", data: { confirm: 'Are you sure that you want to delete "' + post.title + '" by ' + post.get_email_owner + '?' } %>
+                  </div>
+                </td>
               </tr>
-              <div class="modal" id="delete-post-modal-<%= post.id %>">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h4 class="modal-title">Delete post</h4>
-                      <button class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                      <p>Are you sure that you want to delete the post <b><%= post.title %></b> by <b><%= post.get_email_owner %></b>?</p>
-                    </div>
-                    <div class="modal-footer">
-                      <%= link_to 'Accept', post, method: :delete, class: "btn btn-outline-danger" %>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="modal" id="report-modal-post-<%= post.id %>">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h4 class="modal-title">Report post</h4>
-                      <button class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <%= form_for :report, :url => {:controller => "reports", :action => "create"} do |report_form| %>
-                      <%= report_form.text_field :user_id, value: current_user.id, type: "hidden", id: "current_user_post_" + post.id.to_s %>
-                      <%= report_form.text_field :post_id, value: post.id, type: "hidden", id: "current_post_" + post.id.to_s %>
-                      <div class="modal-body">
-                        <p>Why you want to mark the post <b><%= post.title %></b> by <b><%= post.get_email_owner %></b> as inappropiate?</p>
-                        <%= report_form.text_area :content, class:"form-control", placeholder: "Write a short comment for justification...", id: "current_content_" + post.id.to_s %>
-                      </div>
-                      <div class="modal-footer">
-                        <%= report_form.submit value:"Report", class:"actions btn btn-outline-warning my-1", style:"float-right"%>
-                      </div>
-                    <% end %>
-                  </div>
-                </div>
-              </div>
             <% end %>
             </tbody>
           </table>
@@ -213,9 +203,14 @@
                 <td><%= blacklist_user.get_owner_email %></td>
                 <td><%= blacklist_user.created_at %></td>
                 <td><%= blacklist_user.exit_date %></td>
-                <td><button class="btn btn-dark fas fa-sign-out-alt" data-tooltip="tooltip" title="Remove user from the blacklist"
-                            data-target="#remove-from-blacklist-modal-<%= blacklist_user.id %>" data-toggle="modal" <%= "disabled" if !blacklist_user.exit_date.nil? %>>
-                </button></td>
+                <td>
+                  <% if blacklist_user.exit_date.nil? %>
+                    <%= link_to "<button class='btn btn-dark fas fa-sign-out-alt' title='Remove user from the blacklist'></button>".html_safe, remove_from_blacklist_path("blacklist[id]": blacklist_user.id, "blacklist[exit_date]": Time.now),
+                                method: :post, data: { confirm: 'Are you sure that you want to remove ' + blacklist_user.get_owner_email + ' from the blacklist?' } %>
+                  <% else %>
+                    <button class="btn btn-dark fas fa-sign-out-alt" disabled></button>
+                  <% end %>
+                </td>
               </tr>
               <div class="modal" id="remove-from-blacklist-modal-<%= blacklist_user.id %>">
                 <div class="modal-dialog">
@@ -441,6 +436,32 @@
       </div>
     </div>
   </div>
+
+
+  <div class="modal" id="report-modal-post">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Report post</h4>
+          <button class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <%= form_for :report, :url => {:controller => "reports", :action => "create"} do |report_form| %>
+          <%= report_form.text_field :user_id, value: current_user.id, type: "hidden" %>
+          <%= report_form.text_field :post_id, type: "hidden", id: "hidden-post-id-report" %>
+          <div class="modal-body">
+            <p>Why you want to mark the post <b id="post-title"></b> by <b id="post-owner"></b> as inappropiate?</p>
+            <%= report_form.text_area :content, class:"form-control", placeholder: "Write a short comment for justification..." %>
+          </div>
+          <div class="modal-footer">
+            <%= report_form.submit value:"Report", class:"btn btn-warning my-1", style:"float-right" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+
+
 <% else %>
   <div class="alert alert-danger alert-dismissible fade show">
     <b>Error!</b> You don't have permission to access here.

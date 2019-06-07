@@ -17,11 +17,6 @@ Rails.application.routes.draw do
   resources :comments
   resources :posts
   resources :users
-  # resources :users do
-  #   resources :posts do
-  #     resources :comments
-  #   end
-  # end
   resources :home
 
   root to: 'home#home'
@@ -32,24 +27,17 @@ Rails.application.routes.draw do
   get 'session/login', as: 'session_login'
   get 'session/sign_up', as: 'session_sign_up'
   get 'admin', to: 'admins#view', as: 'admin_view'
-  #get '/admin', to: 'application#update_type_admin', as: 'view_like_admin'
-  #get '/regular', to: 'application#update_type_regular_user', as: 'view_like_regular_user'
-  #get '/guest', to: 'application#update_type_guest_user', as: 'view_like_guest_user'
   get '/search', to: 'search#search', as: 'search'
   get '/posts/watch', to: 'posts#watch'
   get 'watch', to: 'watch#watch'
 
-  # post 'admin/remove_user_from_list', to: 'admins#remove_user_from_list'
-  # post 'admin/delete_user', to: 'users#destroy'
-  # post 'admin/stop_being_admin', to: 'admins#destroy'
-  # post 'admin/make_user_admin', to: 'admins#make_user_admin'
-  # post 'admin/remove_post_from_dumpster', to: 'admins#remove_post_from_dumpster'
-  # post 'admin/delete_post', to: 'posts#destroy'
-  # post 'admin/report_post', to: 'reports#create'
   post 'admin/edit_admin', to: 'admins#update'
   post 'admin/edit_user', to: 'users#update'
-
-  post 'admin/create_admin', to: 'admins#create', as: 'create_admin'
+  post 'admin/send_user_to_blacklist', to: 'blacklists#create', as: 'send_user_to_blacklist'
+  post 'admin/send_user_to_suspension_list', to: 'suspension_lists#create', as: 'send_user_to_suspension_list'
+  post 'admin/send_user_to_block_list', to: 'block_lists#create', as: 'send_user_to_block_list'
+  post 'admin/send_post_to_dumpster', to: 'dumpsters#create', as: 'send_post_to_dumpster'
+  post 'admin/remove_from_blacklist', to: 'blacklists#update', as: 'remove_from_blacklist'
 
   post 'create_post', to: 'posts#create'
   post 'create_validation', to: 'validations#create'

@@ -1,5 +1,5 @@
 class BlacklistsController < ApplicationController
-  before_action :set_blacklist, only: [:show, :edit, :update, :destroy]
+  before_action :set_blacklist, only: [:show, :edit, :destroy]
 
   # GET /blacklists
   # GET /blacklists.json
@@ -40,6 +40,12 @@ class BlacklistsController < ApplicationController
   # PATCH/PUT /blacklists/1
   # PATCH/PUT /blacklists/1.json
   def update
+    a = params
+    if params[:id].nil?
+      @blacklist = Blacklist.find(params[:blacklist][:id])
+    else
+      set_blacklist
+    end
     respond_to do |format|
       if @blacklist.update(blacklist_params)
         format.html { redirect_to @blacklist, notice: 'Blacklist was successfully updated.' }
