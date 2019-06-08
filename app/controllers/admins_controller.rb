@@ -39,7 +39,7 @@ class AdminsController < ApplicationController
 
     respond_to do |format|
       if @admin.save
-        format.html { redirect_to @admin, notice: 'Admin was successfully created.' }
+        format.html { redirect_back(fallback_location: root_path); flash[:notice] = 'The user successfully became an administrator.' }
         format.json { render :show, status: :created, location: @admin }
       else
         format.html { render :new }

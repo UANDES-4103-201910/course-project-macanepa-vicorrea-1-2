@@ -30,7 +30,7 @@
 <!--          <a class="nav-link" data-toggle="pill" href="#suspension-list">Suspension list</a>-->
 <!--        </li>-->
         <li class="nav-item">
-          <a class="nav-link" data-toggle="pill" href="#block-list">Block list</a>
+          <a class="nav-link" data-toggle="pill" href="#block-list">Blocked User Accounts</a>
         </li>
       </ul>
     </div>
@@ -87,11 +87,11 @@
                   <% if user.is_in_blacklist %>
                     <li>Blacklist</li>
                   <% end %>
-                  <% if user.is_in_suspension_list %>
-                    <li>Suspension list</li>
-                  <% end %>
+                  <%# if user.is_in_suspension_list %>
+<!--                    <li>Suspension list</li>-->
+                  <%# end %>
                   <% if user.is_in_block_list %>
-                    <li>Block list</li>
+                    <li>Blocked user accounts</li>
                   <% end %>
                 </ul>
               </td>
@@ -122,20 +122,20 @@
                   <% end %>
                   <% can_edit = false %>
                   <% if user.is_admin %>
-                    <% text = "Delete admin" %>
+                    <%# text = "admin" %>
                     <% if current_user.is_super_admin %>
                       <% can_edit = true %>
                     <% end %>
                   <% else %>
-                    <% text = "Delete user" %>
+                    <%# text = "user" %>
                     <% can_edit = true %>
                   <% end %>
                   <% if can_edit %>
                     <% if user.is_in_blacklist %>
                       <%= link_to 'Remove user from the blacklist', remove_from_blacklist_path("blacklist[id]": user.get_blacklist_instance_id, "blacklist[exit_date]": Time.now),
                                   class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to remove ' + user.email + ' from the blacklist?' } %>
-                    <% else %>
-                      <%= link_to 'Send to the blacklist', send_user_to_blacklist_path("blacklist[user_id]": user.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send ' + user.email + 'to the blacklist?' } %>
+                    <%# else %>
+                      <%#= link_to 'Send to the blacklist', send_user_to_blacklist_path("blacklist[user_id]": user.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send ' + user.email + 'to the blacklist?' } %>
                     <% end %>
                     <%# if user.is_in_suspension_list %>
                       <%#= link_to 'Remove user from the suspension list', remove_from_suspension_list_path("suspension_list[id]": user.get_suspension_instance_id, "suspension_list[exit_date]": Time.now), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to remove ' + user.email + ' from the suspension list?' } %>
@@ -143,12 +143,11 @@
                       <%#= link_to 'Send to the suspension list', send_user_to_suspension_list_path("suspension_list[user_id]": user.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send ' + user.email + 'to the suspension list?' } %>
                     <%# end %>
                     <% if user.is_in_block_list %>
-                      <%= link_to 'Remove user from the block list', remove_from_block_list_path("block_list[id]": user.get_block_instance_id, "block_list[exit_date]": Time.now),
-                                  class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to remove ' + user.email + ' from the block list?' } %>
+                      <%#= link_to 'Remove user from the block list', remove_from_block_list_path("block_list[id]": user.get_block_instance_id, "block_list[exit_date]": Time.now), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to remove ' + user.email + ' from the block list?' } %>
                     <% else %>
-                      <%= link_to 'Send to the block list', send_user_to_block_list_path("block_list[user_id]": user.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send ' + user.email + 'to the block list?' } %>
+                      <%= link_to 'Block user account', send_user_to_block_list_path("block_list[user_id]": user.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to block ' + user.get_name + "'s account?" } %>
                     <% end %>
-                    <%= link_to text, user, method: :delete, class: "dropdown-item", data: { confirm: 'Are you sure that you want to delete ' + user.email + '?' } %>
+                    <%= link_to "Delete user", user, method: :delete, class: "dropdown-item", data: { confirm: 'Are you sure that you want to delete ' + user.email + '?' } %>
                   <% end %>
                 </div>
               </td>
@@ -330,11 +329,11 @@
 <!--          </table>-->
 <!--        </div>-->
         <div id="block-list" class="container tab-pane fade">
-          <h3>Block list</h3>
+          <h3>Blocked User Accounts</h3>
           <div class="form-check">
             <label class="form-check-label">
               <input id="checkbox-block-id" type="checkbox" class="form-check-input" onclick="if (this.checked){showOnlyCurrentObjectsInList('user-block-list')} else {showAllObjectsInList('user-block-list')}">
-              Show history (users who have passed through the block list)
+              Show history (users who have had their account blocked)
             </label>
           </div>
           <input type="text" class="form-control" id="inputSearchBlockList" onkeyup="searchInTable('inputSearchBlockList', 'manage-block-list-table', 'checkbox-block-id')" placeholder="Search users in block list..." style="margin-bottom: 10px">

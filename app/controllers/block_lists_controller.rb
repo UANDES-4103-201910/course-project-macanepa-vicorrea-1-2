@@ -28,7 +28,7 @@ class BlockListsController < ApplicationController
 
     respond_to do |format|
       if @block_list.save
-        format.html { redirect_to @block_list, notice: 'Block list was successfully created.' }
+        format.html { redirect_back(fallback_location: root_path); flash[:notice] = 'The user account was successfully blocked.' }
         format.json { render :show, status: :created, location: @block_list }
       else
         format.html { render :new }
