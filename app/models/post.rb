@@ -44,4 +44,10 @@ class Post < ApplicationRecord
     num = reports.distinct.pluck(:user_id).length
   end
 
+  # If after account suspension the user publishes another post
+  # that is flagged inappropriate by three people or more, the user account will be blocked permanently.
+  def get_reporting_users_num
+    num = Report.where(post_id: id).count
+  end
+
 end
