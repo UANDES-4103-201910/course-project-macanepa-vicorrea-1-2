@@ -42,6 +42,10 @@ class ReportsController < ApplicationController
           #   into a blacklist visible by all site administrators.
         elsif condition && !already_on_blacklist
           Blacklist.create!(user_id: reported_post_owner.id, exit_date: nil)
+          my_reported_posts_id = reported_post_owner.get_ids_reported_posts_user_blacklisted
+          my_reported_posts_id.each do |id|
+            Dumpster.create!(post_id: id, exit_date: nil)
+          end
         end
 
         format.html { redirect_back(fallback_location: root_path); flash[:notice] = 'The post was successfully marked as inappropriate.' }

@@ -114,6 +114,11 @@ class User < ApplicationRecord
     was = !Blacklist.where("user_id = ? AND exit_date NOT ?", id, nil).empty?
   end
 
+  def get_ids_reported_posts_user_blacklisted
+    reported_posts_ids = Report.all.pluck(:post_id)
+    my_reported_post = Post.where(user_id: id, id: reported_posts_ids).pluck(:id)
+  end
+
   #   A user that has two or more posts flagged as inaproppriate by three or
   #   more different users (and/or administrators) within a week will fall
   #   into a blacklist visible by all site administrators.
