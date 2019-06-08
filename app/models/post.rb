@@ -33,4 +33,15 @@ class Post < ApplicationRecord
     dump_ins_id = Dumpster.where(post_id: id, exit_date: nil).first.id
   end
 
+#   A user that has two or more posts flagged as inaproppriate by three or
+#   more different users (and/or administrators) within a week will fall
+#   into a blacklist visible by all site administrators.
+
+
+  # Obtain the number of different reporting users (within a week from now)
+  def get_diff_reporting_users_within_a_week_num
+    reports = Report.where(post_id: id, created_at: (Time.now - 1.week.to_i .. Time.now))
+    num = reports.distinct.pluck(:user_id).length
+  end
+
 end

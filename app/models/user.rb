@@ -106,4 +106,23 @@ class User < ApplicationRecord
     block_ins_id = BlockList.where(user_id: id, exit_date: nil).first.id
   end
 
+  #   A user that has two or more posts flagged as inaproppriate by three or
+  #   more different users (and/or administrators) within a week will fall
+  #   into a blacklist visible by all site administrators.
+
+  def have_condition_to_blacklist
+    my_posts = Post.where(user_id: id)
+    num = 0
+    my_posts.each do |my_post|
+      if my_post.get_diff_reporting_users_within_a_week_num >= 3
+        num += 1
+      end
+    end
+    if num >= 2
+      true
+    else
+      false
+    end
+  end
+
 end

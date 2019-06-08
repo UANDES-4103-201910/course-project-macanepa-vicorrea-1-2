@@ -25,9 +25,14 @@ class ReportsController < ApplicationController
   # POST /reports.json
   def create
     @report = Report.new(report_params)
-
+    a = @report.user_id # by three or more different users
+    b = @report.post_id # A user that has two or more posts flagged as inaproppriate
+    c = @report.created_at # within a week
     respond_to do |format|
       if @report.save
+        a2 = @report.user_id # by three or more different users
+        b2 = @report.post_id # A user that has two or more posts flagged as inaproppriate
+        c2 = @report.created_at # within a week
         format.html { redirect_back(fallback_location: root_path); flash[:notice] = 'The post was successfully marked as inappropriate.' }
         format.json { render :show, status: :created, location: @report }
       else
@@ -35,6 +40,7 @@ class ReportsController < ApplicationController
         format.json { render json: @report.errors, status: :unprocessable_entity }
       end
     end
+    hola = "w"
   end
 
   # PATCH/PUT /reports/1
