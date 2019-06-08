@@ -41,7 +41,6 @@ class ReportsController < ApplicationController
         format.json { render json: @report.errors, status: :unprocessable_entity }
       end
     end
-    hola = "w"
   end
 
   # PATCH/PUT /reports/1

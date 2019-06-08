@@ -10,10 +10,18 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
-    super
     user = User.where(email: params[:user][:email]).first
     if not user.nil?
-      user.update(last_access: Time.now)
+      is_in_blacklist = user.is_in_blacklist
+    end
+    if !is_in_blacklist
+      super
+      if not user.nil?
+        user.update(last_access: Time.now)
+      end
+    else
+      exit_date = user.get_blacklist_entry_date + 1.week.to_i
+      redirect_to new_user_session_path, alert: "Your account has been suspended until " + exit_date.to_s
     end
   end
 

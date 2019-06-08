@@ -106,6 +106,10 @@ class User < ApplicationRecord
     block_ins_id = BlockList.where(user_id: id, exit_date: nil).first.id
   end
 
+  def get_blacklist_entry_date
+    entry_date = Blacklist.where(user_id: id, exit_date: nil).first.created_at
+  end
+
   #   A user that has two or more posts flagged as inaproppriate by three or
   #   more different users (and/or administrators) within a week will fall
   #   into a blacklist visible by all site administrators.
