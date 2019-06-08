@@ -25,14 +25,15 @@ class ReportsController < ApplicationController
   # POST /reports.json
   def create
     @report = Report.new(report_params)
-    a = @report.user_id # by three or more different users
-    b = @report.post_id # A user that has two or more posts flagged as inaproppriate
-    c = @report.created_at # within a week
     respond_to do |format|
       if @report.save
-        a2 = @report.user_id # by three or more different users
-        b2 = @report.post_id # A user that has two or more posts flagged as inaproppriate
-        c2 = @report.created_at # within a week
+        # See if the reported post owner has to go to the blacklist
+        reported_post_owner = Post.find(@report.post_id).user
+        condition = reported_post_owner.have_condition_to_blacklist
+        already_on_blacklist = Blacklist.where(user_id: reported_post_owner.id, exit_date: nil).count > 0
+        if condition && !already_on_blacklist
+          Blacklist.create!(user_id: reported_post_owner.id, exit_date: nil)
+        end
         format.html { redirect_back(fallback_location: root_path); flash[:notice] = 'The post was successfully marked as inappropriate.' }
         format.json { render :show, status: :created, location: @report }
       else
