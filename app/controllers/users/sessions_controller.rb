@@ -13,15 +13,20 @@ class Users::SessionsController < Devise::SessionsController
     user = User.where(email: params[:user][:email]).first
     if not user.nil?
       is_in_blacklist = user.is_in_blacklist
+      is_blocked = user.is_in_block_list
     end
-    if !is_in_blacklist
+    if !is_in_blacklist && !is_blocked
       super
       if not user.nil?
         user.update(last_access: Time.now)
       end
     else
-      exit_date = user.get_blacklist_entry_date + 1.week.to_i
-      redirect_to new_user_session_path, alert: "Your account has been suspended until " + exit_date.to_s
+      if is_in_blacklist
+        exit_date = user.get_blacklist_entry_date + 1.week.to_i
+        redirect_to new_user_session_path, alert: "Your account has been suspended until " + exit_date.to_s
+      elsif is_blocked
+        redirect_to new_user_session_path, alert: "Your account has been blocked."
+      end
     end
   end
 

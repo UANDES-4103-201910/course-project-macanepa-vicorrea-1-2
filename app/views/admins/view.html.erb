@@ -200,10 +200,10 @@
                        data-post-id="<%= post.id %>" data-btn-type="view-reports">View reports</a>
                     <a class="dropdown-item" data-toggle="modal" data-target="#report-modal-post"
                     data-owner="<%= post.get_email_owner %>" data-title="<%= post.title %>"
-                    data-post-id="<%= post.id %>" data-btn-type="report-post">Mark post as inappropiate</a>
+                    data-post-id="<%= post.id %>" data-btn-type="report-post">Mark post as inappropiate (report it)</a>
                     <% if post.is_in_dumpster %>
-                      <%= link_to 'Remove post from the dumpster', remove_post_from_dumpster_path("dumpster[id]": post.get_dumpster_instance_id, "dumpster[exit_date]": Time.now),
-                                  class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to remove "' + post.title + '" by ' + post.get_email_owner + ' from the dumpster?' } %>
+                      <%= link_to 'Recover post from the dumpster', remove_post_from_dumpster_path("dumpster[id]": post.get_dumpster_instance_id, "dumpster[exit_date]": Time.now),
+                                  class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to recover "' + post.title + '" by ' + post.get_email_owner + ' from the dumpster?' } %>
                     <% else %>
                       <%= link_to 'Send post to the dumpster', send_post_to_dumpster_path("dumpster[post_id]": post.id), class: "dropdown-item", method: :post, data: { confirm: 'Are you sure that you want to send "' + post.title + '" by ' + post.get_email_owner + ' to the dumpster?' } %>
                     <% end %>
@@ -280,8 +280,8 @@
                 <td><%= dumpster_post.exit_date %></td>
                 <td>
                   <% if dumpster_post.exit_date.nil? %>
-                    <%= link_to "<button class='btn btn-dark fas fa-sign-out-alt' title='Remove post from the dumpster'></button>".html_safe, remove_post_from_dumpster_path("dumpster[id]": dumpster_post.id, "dumpster[exit_date]": Time.now),
-                                method: :post, data: { confirm: 'Are you sure that you want to remove "' + dumpster_post.get_post_title + '" by ' + dumpster_post.get_email_owner + ' from the dumpster?' } %>
+                    <%= link_to "<button class='btn btn-dark fas fa-sign-out-alt' title='Recover post from the dumpster'></button>".html_safe, remove_post_from_dumpster_path("dumpster[id]": dumpster_post.id, "dumpster[exit_date]": Time.now),
+                                method: :post, data: { confirm: 'Are you sure that you want to recover "' + dumpster_post.get_post_title + '" by ' + dumpster_post.get_email_owner + ' from the dumpster?' } %>
                   <% else %>
                     <button class="btn btn-dark fas fa-sign-out-alt" disabled></button>
                   <% end %>
@@ -330,20 +330,20 @@
 <!--        </div>-->
         <div id="block-list" class="container tab-pane fade">
           <h3>Blocked User Accounts</h3>
-          <div class="form-check">
-            <label class="form-check-label">
-              <input id="checkbox-block-id" type="checkbox" class="form-check-input" onclick="if (this.checked){showOnlyCurrentObjectsInList('user-block-list')} else {showAllObjectsInList('user-block-list')}">
-              Show history (users who have had their account blocked)
-            </label>
-          </div>
+<!--          <div class="form-check">-->
+<!--            <label class="form-check-label">-->
+<!--              <input id="checkbox-block-id" type="checkbox" class="form-check-input" onclick="if (this.checked){showOnlyCurrentObjectsInList('user-block-list')} else {showAllObjectsInList('user-block-list')}">-->
+<!--              Show history (users who have had their account blocked)-->
+<!--            </label>-->
+<!--          </div>-->
           <input type="text" class="form-control" id="inputSearchBlockList" onkeyup="searchInTable('inputSearchBlockList', 'manage-block-list-table', 'checkbox-block-id')" placeholder="Search users in block list..." style="margin-bottom: 10px">
           <table id="manage-block-list-table" class="table table-bordered table-hover">
             <thead>
             <tr>
               <th>User</th>
-              <th>Entry date</th>
-              <th>Exit date</th>
-              <th>Remove from the list</th>
+              <th>Block date</th>
+<!--              <th>Exit date</th>-->
+<!--              <th>Remove from the list</th>-->
             <tr>
             </thead>
             <tbody>
@@ -351,15 +351,14 @@
               <tr class="user-block-list-row-<%= if block_list_user.exit_date.nil? then "all" else "have-exit-date history" end %>">
                 <td><%= block_list_user.get_user_email %></td>
                 <td><%= block_list_user.created_at %></td>
-                <td><%= block_list_user.exit_date %></td>
-                <td>
-                  <% if block_list_user.exit_date.nil? %>
-                    <%= link_to "<button class='btn btn-dark fas fa-sign-out-alt' title='Remove user from the block list'></button>".html_safe, remove_from_block_list_path("block_list[id]": block_list_user.id, "block_list[exit_date]": Time.now),
-                                method: :post, data: { confirm: 'Are you sure that you want to remove ' + block_list_user.get_user_email + ' from the block list?' } %>
-                  <% else %>
-                    <button class="btn btn-dark fas fa-sign-out-alt" disabled></button>
-                  <% end %>
-                </td>
+<!--                <td><%#= block_list_user.exit_date %></td>-->
+<!--                <td>-->
+                  <%# if block_list_user.exit_date.nil? %>
+                    <%#= link_to "<button class='btn btn-dark fas fa-sign-out-alt' title='Remove user from the block list'></button>".html_safe, remove_from_block_list_path("block_list[id]": block_list_user.id, "block_list[exit_date]": Time.now), method: :post, data: { confirm: 'Are you sure that you want to remove ' + block_list_user.get_user_email + ' from the block list?' } %>
+                  <%# else %>
+<!--                    <button class="btn btn-dark fas fa-sign-out-alt" disabled></button>-->
+                  <%# end %>
+<!--                </td>-->
               </tr>
             <% end %>
             </tbody>

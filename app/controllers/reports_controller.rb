@@ -44,7 +44,10 @@ class ReportsController < ApplicationController
           Blacklist.create!(user_id: reported_post_owner.id, exit_date: nil)
           my_reported_posts_id = reported_post_owner.get_ids_reported_posts_user_blacklisted
           my_reported_posts_id.each do |id|
-            Dumpster.create!(post_id: id, exit_date: nil)
+            post = Post.find(id)
+            if !post.is_in_dumpster
+              Dumpster.create!(post_id: id, exit_date: nil)
+            end
           end
         end
 
