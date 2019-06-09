@@ -15,4 +15,4 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 Rails.application.config.assets.precompile += %w( js_admin.js )
 Rails.application.config.assets.precompile += %w( admins.scss )
 Rails.application.config.assets.precompile += %w( js_home.js )
-
+Rails.application.config.assets.precompile += %w( js_post_view.js )

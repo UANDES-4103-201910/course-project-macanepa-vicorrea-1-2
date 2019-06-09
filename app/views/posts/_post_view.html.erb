@@ -30,7 +30,13 @@
   <% hover_shares_value += (" " + c3.to_s + ". " + share.user.get_name) %>
   <% c3 += 1 %>
 <% end %>
+<head>
+  <%= javascript_include_tag 'js_post_view'%>
+  <% key = "AIzaSyCPyzjsnZ320er0gU62rJG9FhyrMwf3v98" %>
+  <%= javascript_include_tag 'https://maps.googleapis.com/maps/api/js?key='+key %>
+  <%#= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
+</head>
 <div class="container-fluid">
   <div class="col">
     <hr>
@@ -290,11 +296,16 @@
 
                   <% key = "AIzaSyCPyzjsnZ320er0gU62rJG9FhyrMwf3v98" %>
                   <% if not post.location.nil? %>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function(){
+                            initMap(<%=post.location.latitude%>, <%=post.location.longitude%>, <%=post.location.id %>)
+                        });
+                    </script>
                     <p>
-                      <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?zoom=17&size=400x300&center=#{post.location.latitude},#{post.location.longitude}&key=#{key}", alt: "Map" %>
+                      <div class="map" id=<%="map-"+post.location.id.to_s %>></div>
                     </p>
-                    <%= "https://maps.googleapis.com/maps/api/staticmap?zoom=17&size=400x300&center=#{post.location.latitude},#{post.location.longitude}&key=#{key}" %>
                   <% end %>
+
 
                 </div>
 

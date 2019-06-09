@@ -7,6 +7,14 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <% key = "AIzaSyCPyzjsnZ320er0gU62rJG9FhyrMwf3v98" %>
+    <%a = javascript_include_tag 'https://maps.googleapis.com/maps/api/js?key='+key %>
+    <%b = javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <% tt=[a,b] %>
+
+    <%= yield(tt) %>
+
   </head>
   <body>
   <% if user_signed_in? && current_user.profile.nil? %>
