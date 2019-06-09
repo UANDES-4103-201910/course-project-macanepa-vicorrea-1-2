@@ -3,7 +3,7 @@ class CallbacksController < Devise::OmniauthCallbacksController
     # You need to implement the method below in your model (e.g. app/models/user.rb)
     @user = User.from_omniauth(request.env['omniauth.auth'])
     is_in_blacklist = @user.is_in_blacklist
-    is_blocked = user.is_in_block_list
+    is_blocked = @user.is_in_block_list
     if !is_in_blacklist && !is_blocked
       if @user.persisted?
         flash[:notice] = I18n.t 'devise.omniauth_callbacks.success', kind: 'Google'
