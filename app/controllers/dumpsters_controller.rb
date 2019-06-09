@@ -47,7 +47,7 @@ class DumpstersController < ApplicationController
     end
     respond_to do |format|
       if @dumpster.update(dumpster_params)
-        format.html { redirect_to @dumpster, notice: 'Dumpster was successfully updated.' }
+        format.html { redirect_back(fallback_location: root_path); flash[:notice] = 'The post has been successfully recovered from the dumpster.' }
         format.json { render :show, status: :ok, location: @dumpster }
       else
         format.html { render :edit }

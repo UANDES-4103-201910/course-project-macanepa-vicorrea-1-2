@@ -47,7 +47,7 @@ class BlacklistsController < ApplicationController
     end
     respond_to do |format|
       if @blacklist.update(blacklist_params)
-        format.html { redirect_to @blacklist, notice: 'Blacklist was successfully updated.' }
+        format.html { redirect_back(fallback_location: root_path); flash[:notice] = 'The user has been successfully removed from the blacklist.' }
         format.json { render :show, status: :ok, location: @blacklist }
       else
         format.html { render :edit }

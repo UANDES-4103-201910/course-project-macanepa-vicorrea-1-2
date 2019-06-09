@@ -3,7 +3,8 @@ class CallbacksController < Devise::OmniauthCallbacksController
     # You need to implement the method below in your model (e.g. app/models/user.rb)
     @user = User.from_omniauth(request.env['omniauth.auth'])
     is_in_blacklist = @user.is_in_blacklist
-    if !is_in_blacklist
+    is_blocked = user.is_in_block_list
+    if !is_in_blacklist && !is_blocked
       if @user.persisted?
         flash[:notice] = I18n.t 'devise.omniauth_callbacks.success', kind: 'Google'
         @user.update(last_access: Time.now)
@@ -13,8 +14,12 @@ class CallbacksController < Devise::OmniauthCallbacksController
         redirect_to new_user_registration_url, notice: @user.errors.full_messages.join("\n")
       end
     else
-      exit_date = @user.get_blacklist_entry_date + 1.week.to_i
-      redirect_to root_path, alert: "Your account has been suspended until " + exit_date.to_s
+      if is_in_blacklist
+        exit_date = @user.get_blacklist_entry_date + 1.week.to_i
+        redirect_to root_path, alert: "Your account has been suspended until " + exit_date.to_s
+      elsif is_blocked
+        redirect_to root_path, alert: "Your account has been blocked."
+      end
     end
   end
 end
