@@ -44,8 +44,9 @@
             <b>If you want to create a new administrator, you have 2 options:</b>
             <ul>
               <li>In this section, make a current user an administrator.</li>
-              <li>Create a new administrator. For that, <%= link_to "log out", destroy_user_session_path, method: :delete %>,
-                create a new user and then do it administrator.</li>
+<!--              <li>Create a new administrator. For that, <%#= link_to "log out", destroy_user_session_path, method: :delete %>,-->
+<!--                create a new user and then do it administrator.</li>-->
+              <li>Create a new administrator <a href="" data-toggle="modal" data-btn-type="new-admin" data-target="#new-admin-modal"> here</a>.</li>
             </ul>
           <% end %>
           <input type="text" class="form-control" id="inputSearchUser" onkeyup="searchInTable('inputSearchUser', 'manage-users-table')" placeholder="Search users..." style="margin-bottom: 10px">
@@ -387,7 +388,7 @@
             <%= edit_user_password_form.text_field :id, type: "hidden", id: "hidden-user-id-for-password-admin-modal" %>
             <div class="field form-inline">
               Password:&nbsp;
-              <%= edit_user_password_form.text_field :password, type: "password", placeholder: "Write the new password...", id: "admin_new_password" %>&nbsp;
+              <%= edit_user_password_form.text_field :password, type: "password", placeholder: "Write the new password...", id: "admin_new_password", class:"form-control" %>&nbsp;
               <%= edit_user_password_form.submit value: "Update", class:"btn btn-success my-1" %>
             </div>
           <% end %>
@@ -397,6 +398,7 @@
               <div class="field form-inline">
                 Geofence:&nbsp;
                 <% geofences_options = Array.new %>
+                <% geofences_options << ['Without geofence', nil] %>
                 <% @geofences.each do |geofence| %>
                   <% geofences_options << [geofence.name, geofence.id] %>
                 <% end %>
@@ -424,7 +426,7 @@
             <%= edit_user_password_form.text_field :id, type: "hidden", id: "hidden-user-id-for-password-user-modal" %>
             <div class="field form-inline">
               Password:&nbsp;
-              <%= edit_user_password_form.text_field :password, type: "password", placeholder: "Write the new password...", id: "user_new_password" %>&nbsp;
+              <%= edit_user_password_form.text_field :password, type: "password", placeholder: "Write the new password...", id: "user_new_password", class:"form-control" %>&nbsp;
               <%= edit_user_password_form.submit value: "Update", class:"btn btn-success my-1" %>
             </div>
           <% end %>
@@ -445,6 +447,7 @@
           <div class="field form-inline">
             Geofence:&nbsp;
             <% geofences_options = Array.new %>
+            <% geofences_options << ['Without geofence', nil] %>
             <% @geofences.each do |geofence| %>
               <% geofences_options << [geofence.name, geofence.id] %>
             <% end %>
@@ -470,7 +473,7 @@
           <%= report_form.text_field :post_id, type: "hidden", id: "hidden-post-id-report" %>
           <div class="modal-body">
             <p>Why you want to mark the post <b id="post-title"></b> by <b id="post-owner"></b> as inappropiate?</p>
-            <%= report_form.text_area :content, class:"form-control", placeholder: "Write a short comment for justification..." %>
+            <%= report_form.text_area :content, class:"form-control", placeholder: "Write a short comment for justification...", required: true %>
           </div>
           <div class="modal-footer">
             <%= report_form.submit value:"Report", class:"btn btn-warning my-1", style:"float-right" %>
@@ -510,7 +513,49 @@
     </div>
   </div>
 
-
+  <div class="modal" id="new-admin-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Create new administrator</h4>
+          <button class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <%= form_for :admin, :url => {controller: 'admins', action: 'create'} do |new_admin| %>
+          <div class="modal-body">
+            <div class="field">
+              <%= new_admin.label :name %><br>
+              <%= new_admin.text_field :name, class: "form-control", required: true %>
+            </div>
+            <div class="field">
+              <%= new_admin.label :last_name %><br>
+              <%= new_admin.text_field :last_name, class: "form-control" %>
+            </div>
+            <div class="field">
+              <%= new_admin.label :email %><br>
+              <%= new_admin.text_field :email, class: "form-control", required: true %>
+            </div>
+            <div class="field">
+              <%= new_admin.label :password %><br>
+              <%= new_admin.text_field :password, type: "password", class: "form-control", required: true %>
+            </div>
+            <div class="field">
+              <%= new_admin.label :geofence %><br>
+              <%#= new_admin.text_field :geof, class: "form-control" %>
+              <% geofences_options = Array.new %>
+              <% geofences_options << ['Without geofence', nil] %>
+              <% @geofences.each do |geofence| %>
+                <% geofences_options << [geofence.name, geofence.id] %>
+              <% end %>
+              <%= new_admin.select(:geofence_id, options_for_select(geofences_options), {}, { class: "form-control", id: 'geofence_new_admin_and_user' } ) %>&nbsp;
+            </div>
+          </div>
+          <div class="modal-footer">
+            <%= new_admin.submit value:"Create", class:"btn btn-success my-1", style:"float-right" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 
 <% else %>
   <div class="alert alert-danger alert-dismissible fade show">

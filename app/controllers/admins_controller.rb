@@ -56,17 +56,35 @@ class AdminsController < ApplicationController
   # POST /admins
   # POST /admins.json
   def create
+    new_user_and_admin = !params[:admin][:email].nil?
+    if new_user_and_admin
+      new_user = User.create!(name: params[:admin][:name], last_name: params[:admin][:last_name], email: params[:admin][:email], password: params[:admin][:password])
+    end
     @admin = Admin.new(admin_params)
-
-    respond_to do |format|
-      if @admin.save
-        format.html { redirect_back(fallback_location: root_path); flash[:notice] = 'The user successfully became an administrator.' }
-        format.json { render :show, status: :created, location: @admin }
-      else
-        format.html { render :new }
-        format.json { render json: @admin.errors, status: :unprocessable_entity }
+    if new_user_and_admin
+      @admin.update!(user_id: new_user.id, geofence_id: params[:admin][:geofence_id])
+      respond_to do |format|
+        if @admin.save
+          format.html { redirect_back(fallback_location: root_path); flash[:notice] = 'The administrator was successfully created.' }
+          format.json { render :show, status: :created, location: @admin }
+        else
+          format.html { render :new }
+          format.json { render json: @admin.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      respond_to do |format|
+        if @admin.save
+          format.html { redirect_back(fallback_location: root_path); flash[:notice] = 'The user successfully became an administrator.' }
+          format.json { render :show, status: :created, location: @admin }
+        else
+          format.html { render :new }
+          format.json { render json: @admin.errors, status: :unprocessable_entity }
+        end
       end
     end
+    a = @admin.to_json
+
   end
 
   # PATCH/PUT /admins/1
