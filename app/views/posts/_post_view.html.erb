@@ -606,7 +606,7 @@
           <%= report_form.text_field :post_id, value: post.id, type: "hidden" %>
           <div class="modal-body">
             Why you want to mark the post <b><%= post.title %></b> by <b><%= post.user.email %></b> as inappropiate?
-            <%= report_form.text_area :content, class:"form-control", placeholder: "Write a short comment for justification...", required: true %>
+            <%= report_form.text_area :content, class:"form-control", placeholder: "Write a short comment for justification...", required: true, minlength: "5" %>
           </div>
           <div class="modal-footer">
             <%= report_form.submit value:"Report", class:"btn btn-warning my-1", style:"float-right"%>
