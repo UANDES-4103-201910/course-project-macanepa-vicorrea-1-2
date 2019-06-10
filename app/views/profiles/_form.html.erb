@@ -65,12 +65,12 @@
 
           <div class="field">
             <%= form.label :country %><br>
-            <%= form.text_field :country, class:"form-control"  %>
+            <%= form.text_field :country, class:"form-control", required: true   %>
           </div>
 
           <div class="field">
             <%= form.label :city %><br>
-            <%= form.text_field :city, class:"form-control"  %>
+            <%= form.text_field :city, class:"form-control", required: true   %>
           </div>
 
           <div class="field">
@@ -86,7 +86,7 @@
 
           <div class="field">
             <%= form.label :biography %><br>
-            <%= form.text_area :biography, class:"form-control", rows:6 %>
+            <%= form.text_area :biography, class:"form-control", rows:6, required: true  %>
           </div>
 
         </div>

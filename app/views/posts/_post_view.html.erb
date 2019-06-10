@@ -318,7 +318,7 @@
                       <%=form_for :comment, :url => {:controller => "comments", :action => "create"} do |comment_form| %>
                           <%= comment_form.text_field :user_id, value:current_user.id, type:"hidden" %>
                           <%= comment_form.text_field :post_id, value:post.id, type:"hidden" %>
-                          <%= comment_form.text_area :content, class:"form-control", placeholder:"Enter Comment..." %>
+                          <%= comment_form.text_area :content, class:"form-control", placeholder:"Enter Comment...", required: true  %>
                           <%= comment_form.submit value:"Publish", class:"btn btn-outline-dark my-1", style:"float-right"%>
                       <% end %>
 
@@ -390,7 +390,7 @@
                                   <%= comment_form.text_field :user_id, value:current_user.id, type:"hidden" %>
                                   <%= comment_form.text_field :post_id, value:post.id, type:"hidden" %>
                                   <%= comment_form.text_field :comment_id, value:comment.id, type:"hidden" %>
-                                  <%= comment_form.text_area :content, class:"form-control", placeholder:"Enter Comment..." %>
+                                  <%= comment_form.text_area :content, class:"form-control", placeholder:"Enter Comment...", required: true  %>
                                   <%= comment_form.submit value:"Publish", class:"btn btn-outline-dark my-1", style:"float-right"%>
                                 <% end %>
 
@@ -471,7 +471,7 @@
                                           <%= comment_form.text_field :post_id, value:post.id, type:"hidden" %>
                                           <%= comment_form.text_field :comment_id, value:reply.comment.id, type:"hidden" %>
                                           <%= comment_form.text_field :reply_id, value:reply.id, type:"hidden" %>
-                                          <%= comment_form.text_area :content, class:"form-control", placeholder:"Enter Comment..." %>
+                                          <%= comment_form.text_area :content, class:"form-control", placeholder:"Enter Comment...", required: true  %>
                                           <%= comment_form.submit value:"Publish", class:"btn btn-outline-dark my-1", style:"float-right"%>
                                         <% end %>
 

@@ -46,12 +46,12 @@
                         <% else %>
                           <%= image_tag current_user.profile.image.variant(combine_options: {resize:'100x100', gravity: "Center", crop: '50x50+0+0' }), :class => "my-auto mx-4 rounded-circle border border-dark"%>
                         <% end %>
-                        <%= post_form.text_field :title, placeholder:"Post's Title", class:"form-control"%>
+                        <%= post_form.text_field :title, placeholder:"Post's Title", class:"form-control", required: true %>
                       </div>
                     </div>
                   </div>
                   <div class="card-body">
-                    <%= post_form.text_area :content, placeholder:"Write something", :rows => 6, class:"form-control"%>
+                    <%= post_form.text_area :content, placeholder:"Write something", :rows => 6, class:"form-control", required: true %>
                     <div class="cont">
                       <div class="form-inline" style="float: left;">
 
