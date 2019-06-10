@@ -48,7 +48,11 @@ class PostsController < ApplicationController
     if post_params[:include_location]=="1"
       @post.city="Santiago"
       @post.country="Chile"
-      @post.gps_location="Latitude: -33.326802 | Longitude: -70.53883"
+      puts("\n\n\n\n\n\n\n\n\n\nBieeen\n\n\n\n\n\n\n\n")
+      puts(params[:location]["latitude"])
+      @post.gps_location="Latitude: #{params[:location]["latitude"]} | Longitude: #{params[:location]["longitude"]}"
+      location = Location.create(name: "wiwi",latitude: params[:location]["latitude"], longitude: params[:location]["longitude"])
+      @post.location=location
     end
 
 
@@ -109,6 +113,7 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:user_id, :title, :content, :city, :country, :gps_location, :is_solved, :is_open, :include_location, images: [], attachments: [])
+      params.require(:post).permit(:user_id, :title, :content, :city, :country, :gps_location, :is_solved, :is_open, :include_location, :longitude, :latitude, images: [], attachments: [])
     end
+
 end

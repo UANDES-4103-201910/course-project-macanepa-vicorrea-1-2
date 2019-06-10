@@ -70,12 +70,30 @@
                         </label>
 
 
-                        <%= post_form.check_box :include_location, class:"form-control ml-2 mt-2" %><%= post_form.label :include_location, class:"mt-2"%>
+                        <a class="post-icon btn btn-link text-primary mx-2 mt-2 btn-xs" data-toggle="collapse" data-target="#collapseNewMap" role="button" aria-expanded="false" aria-controls="collapseNewMap">
+                          GPS Options
+                        </a>
 
-                        <%= post_form.text_field :latitude, value:"-0.141944", class:"form-control", id:"lat"%>
-                        <%= post_form.text_field :longitude, value:"0.51501564", class:"form-control", id:"lng"%>
+
+                        <div class="new-map-container collapse" id="collapseNewMap">
+                          <div class="form-inline">
+                            <%= post_form.check_box :include_location, class:"form-control mt-2" %><%= post_form.label :include_location, class:"mt-2"%>
+                          </div>
+                          <%= post_form.text_field :latitude, value:"-33.404100", class:"form-control", id:"lat", name:"location[latitude]"%>
+                          <%= post_form.text_field :longitude, value:"-70.506412", class:"form-control", id:"lng", name:"location[longitude]"%>
+
+                          <meta name='turbolinks-visit-control' content='reload'>
+                          <script>
+                              document.addEventListener("DOMContentLoaded", initMap2);
+                          </script>
+
+                          <p>
+                          <div class="map" id="map-n"></div>
+                          </p>
 
 
+
+                        </div>
 
 
 
@@ -89,14 +107,6 @@
 
 
 
-                <meta name='turbolinks-visit-control' content='reload'>
-                <script>
-                    document.addEventListener("DOMContentLoaded", initMap2);
-                </script>
-
-              <p>
-              <div class="map" id="map-n"></div>
-              </p>
 
             </div>
           </div>
