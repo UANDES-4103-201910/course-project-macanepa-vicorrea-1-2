@@ -55,9 +55,9 @@
 
               <div class="col">
                 <% if(not post.user.profile.nil?) %>
-                  <a class="p text-dark my-auto" href="<%= user_profile_view_path(user_profile_id: post.user.profile.id) %>"><%= post.user.get_name %></a>
+                  <a data-turbolinks='false' class="p text-dark my-auto" href="<%= user_profile_view_path(user_profile_id: post.user.profile.id) %>"><%= post.user.get_name %></a>
                 <% end %>
-                <a class="p text-secondary my-auto ml-4" href="<%= watch_path(post_id: post.id) %>"><%= post.title %></a>
+                <a data-turbolinks='false' class="p text-secondary my-auto ml-4" href="<%= watch_path(post_id: post.id) %>"><%= post.title %></a>
 
 
                <div class="form-inline">
@@ -349,7 +349,7 @@
 
 
                               <% if(not comment_user.profile.nil?) %>
-                                <a class="p text-dark mx-2 my-auto" href="<%= user_profile_view_path(user_profile_id: comment_user.profile.id) %>"><%= comment_user.get_name %></a>
+                                <a data-turbolinks='false' class="p text-dark mx-2 my-auto" href="<%= user_profile_view_path(user_profile_id: comment_user.profile.id) %>"><%= comment_user.get_name %></a>
                               <% else %>
                                 <a><%= comment_user.get_name %></a>
                               <% end %>
@@ -375,7 +375,7 @@
                             <div class="form-inline">
                               <div class="small text-secondary mr-2">tags:</div>
                               <% comment.tags.each do |tag| %>
-                                <a class="btn-link small text-dark mr-2" href=<%= user_profile_view_path(user_profile_id: tag.user.profile.id) %>><%= tag.user.name %> <%= tag.user.last_name %></a>
+                                <a data-turbolinks='false' class="btn-link small text-dark mr-2" href=<%= user_profile_view_path(user_profile_id: tag.user.profile.id) %>><%= tag.user.name %> <%= tag.user.last_name %></a>
                               <% end %>
                             </div>
                             <hr>
@@ -433,12 +433,12 @@
 
 
 
-                                    <a class="btn-link text-dark" href=<%= user_profile_view_path(user_profile_id: reply.user.profile.id) %>><%= reply.user.name %> <%= reply.user.last_name %></a>
+                                    <a data-turbolinks='false' class="btn-link text-dark" href=<%= user_profile_view_path(user_profile_id: reply.user.profile.id) %>><%= reply.user.name %> <%= reply.user.last_name %></a>
                                     replying to
                                     <% if reply.reply.nil? %>
-                                      <a class="btn-link text-dark" href=<%= user_profile_view_path(user_profile_id: comment.user.profile.id) %>><%= comment.user.name %> <%= comment.user.last_name %>
+                                      <a data-turbolinks='false' class="btn-link text-dark" href=<%= user_profile_view_path(user_profile_id: comment.user.profile.id) %>><%= comment.user.name %> <%= comment.user.last_name %>
                                     <% else %>
-                                      <a class="btn-link text-dark" href=<%= user_profile_view_path(user_profile_id: reply.reply.user.profile.id) %>><%= reply.reply.user.name %> <%= reply.reply.user.last_name %>
+                                      <a data-turbolinks='false' class="btn-link text-dark" href=<%= user_profile_view_path(user_profile_id: reply.reply.user.profile.id) %>><%= reply.reply.user.name %> <%= reply.reply.user.last_name %>
                                     <% end %>
                                       : </a>
                                     <%= reply.content %></div>
@@ -449,7 +449,7 @@
                                     <div class="form-inline">
                                       <div class="small text-secondary mr-2">tags:</div>
                                       <% reply.tags.each do |tag| %>
-                                        <a class="btn-link small text-dark mr-2" href=<%= user_profile_view_path(user_profile_id: tag.user.profile.id) %>><%= tag.user.name %> <%= tag.user.last_name %></a>
+                                        <a data-turbolinks='false' class="btn-link small text-dark mr-2" href=<%= user_profile_view_path(user_profile_id: tag.user.profile.id) %>><%= tag.user.name %> <%= tag.user.last_name %></a>
                                       <% end %>
                                     </div>
                                   <% end %>

@@ -98,7 +98,7 @@
               <td>
                 <button class="btn btn-primary" data-toggle="dropdown"><i class="fas fa-tools"></i></button>
                 <div class="dropdown-menu dropdown-menu-right">
-                  <a class="dropdown-item" href="<%= user_profile_view_path(user_profile_id: user.id) %>">View profile</a>
+                  <a data-turbolinks='false' class="dropdown-item" href="<%= user_profile_view_path(user_profile_id: user.id) %>">View profile</a>
                   <% if current_user.is_super_admin %>
                     <% if user.is_admin %>
                       <a class="dropdown-item" data-toggle="modal" data-btn-type="edit-admin" data-user-id="<%= user.id %>"
@@ -200,7 +200,7 @@
                     <% end %>
                   ><i class="fas fa-tools"></i></button>
                   <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="<%= watch_path(post_id: post.id) %>">View post</a>
+                    <a data-turbolinks='false' class="dropdown-item" href="<%= watch_path(post_id: post.id) %>">View post</a>
                     <a class="dropdown-item" data-toggle="modal" data-target="#reports-modal"
                        data-owner="<%= post.get_email_owner %>" data-title="<%= post.title %>"
                        data-post-id="<%= post.id %>" data-btn-type="view-reports">View reports</a>
