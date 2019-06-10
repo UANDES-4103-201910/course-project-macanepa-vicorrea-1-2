@@ -60,11 +60,11 @@ class User < ApplicationRecord
     if admin.count == 0
       ""
     elsif admin.count >= 1
-      admin_geofence = admin.first.get_geofence_name
-      if admin_geofence.nil?
-        "None"
+      have_geofence = !admin.first.geofence_id.nil?
+      if have_geofence
+        geo = Geofence.find(admin.first.geofence_id).name
       else
-        admin_geofence
+        "None"
       end
     end
   end

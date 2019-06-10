@@ -32,8 +32,4 @@ class ApplicationController < ActionController::Base
     return posts
   end
 
-  # def get_geofences_options
-  #
-  # end
-
 end
