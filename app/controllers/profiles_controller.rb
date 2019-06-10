@@ -21,11 +21,15 @@ class ProfilesController < ApplicationController
   def edit
   end
 
+
   # POST /profiles
   # POST /profiles.json
   def create
     @profile = Profile.new(profile_params)
     @profile.user_id = current_user.id
+
+    location = Location.create(name: "wiwi",latitude: params[:location]["latitude"], longitude: params[:location]["longitude"])
+    @profile.location=location
     respond_to do |format|
       if @profile.save
         # format.html { redirect_to @profile, notice: 'Profile was successfully created.' }
@@ -44,6 +48,7 @@ class ProfilesController < ApplicationController
     # respond_to do |format|
       puts("==============UPDATING PROFILE===============")
       puts(profile_params)
+
       if @profile.update(profile_params)
         # format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
         redirect_to user_profile_view_path(user_profile_id: current_user.profile.id)
@@ -74,7 +79,7 @@ class ProfilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
-      params.require(:profile).permit(:user_id, :biography, :country, :city, :image, :gps_location,
-                                      user_attributes: [:name, :last_name, :email, :password, :id])
+      params.require(:profile).permit(:user_id, :biography, :country, :city, :image, :gps_location, :include_location,
+                                      user_attributes: [:name, :last_name, :email, :password, :id],)
     end
 end

@@ -29,6 +29,9 @@
           <hr>
           <h4>Location</h4>
           <div class="p text-secondary"><%= @user_profile.city %>, <%= @user_profile.country %></div>
+          <% if @user_profile.include_location %>
+            <a data-turbolinks='false' href="<%= location_path(id:@user_profile.location.id) %>">View Location</a>
+          <% end %>
 
         </div>
       </div>

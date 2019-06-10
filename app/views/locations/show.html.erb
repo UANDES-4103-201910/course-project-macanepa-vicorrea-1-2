@@ -1,9 +1,12 @@
-<p id="notice"><%= notice %></p>
+<head>
 
-<p>
-  <strong>Name:</strong>
-  <%= @location.name %>
-</p>
+  <%= javascript_include_tag 'js_profile'%>
+  <% key = "AIzaSyCPyzjsnZ320er0gU62rJG9FhyrMwf3v98" %>
+  <%= javascript_include_tag 'https://maps.googleapis.com/maps/api/js?key='+key %>
+
+</head>
+
+<p id="notice"><%= notice %></p>
 
 <p>
   <strong>Longitude:</strong>
@@ -15,5 +18,11 @@
   <%= @location.latitude %>
 </p>
 
-<%= link_to 'Edit', edit_location_path(@location) %> |
-<%= link_to 'Back', locations_path %>
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        initMap(<%=@location.latitude%>, <%=@location.longitude%>, <%=@location.id %>)
+    });
+</script>
+<p>
+<div class="map" id=<%="map-"+@location.id.to_s %>></div>
+</p>
