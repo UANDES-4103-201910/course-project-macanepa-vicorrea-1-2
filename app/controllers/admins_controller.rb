@@ -5,6 +5,15 @@ class AdminsController < ApplicationController
 
   def view
     @users = User.all
+    @users.each do |user| # check if some user completed the week in the blacklist
+      if user.is_in_blacklist
+        exit_date = user.get_blacklist_entry_date + 1.week.to_i
+        if Time.now >= exit_date
+          black_to_remove = Blacklist.where(user_id: user.id, exit_date: nil).first
+          black_to_remove.update(exit_date: Time.now)
+        end
+      end
+    end
     @posts = Post.all
     @blacklist_users = Blacklist.all.order(:user_id)
     @dumpster_posts = Dumpster.all.order(:post_id)

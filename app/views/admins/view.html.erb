@@ -388,7 +388,7 @@
             <%= edit_user_password_form.text_field :id, type: "hidden", id: "hidden-user-id-for-password-admin-modal" %>
             <div class="field form-inline">
               Password:&nbsp;
-              <%= edit_user_password_form.text_field :password, type: "password", placeholder: "Write the new password...", id: "admin_new_password", class:"form-control" %>&nbsp;
+              <%= edit_user_password_form.text_field :password, type: "password", placeholder: "Write the new password...", id: "admin_new_password", class:"form-control", minlength: "6" %>&nbsp;
               <%= edit_user_password_form.submit value: "Update", class:"btn btn-success my-1" %>
             </div>
           <% end %>
@@ -426,7 +426,7 @@
             <%= edit_user_password_form.text_field :id, type: "hidden", id: "hidden-user-id-for-password-user-modal" %>
             <div class="field form-inline">
               Password:&nbsp;
-              <%= edit_user_password_form.text_field :password, type: "password", placeholder: "Write the new password...", id: "user_new_password", class:"form-control" %>&nbsp;
+              <%= edit_user_password_form.text_field :password, type: "password", placeholder: "Write the new password...", id: "user_new_password", class:"form-control", minlength: "6" %>&nbsp;
               <%= edit_user_password_form.submit value: "Update", class:"btn btn-success my-1" %>
             </div>
           <% end %>
@@ -473,7 +473,7 @@
           <%= report_form.text_field :post_id, type: "hidden", id: "hidden-post-id-report" %>
           <div class="modal-body">
             <p>Why you want to mark the post <b id="post-title"></b> by <b id="post-owner"></b> as inappropiate?</p>
-            <%= report_form.text_area :content, class:"form-control", placeholder: "Write a short comment for justification...", required: true %>
+            <%= report_form.text_area :content, class:"form-control", placeholder: "Write a short comment for justification...", required: true, minlength: "5" %>
           </div>
           <div class="modal-footer">
             <%= report_form.submit value:"Report", class:"btn btn-warning my-1", style:"float-right" %>
@@ -514,7 +514,7 @@
   </div>
 
   <div class="modal" id="new-admin-modal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">Create new administrator</h4>
@@ -522,21 +522,25 @@
         </div>
         <%= form_for :admin, :url => {controller: 'admins', action: 'create'} do |new_admin| %>
           <div class="modal-body">
-            <div class="field">
-              <%= new_admin.label :name %><br>
-              <%= new_admin.text_field :name, class: "form-control", required: true %>
+            <div class="row">
+              <div class="field col-6">
+                <%= new_admin.label :name %><br>
+                <%= new_admin.text_field :name, class: "form-control", required: true %>
+              </div>
+              <div class="field col-6">
+                <%= new_admin.label :last_name %><br>
+                <%= new_admin.text_field :last_name, class: "form-control" %>
+              </div>
             </div>
-            <div class="field">
-              <%= new_admin.label :last_name %><br>
-              <%= new_admin.text_field :last_name, class: "form-control" %>
-            </div>
-            <div class="field">
-              <%= new_admin.label :email %><br>
-              <%= new_admin.text_field :email, class: "form-control", required: true %>
-            </div>
-            <div class="field">
-              <%= new_admin.label :password %><br>
-              <%= new_admin.text_field :password, type: "password", class: "form-control", required: true %>
+            <div class="row">
+              <div class="field col-6">
+                <%= new_admin.label :email %><br>
+                <%= new_admin.text_field :email, class: "form-control", required: true %>
+              </div>
+              <div class="field col-6">
+                <%= new_admin.label :password %><br>
+                <%= new_admin.text_field :password, type: "password", class: "form-control", required: true, minlength: "6" %>
+              </div>
             </div>
             <div class="field">
               <%= new_admin.label :geofence %><br>
