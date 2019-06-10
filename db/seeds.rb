@@ -14,9 +14,9 @@ profile05 = Profile.create!(user_id:user05.id,biography:"rotsap im se natas",cou
 profile06 = Profile.create!(user_id:user06.id,biography:"La Matucha",country:"Chile",city:"Santiago")
 
 #Admins
-admin01 = Admin.create!(user_id:user06.id,super_admin:false,geofence:nil)
-admin02 = Admin.create!(user_id:user04.id,super_admin:false,geofence:"Chile")
-admin03 = Admin.create!(user_id:user03.id,super_admin:true,geofence:"Perú")
+admin01 = Admin.create!(user_id:user06.id,super_admin:false,geofence:'d3577b70-7268-435c-9f50-61dcbf6dd4a4')
+admin02 = Admin.create!(user_id:user04.id,super_admin:false,geofence:'8a0ddfa1-0b40-43d7-9e8f-a8c2d612a557')
+admin03 = Admin.create!(user_id:user03.id,super_admin:true,geofence:nil)
 
 
 #Posts
@@ -29,7 +29,6 @@ bl01 = Blacklist.create!(user_id:user03.id,exit_date:Time.now.yesterday)
 bl02 = Blacklist.create!(user_id:user03.id,exit_date:Time.now)
 bl03 = Blacklist.create!(user_id:user04.id,exit_date:nil)
 bl04 = Blacklist.create!(user_id:user05.id,exit_date:Time.now)
-bl02 = Blacklist.create!(user_id:user03.id,exit_date:nil)
 
 # Comments
 comment01 = Comment.create!(post_id:post01.id, comment_id:nil, user_id:user04.id,content:"Ahh CTM")

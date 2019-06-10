@@ -192,7 +192,13 @@
                   <% end %>
                 </td>
                 <td>
-                  <button class="btn btn-primary" data-toggle="dropdown"><i class="fas fa-tools"></i></button>
+                  <button class="btn btn-primary" data-toggle="dropdown"
+                  <% if !post.location.nil? %>
+                    <% if !current_user.get_admin.post_in_geofence(post.location.latitude, post.location.longitude) %>
+                        disabled title="This post is not within your geofence"
+                      <% end %>
+                    <% end %>
+                  ><i class="fas fa-tools"></i></button>
                   <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="<%= watch_path(post_id: post.id) %>">View post</a>
                     <a class="dropdown-item" data-toggle="modal" data-target="#reports-modal"
@@ -435,6 +441,9 @@
           <div class="field form-inline">
             Geofence:&nbsp;
             <%= new_admin_form.text_field :geofence %>&nbsp;
+            <%#= select_tag(:geofence) %>
+
+            <%#= options_for_select([[]]) %>
             <%= new_admin_form.submit value: "Accept", class: "btn btn-success" %>
           </div>
           <% end %>

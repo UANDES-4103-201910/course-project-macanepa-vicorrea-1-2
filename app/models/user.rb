@@ -60,7 +60,7 @@ class User < ApplicationRecord
     if admin.count == 0
       ""
     elsif admin.count >= 1
-      admin_geofence = admin.first.geofence
+      admin_geofence = admin.first.get_geofence_name
       if admin_geofence.nil?
         "None"
       else
