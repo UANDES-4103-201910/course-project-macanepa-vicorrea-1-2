@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_05_152213) do
+ActiveRecord::Schema.define(version: 2019_06_10_044404) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -35,10 +35,11 @@ ActiveRecord::Schema.define(version: 2019_06_05_152213) do
 
   create_table "admins", force: :cascade do |t|
     t.integer "user_id"
-    t.string "geofence"
     t.boolean "super_admin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "geofence_id"
+    t.index ["geofence_id"], name: "index_admins_on_geofence_id"
     t.index ["user_id"], name: "index_admins_on_user_id"
   end
 
@@ -87,6 +88,13 @@ ActiveRecord::Schema.define(version: 2019_06_05_152213) do
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_follows_on_post_id"
     t.index ["user_id"], name: "index_follows_on_user_id"
+  end
+
+  create_table "geofences", force: :cascade do |t|
+    t.string "key"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "locations", force: :cascade do |t|

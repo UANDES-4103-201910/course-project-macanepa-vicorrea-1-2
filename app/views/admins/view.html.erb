@@ -103,7 +103,7 @@
                     <% if user.is_admin %>
                       <a class="dropdown-item" data-toggle="modal" data-btn-type="edit-admin" data-user-id="<%= user.id %>"
                          data-target="#edit-admin-modal" data-email="<%= user.email %>"
-                         data-admin-id="<%= user.get_admin.id %>" data-geofence="<%= user.get_admin.geofence %>">Edit admin</a>
+                         data-admin-id="<%= user.get_admin.id %>" data-geofence-id="<%= user.get_admin.geofence_id %>">Edit admin</a>
                     <% else %>
                       <a class="dropdown-item" data-toggle="modal" data-btn-type="edit-user" data-user-id="<%= user.id %>"
                          data-target="#edit-user-modal" data-email="<%= user.email %>">Edit user</a>
@@ -192,7 +192,13 @@
                   <% end %>
                 </td>
                 <td>
-                  <button class="btn btn-primary" data-toggle="dropdown"><i class="fas fa-tools"></i></button>
+                  <button class="btn btn-primary" data-toggle="dropdown"
+                  <% if !post.location.nil? %>
+                    <% if !current_user.get_admin.post_in_geofence(post.location.latitude, post.location.longitude) %>
+                        disabled title="This post is not within your geofence"
+                      <% end %>
+                    <% end %>
+                  ><i class="fas fa-tools"></i></button>
                   <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="<%= watch_path(post_id: post.id) %>">View post</a>
                     <a class="dropdown-item" data-toggle="modal" data-target="#reports-modal"
@@ -370,7 +376,7 @@
 </div>
 
   <div class="modal" id="edit-admin-modal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">Edit <b id="edit-admin-email"></b></h4>
@@ -390,7 +396,11 @@
               <%= edit_admin_geofence_form.text_field :id, type: "hidden", id: "hidden-admin-id-for-geofence" %>
               <div class="field form-inline">
                 Geofence:&nbsp;
-                <%= edit_admin_geofence_form.text_field :geofence, id: "actual-geofence" %>&nbsp;
+                <% geofences_options = Array.new %>
+                <% @geofences.each do |geofence| %>
+                  <% geofences_options << [geofence.name, geofence.id] %>
+                <% end %>
+                <%= edit_admin_geofence_form.select(:geofence_id, options_for_select(geofences_options), {}, { class: "actual-geofence form-control", id: 'new_geofence_current_admin' } ) %>&nbsp;
                 <%= edit_admin_geofence_form.submit value: "Update", class:"btn btn-primary my-1" %>
               </div>
             <% end %>
@@ -423,7 +433,7 @@
     </div>
   </div>
   <div class="modal" id="make-user-admin-modal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">Make <b id="make-user-admin-email"></b> an administrator</h4>
@@ -434,7 +444,11 @@
           <%= new_admin_form.text_field :user_id, type: "hidden", id: "hidden_new_admin_user_id" %>
           <div class="field form-inline">
             Geofence:&nbsp;
-            <%= new_admin_form.text_field :geofence %>&nbsp;
+            <% geofences_options = Array.new %>
+            <% @geofences.each do |geofence| %>
+              <% geofences_options << [geofence.name, geofence.id] %>
+            <% end %>
+            <%= new_admin_form.select(:geofence_id, options_for_select(geofences_options), {}, { class: "form-control", id: 'geofence_new_admin' } ) %>&nbsp;
             <%= new_admin_form.submit value: "Accept", class: "btn btn-success" %>
           </div>
           <% end %>

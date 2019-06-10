@@ -10,7 +10,9 @@ class AdminsController < ApplicationController
     @dumpster_posts = Dumpster.all.order(:post_id)
     @suspension_list_users = SuspensionList.all.order(:user_id)
     @block_list_users = BlockList.all.order(:user_id)
+    @geofences = Geofence.all
   end
+
 
   # def make_get_geofences_request
   #   require 'net/http'
@@ -77,7 +79,7 @@ class AdminsController < ApplicationController
     end
     respond_to do |format|
       if @admin.update(admin_params)
-        format.html { redirect_to @admin, notice: 'Admin was successfully updated.' }
+        format.html { redirect_back(fallback_location: root_path); flash[:notice] = 'The admin was successfully updated.' }
         format.json { render :show, status: :ok, location: @admin }
       else
         format.html { render :edit }
@@ -105,6 +107,6 @@ class AdminsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def admin_params
-      params.require(:admin).permit(:user_id, :geofence, :super_admin)
+      params.require(:admin).permit(:user_id, :geofence_id, :super_admin)
     end
 end

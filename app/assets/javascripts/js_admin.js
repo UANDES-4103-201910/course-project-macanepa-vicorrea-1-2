@@ -28,12 +28,12 @@ function showEditAdmin(event) {
     var data = $(event.currentTarget).data();
     var email = data.email;
     var adminId = data.adminId;
-    var geofence = data.geofence;
+    var geofenceId = data.geofenceId;
     var userId = data.userId;
     $('#edit-admin-email').text(email);
     $('#hidden-admin-id-for-geofence').val(adminId);
     $('#hidden-user-id-for-password-admin-modal').val(userId);
-    $('#actual-geofence').val(geofence);
+    $('.actual-geofence').val(geofenceId)
 }
 
 function showReportsAjax(event) {
