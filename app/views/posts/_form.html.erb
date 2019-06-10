@@ -56,6 +56,8 @@
         <%= form.label :include_location, class:"ml-2"%>
         <%= form.check_box :include_location %>
 
+        <a href="<%=edit_location_path(id: post.location.id, turbolinks:false) %>">Edit Location</a>
+
       </div>
       <div class="col-1"></div>
       <div class="actions" style="float: right;">

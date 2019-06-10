@@ -1,3 +1,11 @@
+<head>
+
+  <%= javascript_include_tag 'js_location'%>
+  <% key = "AIzaSyCPyzjsnZ320er0gU62rJG9FhyrMwf3v98" %>
+  <%= javascript_include_tag 'https://maps.googleapis.com/maps/api/js?key='+key %>
+
+</head>
+<meta name='turbolinks-visit-control' content='reload'>
 <%= form_with(model: location, local: true) do |form| %>
   <% if location.errors.any? %>
     <div id="error_explanation">
@@ -11,22 +19,48 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
 
-  <div class="field">
-    <%= form.label :longitude %>
-    <%= form.text_field :longitude %>
-  </div>
+  <div class="card-container col-7 mx-auto">
+    <div class="card card-default">
+      <div class="card-header">
+        <div class="text-primary h4">Edit Location</div>
+      </div>
 
-  <div class="field">
-    <%= form.label :latitude %>
-    <%= form.text_field :latitude %>
-  </div>
+      <div class="card-body">
 
-  <div class="actions">
-    <%= form.submit %>
+        <div class="field">
+          <%#= form.label :name %>
+          <%= form.text_field :name, type:"hidden" %>
+        </div>
+
+        <div class="row">
+          <div class="field col-6">
+            <%= form.label :longitude%>
+            <%= form.text_field :longitude, id:"lng", class:"form-control" %>
+          </div>
+
+          <div class="field col-6">
+            <%= form.label :latitude%>
+            <%= form.text_field :latitude, id:"lat", class:"form-control" %>
+          </div>
+        </div>
+
+        <meta name='turbolinks-visit-control' content='reload'>
+        <script>
+            document.addEventListener("DOMContentLoaded", initMap2);
+        </script>
+
+        <p>
+        <div class="map form-control mx-auto" id="map-n"></div>
+        </p>
+
+      </div>
+
+      <div class="card-footer">
+        <div class="actions col-3" style="float: right;">
+          <%= form.submit class:"form-control"%>
+        </div>
+      </div>
+    </div>
   </div>
 <% end %>
