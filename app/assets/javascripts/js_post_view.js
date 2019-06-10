@@ -1,6 +1,6 @@
 function showPost(event) {
     var data = $(event.currentTarget).data();
-    console.log(data);
+    // console.log(data);
     // var postId = data.post;
 }
 
@@ -24,7 +24,6 @@ function initMap(lat, lng, id) {
     });
 
 }
-
 
 
 $(document).ready( function () {

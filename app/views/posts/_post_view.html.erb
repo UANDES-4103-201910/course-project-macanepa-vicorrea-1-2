@@ -241,54 +241,13 @@
                 </div>
                 </div>
                 <div style="height: 40px;"></div>
-                <% if post.images.attached? %>
-                  <div class="image-container collapse" id="collapseImages-<%= post.id %>">
-                    <div class="h2 text-dark">Images</div>
-                    <div id="carouselExampleIndicatorsPost<%= post.id %>" class="carousel slide" data-ride="carousel">
-                      <ol class="carousel-indicators">
-                        <% counter = 0 %>
-                        <% post.images.each do |image| %>
-                          <% if counter > 0 %>
-                            <li data-target="#carouselExampleIndicatorsPost<%= post.id %>" data-slide-to="<%= counter %>"></li>
-                          <% else %>
-                            <li data-target="#carouselExampleIndicatorsPost<%= post.id %>" data-slide-to="<%= counter %>" class="active"></li>
-                          <% end %>
-                          <% counter += 1 %>
-                        <% end %>
-                      </ol>
-                      <div class="carousel-inner">
-                          <% counter_2 = 0 %>
-                          <% post.images.each do |image| %>
-                            <% if counter_2 > 0 %>
-                              <div class="carousel-item">
-                                <%= image_tag(url_for(image), class: "d-block w-100", alt: "image-" + counter.to_s) %>
-                              </div>
-                            <% else %>
-                              <div class="carousel-item active">
-                                <%= image_tag(url_for(image), class: "d-block w-100", alt: "image-" + counter.to_s) %>
-                              </div>
-                          <% end %>
-                            <% counter_2 += 1 %>
-                        <% end %>
-                      </div>
-                      <a class="carousel-control-prev" href="#carouselExampleIndicatorsPost<%= post.id %>" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                      </a>
-                      <a class="carousel-control-next" href="#carouselExampleIndicatorsPost<%= post.id %>" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                      </a>
-                    </div>
-                  </div>
-                <% end %>
-                <br>
                 <div class="file-container collapse" id="collapseFiles-<%= post.id %>">
                   <div class="h2 text-dark">Attachments</div>
                   <% post.attachments.each do |attachment| %>
                     <%= link_to attachment.filename, rails_blob_path(attachment, disposition: 'attachment') %><br>
                   <% end %>
                 </div>
+                <br>
                 <div class="file-container collapse" id="collapseMap-<%= post.id %>">
                   <div class="h2 text-dark">Map</div>
 <!--                  <p><%#= post.city %>, <%#= post.country %></p>-->
@@ -305,9 +264,49 @@
                       <div class="map" id=<%="map-"+post.location.id.to_s %>></div>
                     </p>
                   <% end %>
-
-
                 </div>
+                <br>
+                <% if post.images.attached? %>
+                  <div class="image-container collapse" id="collapseImages-<%= post.id %>">
+                    <div class="h2 text-dark">Images</div>
+                    <div id="carouselExampleIndicatorsPost<%= post.id %>" class="carousel slide" data-ride="carousel">
+                      <ol class="carousel-indicators">
+                        <% counter = 0 %>
+                        <% post.images.each do |image| %>
+                          <% if counter > 0 %>
+                            <li data-target="#carouselExampleIndicatorsPost<%= post.id %>" data-slide-to="<%= counter %>"></li>
+                          <% else %>
+                            <li data-target="#carouselExampleIndicatorsPost<%= post.id %>" data-slide-to="<%= counter %>" class="active"></li>
+                          <% end %>
+                          <% counter += 1 %>
+                        <% end %>
+                      </ol>
+                      <div class="carousel-inner">
+                        <% counter_2 = 0 %>
+                        <% post.images.each do |image| %>
+                          <% if counter_2 > 0 %>
+                            <div class="carousel-item">
+                              <%= image_tag(url_for(image), class: "d-block w-100", alt: "image-" + counter.to_s) %>
+                            </div>
+                          <% else %>
+                            <div class="carousel-item active">
+                              <%= image_tag(url_for(image), class: "d-block w-100", alt: "image-" + counter.to_s) %>
+                            </div>
+                          <% end %>
+                          <% counter_2 += 1 %>
+                        <% end %>
+                      </div>
+                      <a class="carousel-control-prev" href="#carouselExampleIndicatorsPost<%= post.id %>" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                      <a class="carousel-control-next" href="#carouselExampleIndicatorsPost<%= post.id %>" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                    </div>
+                  </div>
+                <% end %>
 
 
 
