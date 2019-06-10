@@ -1,3 +1,9 @@
+<%= javascript_include_tag 'js_location'%>
+<% key = "AIzaSyCPyzjsnZ320er0gU62rJG9FhyrMwf3v98" %>
+<%= javascript_include_tag 'https://maps.googleapis.com/maps/api/js?key='+key %>
+<meta name='turbolinks-visit-control' content='reload'>
+
+
 <%= form_with(model: profile, local: true) do |form| %>
   <% if profile.errors.any? %>
     <div id="error_explanation">
@@ -68,26 +74,57 @@
           </div>
 
           <div class="field">
-            <%= form.label :gps_location %><br>
-            <%= form.text_field :gps_location, class:"form-control"  %>
+            <%= form.label :image %><br>
+            <%= form.file_field :image %><br><br>
           </div>
 
         </div>
 
         <div class="col-8">
 
-          <div class="field">
-            <%= form.label :image %><br>
-            <%= form.file_field :image %><br><br>
-          </div>
+
 
           <div class="field">
             <%= form.label :biography %><br>
-            <%= form.text_area :biography, class:"form-control" %>
+            <%= form.text_area :biography, class:"form-control", rows:6 %>
           </div>
 
         </div>
 
+      </div>
+
+      <hr>
+
+
+      <% if profile.location.nil? %>
+
+        <div class="row">
+          <div class="field col-6">
+            <%#= form.label :longitude%>
+            <%= form.text_field :longitude, value:"-70.506412", class:"form-control", id:"lng", name:"location[longitude]"%>
+          </div>
+
+          <div class="field col-6">
+            <%#= form.label :latitude%>
+            <%= form.text_field :latitude, value:"-33.404100", class:"form-control", id:"lat", name:"location[latitude]"%>
+          </div>
+        </div>
+
+        <meta name='turbolinks-visit-control' content='reload'>
+        <script>
+            document.addEventListener("DOMContentLoaded", initMap2);
+        </script>
+
+        <p>
+        <div class="map form-control mx-auto" id="map-n"></div>
+        </p>
+
+      <% else %>
+        <a data-turbolinks='false' href="<%= edit_location_path(id: profile.location.id) %>">Edit GPS Location</a>
+      <% end %>
+      <div class="form-inline">
+        <%= form.label :include_location %>
+        <%= form.check_box :include_location %>
       </div>
 
 
