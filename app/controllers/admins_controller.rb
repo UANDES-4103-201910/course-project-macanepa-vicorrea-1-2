@@ -12,6 +12,25 @@ class AdminsController < ApplicationController
     @block_list_users = BlockList.all.order(:user_id)
   end
 
+  # def make_get_geofences_request
+  #   require 'net/http'
+  #   require 'json'
+  #   begin
+  #     uri = URI('https://api.fencer.io/v1.0/geofence')
+  #     http = Net::HTTP.new(uri.host, uri.port)
+  #     http.use_ssl = true
+  #     headers = {'Authorization' => '5195ba22-ab3c-52f6-bab9-d15ff7b8794e'}
+  #     req = Net::HTTP::Get.new(uri.path, headers)
+  #     res = http.request(req)
+  #     resp = res.body
+  #     resp_in_js = JSON.parse(resp)
+  #     puts "response #{resp}"
+  #     puts resp_in_js
+  #   rescue => e
+  #     puts "failed #{e}"
+  #   end
+  # end
+
   # GET /admins
   # GET /admins.json
   def index

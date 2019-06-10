@@ -40,6 +40,7 @@
       <div class="tab-content">
         <div id="manage-users" class="container tab-pane active">
           <h3>Manage users</h3>
+          <%= link_to 'obtener geofences', make_get_geofences_request_path %>
           <% if current_user.is_super_admin %>
             <b>If you want to create a new administrator, you have 2 options:</b>
             <ul>
