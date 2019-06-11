@@ -89,9 +89,18 @@ Developed by:
 
 ## Upcoming Features
 
+
 ## Bugs
-  
-  
+
+
+## Notes
+Currently the georeference API allows a maximum of 5 Geofences. We set the following geofences
+- America
+- Europe
+- Africa
+- Asia
+- Oceania
+
 # For Testing Purposes
 ## You can see all the accounts at seeds.rb
 * Admin:
