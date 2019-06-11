@@ -60,7 +60,7 @@ l14 = Location.create!(name:"Mia House", latitude:-33.325874, longitude:-70.5389
 u14 = User.create!(name:"Sprite",last_name:"Doggo",email:"sprite@gmail.com",password:"123456",last_access:Time.now)
 p14 = Profile.create!(user_id:u14.id,biography:"Nacido 17 Enero 2006, El mejor doggo del mundo.",country:"Chile",city:"Santiago", location: l14, include_location:true)
 
-p0 = Post.create!(user_id:u14.id,title:"Wauf Wauf",content:"Wauf Wauf Wauf.",is_open:false,is_solved:true)
+p0 = Post.create!(user_id:u14.id,title:"Wauf Wauf",content:"Wauf Wauf Wauf.",city:"Santiago",country:"Chile",is_open:false,is_solved:true)
 
 #Geofences
 geof01 = Geofence.create!(key:'9c7864f9-b856-4dbb-b4d5-55753a280f1f',name:'America')
@@ -104,6 +104,8 @@ p1c1r1 = Comment.create!(user_id:u2.id, post_id:p2.id, comment_id:p1c1.id, conte
 p1c1r2 = Comment.create!(user_id:u1.id, post_id:p2.id, comment_id:p1c1.id, reply_id:p1c1r1.id, content:"Pero como es posible que no haya mandado mail...")
 p1c1r1 = Comment.create!(user_id:u2.id, post_id:p2.id, comment_id:p1c1.id, content:"Ese profesor es gino_vera@gmail.com y es pesimo!!!")
 Tag.create(user_id: l9.id, comment_id: p1c1r1.id, post_id: p2.id)
+lp3 = Location.create!(name:"La torre Eiffel", latitude:48.857975, longitude: 2.294867)
+p3 = Post.create!(user_id:u11.id, title:"Auto mal estacionado",content:"El auto está sobre la torre!", is_open:true, is_solved:false, city:"Paris", country:"Francia", location:lp3, include_location:true)
 # post02 = Post.create!(user_id:user04.id,title:"Hey listen",content:"I'm quite recognized for my eloquent decision making. People often say that I take 'Bad Choices'",is_open:false,is_solved:true)
 # post03 = Post.create!(user_id:user04.id,title:"Dumpster",content:"Dumpster!",is_open:false,is_solved:true)
 

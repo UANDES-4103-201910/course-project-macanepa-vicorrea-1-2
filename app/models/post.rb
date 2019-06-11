@@ -21,6 +21,14 @@ class Post < ApplicationRecord
   validates :user_id, :title, :content, presence: true
   validates :title, :content, length: { minimum: 5 }
 
+  def get_gps_location
+    if !gps_location.nil?
+      gps_location
+    elsif include_location && !location_id.nil?
+      gps_loc = "Latitude: #{location.latitude} | Longitude: #{location.longitude}"
+    end
+  end
+
   def get_email_owner
     owner = User.find(user_id).email
   end
