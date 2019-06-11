@@ -14,11 +14,11 @@ profile05 = Profile.create!(user_id:user05.id,biography:"rotsap im se natas",cou
 profile06 = Profile.create!(user_id:user06.id,biography:"La Matucha",country:"Chile",city:"Santiago")
 
 #Geofences
-geof01 = Geofence.create!(key:'c4978ffa-e5a1-4e15-8098-dda851a69b4b',name:'South of South America (Chile, Argentina and Uruguay)')
-geof02 = Geofence.create!(key:'8a0ddfa1-0b40-43d7-9e8f-a8c2d612a557',name:'Bolivia and Paraguay')
-geof03 = Geofence.create!(key:'d3577b70-7268-435c-9f50-61dcbf6dd4a4',name:'North of South America (Colombia, Venezuela, Suriname and the Guianas)')
-geof04 = Geofence.create!(key:'5cc8cc5b-1a34-4ad7-99d4-3929be4f9597',name:'Brazil')
-geof05 = Geofence.create!(key:'889d47f4-3010-4d5d-b6c9-eef07c0d50f4',name:'Peru and Ecuador')
+geof01 = Geofence.create!(key:'9c7864f9-b856-4dbb-b4d5-55753a280f1f',name:'America')
+geof02 = Geofence.create!(key:'73d34061-200b-44e7-a121-81d3d417f2cf',name:'Africa')
+geof03 = Geofence.create!(key:'ab959b20-2660-4218-9199-784ed658bb9d',name:'Europa')
+geof04 = Geofence.create!(key:'7f7c9ec1-7f68-439d-a681-e78e1b488af5',name:'Asia')
+geof05 = Geofence.create!(key:'7c1217e2-597a-495e-bf31-413cb5940583',name:'Oceania')
 
 #Admins
 admin01 = Admin.create!(user_id:user06.id,super_admin:false,geofence_id:geof03.id)
