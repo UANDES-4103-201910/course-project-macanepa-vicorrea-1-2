@@ -44,8 +44,7 @@ Developed by:
   - Log of following lists
     - Add/Remove from Blacklist
     - Add/Remove from Dumpster
-    - Add/Remove from Suspension List
-    - Add/Remove from Block List
+    - Add from Block users accounts
 - User Profile
   - View user profile
   - Edit user profile

@@ -16,7 +16,7 @@ profile06 = Profile.create!(user_id:user06.id,biography:"La Matucha",country:"Ch
 #Geofences
 geof01 = Geofence.create!(key:'9c7864f9-b856-4dbb-b4d5-55753a280f1f',name:'America')
 geof02 = Geofence.create!(key:'73d34061-200b-44e7-a121-81d3d417f2cf',name:'Africa')
-geof03 = Geofence.create!(key:'ab959b20-2660-4218-9199-784ed658bb9d',name:'Europa')
+geof03 = Geofence.create!(key:'ab959b20-2660-4218-9199-784ed658bb9d',name:'Europe')
 geof04 = Geofence.create!(key:'7f7c9ec1-7f68-439d-a681-e78e1b488af5',name:'Asia')
 geof05 = Geofence.create!(key:'7c1217e2-597a-495e-bf31-413cb5940583',name:'Oceania')
 
