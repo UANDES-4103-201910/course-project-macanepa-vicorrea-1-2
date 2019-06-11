@@ -190,7 +190,7 @@
               </button>
             <% end %>
 
-            <% if post.include_location &&  (not post.country.nil?)%>
+            <% if post.include_location%>
               <button class="post-icon btn btn-link mx-2 my-auto btn-xs" data-toggle="collapse" data-target="#collapseMap-<%= post.id%>" role="button" aria-expanded="false" aria-controls="collapseMap">
                 View location on map
               </button>
