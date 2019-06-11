@@ -7,7 +7,7 @@ Developed by:
 > Vicente Correa
   
 
-## Current Features in Angrylusho
+## Current Features in AngryLusho
 
 - System Access 
   - Log in with email address
@@ -106,9 +106,10 @@ Currently the georeference API allows a maximum of 5 Geofences. We set the follo
   - email: gaguggiana@miuandes.cl
   - password: 123456
 * Super Admin:
-  - email: tt@miuandes.cl
-  - password: 123456
-* Regular User:
   - email: angry_lusho@miuandes.cl
   - password: 123456
+* Regular User:
+  - email: federico_gonzalez@gmail.com
+  - password: 123456
+
   
