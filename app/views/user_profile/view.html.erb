@@ -79,9 +79,9 @@
                           %>
                           <div class="col">
                             <div class="content-container form-inline">
-                              <a class="p small text-dark my-auto" href="<%= user_profile_view_path(user_profile_id: @user_profile.user.profile.id) %>"><%= @user_profile.user.name %> <%= @user_profile.user.last_name %></a>
+                              <a data-turbolinks='false' class="p small text-dark my-auto" href="<%= user_profile_view_path(user_profile_id: @user_profile.user.profile.id) %>"><%= @user_profile.user.name %> <%= @user_profile.user.last_name %></a>
                               <p class="p small text-secondary my-auto ml-1"><%= content %></p>
-                              <a class="p small text-secondary my-auto ml-1" href="<%= watch_path(post_id: action.post.id)%>"><%= action.post.title %></a>
+                              <a data-turbolinks='false' class="p small text-secondary my-auto ml-1" href="<%= watch_path(post_id: action.post.id)%>"><%= action.post.title %></a>
                             </div>
                             <p class="p small text-secondary"><%= action.updated_at %></p>
                           </div>
