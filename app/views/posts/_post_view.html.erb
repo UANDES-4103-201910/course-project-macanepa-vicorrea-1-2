@@ -155,7 +155,7 @@
                   <hr>
                   <a class="dropdown-item" href="<%= edit_post_path(id: post.id, format: :html) %>">Edit</a>
                   <%= form_for post, method: :delete do |post_form|%>
-                    <%= post_form.submit value:"Delete", class:"dropdown-item"%>
+                    <%= post_form.submit value:"Delete", class:"dropdown-item", data: { confirm: "Are you sure that you want to delete this post?" } %>
                   <% end %>
 
                   <hr>

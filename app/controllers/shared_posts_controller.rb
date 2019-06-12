@@ -1,5 +1,5 @@
 class SharedPostsController < ApplicationController
-  before_action :set_shared_post, :check, only: [:show, :edit, :update, :destroy]
+  before_action :set_shared_post, only: [:show, :edit, :update, :destroy]
   # before_action
   # GET /shared_posts
   # GET /shared_posts.json

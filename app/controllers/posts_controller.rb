@@ -51,7 +51,7 @@ class PostsController < ApplicationController
     @post.is_open = true
     @post.is_solved = false
 
-    if post_params[:include_location]=="1"
+    #if post_params[:include_location]=="1"
       # @post.city="Santiago"
       # @post.country="Chile"
       # puts("\n\n\n\n\n\n\n\n\n\nBieeen\n\n\n\n\n\n\n\n")
@@ -59,7 +59,7 @@ class PostsController < ApplicationController
       @post.gps_location="Latitude: #{params[:location]["latitude"]} | Longitude: #{params[:location]["longitude"]}"
       location = Location.create(name: "wiwi",latitude: params[:location]["latitude"], longitude: params[:location]["longitude"])
       @post.location=location
-    end
+    #end
 
 
     respond_to do |format|

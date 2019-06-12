@@ -37,7 +37,7 @@
                     <hr>
               <% end  end%>
 
-                <a class="dropdown-item" data-toggle="modal" data-target="#report-modal">Report</a>
+                <a class="dropdown-item" href="" data-toggle="modal" data-target="#report-modal-post-id-<%= post.id %>">Report</a>
               </div>
             </div>
           </div>
@@ -46,3 +46,27 @@
     </div>
   </div>
 </div>
+
+<% if user_signed_in? %>
+  <div class="modal" id="report-modal-post-id-<%= post.id %>">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Report post</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <%= form_for :report, :url => {:controller => "reports", :action => "create"} do |pill_report_form| %>
+          <%= pill_report_form.text_field :user_id, value: current_user.id, type: "hidden" %>
+          <%= pill_report_form.text_field :post_id, value: post.id, type: "hidden" %>
+          <div class="modal-body">
+            Why you want to mark the post <b><%= post.title %></b> by <b><%= post.user.email %></b> as inappropiate?
+            <%= pill_report_form.text_area :content, class:"form-control", placeholder: "Write a short comment for justification...", required: true, minlength: "5" %>
+          </div>
+          <div class="modal-footer">
+            <%= pill_report_form.submit value:"Report", class:"btn btn-warning my-1", style:"float-right"%>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

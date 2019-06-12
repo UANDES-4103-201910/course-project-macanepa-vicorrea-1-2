@@ -122,7 +122,7 @@
       <% else %>
         <a data-turbolinks='false' href="<%= edit_location_path(id: profile.location.id) %>">Edit GPS Location</a>
       <% end %>
-      <div class="form-inline">
+      <div class="form-inline" title="Remember to check the checkbox to include location">
         <%= form.label :include_location %>
         <%= form.check_box :include_location %>
       </div>
