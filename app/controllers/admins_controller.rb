@@ -4,7 +4,7 @@ class AdminsController < ApplicationController
   before_action :check_profile
 
   def view
-    @users = User.all
+    @users = User.all.order(created_at: :desc)
     @users.each do |user| # check if some user completed the week in the blacklist
       if user.is_in_blacklist
         exit_date = user.get_blacklist_entry_date + 1.week.to_i
@@ -14,7 +14,7 @@ class AdminsController < ApplicationController
         end
       end
     end
-    @posts = Post.all
+    @posts = Post.all.order(created_at: :desc)
     @blacklist_users = Blacklist.all.order(:user_id)
     @dumpster_posts = Dumpster.all.order(:post_id)
     @suspension_list_users = SuspensionList.all.order(:user_id)
