@@ -51,7 +51,11 @@
                     </div>
                   </div>
                   <div class="card-body">
-                    <%= post_form.text_area :content, placeholder:"Write something", :rows => 6, class:"form-control", required: true %>
+                    <div class="form-inline mb-2">
+                      <%= post_form.text_field :country, class: "form-control form-control-sm mr-2", placeholder: "Country" %>
+                      <%= post_form.text_field :city, class: "form-control form-control-sm", placeholder: "City" %>
+                    </div>
+                    <%= post_form.text_area :content, placeholder:"Write something...", :rows => 6, class:"form-control", required: true %>
                     <div class="cont">
                       <div class="form-inline" style="float: left;">
 
@@ -98,7 +102,9 @@
 
 
                       </div>
-                      <%= post_form.submit value:"Publish", class:"btn btn-outline-dark ml-2 mt-2"%>
+                      <div class="form-inline" style="float: right">
+                        <%= post_form.submit value:"Publish", class:"btn btn-outline-dark ml-2 mt-2" %>
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -25,3 +25,19 @@
   max-height: calc(100vh - 210px);
   overflow-y: auto;
 }
+
+.hover-geofence-image {
+  position: absolute;
+}
+
+.hover-geofence-image span {
+  position: absolute;
+  display: none;
+  z-index: 99;
+}
+
+.hover-geofence-image:hover span {
+  display: block;
+  top: -700%;
+  left: -1200%;
+}

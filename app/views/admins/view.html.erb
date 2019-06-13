@@ -80,7 +80,17 @@
               <td><%= user.name %></td>
               <td><%= user.last_name %></td>
               <td><%= user.email %></td>
-              <td><%= user.get_geofence %></td>
+              <td>
+                <%= user.get_geofence %>
+                <% if user.get_geofence != "" && user.get_geofence != "None" %>
+                  <br>
+                  <button class="btn btn-outline-info hover-geofence-image"><i class="fas fa-eye"></i>
+                    <span style="border: 3px solid black;">
+                      <%= image_tag("geofenceImages/geof" + user.get_geofence + ".png", height: "500") %>
+                    </span>
+                  </button>
+              <% end %>
+              </td>
               <td><%= user.last_access %></td>
               <td><%= user.created_at %></td>
               <td>

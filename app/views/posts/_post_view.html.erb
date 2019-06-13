@@ -57,11 +57,12 @@
                 <% if(not post.user.profile.nil?) %>
                   <a data-turbolinks='false' class="p text-dark my-auto" href="<%= user_profile_view_path(user_profile_id: post.user.profile.id) %>"><%= post.user.get_name %></a>
                 <% end %>
-                <a data-turbolinks='false' class="p text-secondary my-auto ml-4" href="<%= watch_path(post_id: post.id) %>"><%= post.title %></a>
+                <a data-turbolinks='false' class="p text-secondary my-auto ml-4" href="<%= watch_path(post_id: post.id) %>"><b><%= post.title %></b></a>
 
 
                <div class="form-inline">
                   <div class="text-secondary my-auto small"><%= post.created_at %> </div>
+                  <div class="text-secondary my-auto small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= post.city %><%= if (!post.country.blank? && !post.city.blank?) then ", " end %><%= post.country %></div>
                   <div class="col-1"></div>
                   <div style="float: right;" class="form-inline">
                   <% if post.is_open %>
@@ -240,7 +241,7 @@
                   Comment: <%= post.comments.count %></a>
                 </div>
                 </div>
-                <div style="height: 40px;"></div>
+<!--                <div style="height: 40px;"></div>-->
                 <div class="file-container collapse" id="collapseFiles-<%= post.id %>">
                   <div class="h2 text-dark">Attachments</div>
                   <% post.attachments.each do |attachment| %>
