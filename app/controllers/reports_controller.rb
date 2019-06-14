@@ -36,11 +36,18 @@ class ReportsController < ApplicationController
         #   that is flagged inappropriate by three people or more, the user account will be blocked permanently.
         if Post.find(@report.post_id).get_reporting_users_num >= 3 && reported_post_owner.was_on_blacklist
           BlockList.create!(user_id: reported_post_owner.id, exit_date: nil)
+          my_reported_posts_id = reported_post_owner.get_ids_reported_posts_user_blacklisted
+          my_reported_posts_id.each do |id|
+            post = Post.find(id)
+            if !post.is_in_dumpster
+              Dumpster.create!(post_id: id, exit_date: nil)
+            end
+          end
           # See if the reported post owner has to go to the blacklist:
           #   A user that has two or more posts flagged as inaproppriate by three or
           #   more different users (and/or administrators) within a week will fall
           #   into a blacklist visible by all site administrators.
-        elsif condition && !already_on_blacklist
+        elsif condition && !already_on_blacklist && !reported_post_owner.was_on_blacklist
           Blacklist.create!(user_id: reported_post_owner.id, exit_date: nil)
           my_reported_posts_id = reported_post_owner.get_ids_reported_posts_user_blacklisted
           my_reported_posts_id.each do |id|

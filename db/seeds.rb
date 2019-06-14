@@ -86,12 +86,11 @@ r1 = Report.create(post_id:p1.id, user_id:u6.id,content:"Venga hombre...")
 r1 = Report.create(post_id:p1.id, user_id:u7.id,content:"Tranquilo perrito")
 r1 = Report.create(post_id:p1.id, user_id:u8.id,content:"Ya cortala")
 
-p1 = Post.create!(user_id:u4.id,title:"Mueranse TODOS!!!! X2",content:"JIJIJIJI",is_open:true,is_solved:false)
-r1 = Report.create(post_id:p1.id, user_id:u6.id,content:"Suficiente")
+p1 = Post.create!(user_id:u4.id,title:"Estoy muy enojado!",content:"Rayos, una cañería explotó!", city:"Berlin",is_open:true,is_solved:false)
+r1 = Report.create(post_id:p1.id, user_id:u6.id,content:"Basta, no diga garabatos", created_at:Time.now - 3.week.to_i)
 r1 = Report.create(post_id:p1.id, user_id:u7.id,content:"Suficiente perrito")
 
-lp1 = Location.create!(name:"Portal la dehesa", latitude:-33.357299, longitude: -70.515253)
-p1 = Post.create!(user_id:u2.id,title:"Todo Malo",content:"Esta Tienda me tiene chato, todo sus productos salen defectuosos",is_open:false,is_solved:true, location:lp1, include_location:true)
+p1 = Post.create!(user_id:u2.id,title:"Todo Malo",content:"Esta Tienda me tiene chato, todo sus productos salen defectuosos",is_open:false,is_solved:true, include_location:true)
 p1c1 = Comment.create!(user_id:u11.id, post_id:p1.id,content:"Pesima Atencion. 0/5.")
 p1c1r1 = Comment.create!(user_id:u2.id, post_id:p1.id, comment_id:p1c1.id, content:"UFFF!!!!")
 p1c1r2 = Comment.create!(user_id:u1.id, post_id:p1.id, comment_id:p1c1.id, reply_id:p1c1r1.id, content:"ARRRGGG")
@@ -165,9 +164,9 @@ Validation.create(user_id:u8.id, post_id: p2.id, validation_type:'dislike')
 Validation.create(user_id:u10.id, post_id: p2.id, validation_type:'dislike')
 
 
-# Locations
-Location.create!([
-                  { "name": "Buckingham Palace", "latitude": "51.501564","longitude": "-0.141944"},
-                  { "name": "Westminster Abbey", "latitude": "51.499581", "longitude": "-0.127309"},
-                  { "name": "Big Ben", "latitude": "51.500792", "longitude": "-0.124613"}
-              ])
+# # Locations
+# Location.create!([
+#                   { "name": "Buckingham Palace", "latitude": "51.501564","longitude": "-0.141944"},
+#                   { "name": "Westminster Abbey", "latitude": "51.499581", "longitude": "-0.127309"},
+#                   { "name": "Big Ben", "latitude": "51.500792", "longitude": "-0.124613"}
+#               ])
