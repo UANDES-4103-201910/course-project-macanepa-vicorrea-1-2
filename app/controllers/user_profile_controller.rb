@@ -10,9 +10,10 @@ class UserProfileController < ApplicationController
     end
     @user=User.find(@user_profile.user.id)
 
-    @shared_posts= SharedPost.where(user_id:@user_profile.id).pluck(:post_id)
+    @shared_posts= SharedPost.where(user_id:@user_profile.user.id).pluck(:post_id)
+    a = @shared_posts.first
     @posts = Post.where(user_id:@user.id).or(Post.where(id: @shared_posts))
-    @posts = filter_posts(@posts)
+    #@posts = filter_posts(@posts)
 
     posts_in_dumpster_ids = Dumpster.where(exit_date:nil).pluck(:post_id)
     @vals = Validation.where(user_id: @user_profile.user.id).where.not(post_id:posts_in_dumpster_ids)
