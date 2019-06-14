@@ -78,7 +78,7 @@ a1 = Admin.create!(user_id:u13.id,super_admin:false,geofence_id:geof03.id)
 
 
 #Posts
-#
+
 
 
 p1 = Post.create!(user_id:u4.id,title:"Mueranse TODOS!!!!",content:"Muajajaja",is_open:true,is_solved:false)
